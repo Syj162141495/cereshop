@@ -164,7 +164,7 @@
             <if test="productName != null and productName!=''">
                 product_name = #{productName,jdbcType=VARCHAR},
             </if>
-            <if test="productBrief != null">
+            <if test="productBrief != null and productBrief!=''">
                 product_brief = #{productBrief,jdbcType=VARCHAR},
             </if>
             <if test="shopGroupId != null">
