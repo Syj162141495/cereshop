@@ -1,0 +1,348 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.cereshop.admin.dao.buyer.CereBuyerUserDAO">
+  <resultMap id="BaseResultMap" type="com.shop.cereshop.commons.domain.buyer.CereBuyerUser">
+    <id column="buyer_user_id" jdbcType="BIGINT" property="buyerUserId" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="sex" jdbcType="VARCHAR" property="sex" />
+    <result column="birthday" jdbcType="VARCHAR" property="birthday" />
+    <result column="wechat_open_id" jdbcType="VARCHAR" property="wechatOpenId" />
+    <result column="wechat_union_id" jdbcType="VARCHAR" property="wechatUnionId" />
+    <result column="wechat_name" jdbcType="VARCHAR" property="wechatName" />
+    <result column="wechat_number" jdbcType="VARCHAR" property="wechatNumber" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="head_image" jdbcType="VARCHAR" property="headImage" />
+    <result column="state" jdbcType="BIT" property="state" />
+    <result column="if_black" jdbcType="BIT" property="ifBlack" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="token" jdbcType="VARCHAR" property="token" />
+    <result column="create_time" jdbcType="VARCHAR" property="createTime" />
+    <result column="update_time" jdbcType="VARCHAR" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    buyer_user_id, `name`, sex, birthday, wechat_open_id, wechat_union_id, wechat_name, 
+    wechat_number, phone, `password`, head_image, `state`,if_black, remark, token, create_time,
+    update_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from cere_buyer_user
+    where buyer_user_id = #{buyerUserId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from cere_buyer_user
+    where buyer_user_id = #{buyerUserId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" keyColumn="buyer_user_id" keyProperty="buyerUserId" parameterType="com.shop.cereshop.commons.domain.buyer.CereBuyerUser" useGeneratedKeys="true">
+    insert into cere_buyer_user (`name`, sex, birthday, 
+      wechat_open_id, wechat_union_id, wechat_name, 
+      wechat_number, phone, `password`, 
+      head_image, `state`,if_black, remark,
+      token, create_time, update_time
+      )
+    values (#{name,jdbcType=VARCHAR}, #{sex,jdbcType=VARCHAR}, #{birthday,jdbcType=VARCHAR}, 
+      #{wechatOpenId,jdbcType=VARCHAR}, #{wechatUnionId,jdbcType=VARCHAR}, #{wechatName,jdbcType=VARCHAR}, 
+      #{wechatNumber,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
+      #{headImage,jdbcType=VARCHAR}, #{state,jdbcType=BIT},#{ifBlack,jdbcType=BIT}, #{remark,jdbcType=VARCHAR},
+      #{token,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR}, #{updateTime,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" keyColumn="buyer_user_id" keyProperty="buyerUserId" parameterType="com.shop.cereshop.commons.domain.buyer.CereBuyerUser" useGeneratedKeys="true">
+    insert into cere_buyer_user
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="name != null and name!=''">
+        `name`,
+      </if>
+      <if test="sex != null and sex!=''">
+        sex,
+      </if>
+      <if test="birthday != null and birthday!=''">
+        birthday,
+      </if>
+      <if test="wechatOpenId != null and wechatOpenId!=''">
+        wechat_open_id,
+      </if>
+      <if test="wechatUnionId != null and wechatUnionId!=''">
+        wechat_union_id,
+      </if>
+      <if test="wechatName != null and wechatName!=''">
+        wechat_name,
+      </if>
+      <if test="wechatNumber != null and wechatNumber!=''">
+        wechat_number,
+      </if>
+      <if test="phone != null and phone!=''">
+        phone,
+      </if>
+      <if test="password != null and password!=''">
+        `password`,
+      </if>
+      <if test="headImage != null and headImage!=''">
+        head_image,
+      </if>
+      <if test="state != null">
+        `state`,
+      </if>
+      <if test="ifBlack != null">
+        if_black,
+      </if>
+      <if test="remark != null and remark!=''">
+        remark,
+      </if>
+      <if test="token != null and token!=''">
+        token,
+      </if>
+      <if test="createTime != null and createTime!=''">
+        create_time,
+      </if>
+      <if test="updateTime != null and updateTime!=''">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="name != null and name!=''">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null and sex!=''">
+        #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="birthday != null and birthday!=''">
+        #{birthday,jdbcType=VARCHAR},
+      </if>
+      <if test="wechatOpenId != null and wechatOpenId!=''">
+        #{wechatOpenId,jdbcType=VARCHAR},
+      </if>
+      <if test="wechatUnionId != null and wechatUnionId!=''">
+        #{wechatUnionId,jdbcType=VARCHAR},
+      </if>
+      <if test="wechatName != null and wechatName!=''">
+        #{wechatName,jdbcType=VARCHAR},
+      </if>
+      <if test="wechatNumber != null and wechatNumber!=''">
+        #{wechatNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null and phone!=''">
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null and password!=''">
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="headImage != null and headImage!=''">
+        #{headImage,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=BIT},
+      </if>
+      <if test="ifBlack != null">
+        #{ifBlack,jdbcType=BIT},
+      </if>
+      <if test="remark != null and remark!=''">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="token != null and token!=''">
+        #{token,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null and createTime!=''">
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null and updateTime!=''">
+        #{updateTime,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.shop.cereshop.commons.domain.buyer.CereBuyerUser">
+    update cere_buyer_user
+    <set>
+      <if test="name != null and name!=''">
+        `name` = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null and sex!=''">
+        sex = #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="birthday != null and birthday!=''">
+        birthday = #{birthday,jdbcType=VARCHAR},
+      </if>
+      <if test="wechatOpenId != null and wechatOpenId!=''">
+        wechat_open_id = #{wechatOpenId,jdbcType=VARCHAR},
+      </if>
+      <if test="wechatUnionId != null and wechatUnionId!=''">
+        wechat_union_id = #{wechatUnionId,jdbcType=VARCHAR},
+      </if>
+      <if test="wechatName != null and wechatName!=''">
+        wechat_name = #{wechatName,jdbcType=VARCHAR},
+      </if>
+      <if test="wechatNumber != null and wechatNumber!=''">
+        wechat_number = #{wechatNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null and phone!=''">
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null and password!=''">
+        `password` = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="headImage != null and headImage!=''">
+        head_image = #{headImage,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null">
+        `state` = #{state,jdbcType=BIT},
+      </if>
+      <if test="ifBlack != null">
+        if_black = #{ifBlack,jdbcType=BIT},
+      </if>
+      <if test="remark != null and remark!=''">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="token != null and token!=''">
+        token = #{token,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null and createTime!=''">
+        create_time = #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null and updateTime!=''">
+        update_time = #{updateTime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where buyer_user_id = #{buyerUserId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.shop.cereshop.commons.domain.buyer.CereBuyerUser">
+    update cere_buyer_user
+    set `name` = #{name,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=VARCHAR},
+      birthday = #{birthday,jdbcType=VARCHAR},
+      wechat_open_id = #{wechatOpenId,jdbcType=VARCHAR},
+      wechat_union_id = #{wechatUnionId,jdbcType=VARCHAR},
+      wechat_name = #{wechatName,jdbcType=VARCHAR},
+      wechat_number = #{wechatNumber,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      `password` = #{password,jdbcType=VARCHAR},
+      head_image = #{headImage,jdbcType=VARCHAR},
+      `state` = #{state,jdbcType=BIT},
+      if_black = #{ifBlack,jdbcType=BIT},
+      remark = #{remark,jdbcType=VARCHAR},
+      token = #{token,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=VARCHAR}
+    where buyer_user_id = #{buyerUserId,jdbcType=BIGINT}
+  </update>
+
+  <select id="getAll" parameterType="com.shop.cereshop.admin.param.buyer.BuyerGetAllParam" resultType="com.shop.cereshop.admin.page.buyer.BuyerUser">
+    SELECT a.buyer_user_id,IF(a.wechat_name IS NULL,a.`name`,a.wechat_name) `name`,d.member_level_name,
+    a.phone,IF(b.total IS NULL,0,b.total) total,IF(b.buyers IS NULL,0,b.buyers) buyers,a.create_time,a.if_black,b.time from cere_buyer_user a
+    LEFT JOIN (SELECT buyer_user_id,SUM(price) total,COUNT(order_id) buyers,MAX(create_time) time from cere_shop_order where state in (2,3,4)
+    GROUP BY buyer_user_id) b ON a.buyer_user_id=b.buyer_user_id
+    LEFT JOIN cere_buyer_label c ON a.buyer_user_id=c.buyer_user_id
+    LEFT JOIN cere_platform_member_level d ON a.member_level_id=d.member_level_id
+    where 1=1
+    <if test="name!=null and name!=''">
+      and (a.wechat_name like concat('%',#{name},'%') or
+      a.`name` like concat('%',#{name},'%'))
+    </if>
+    <if test="phone!=null and phone!=''">
+      and a.phone like concat('%',#{phone},'%')
+    </if>
+    <if test="labelId!=null">
+      and c.buyer_label_id=#{labelId}
+    </if>
+    <if test="minMoney!=null">
+      and b.total&gt;=#{minMoney}
+    </if>
+    <if test="maxMoney!=null">
+      and b.total&lt;=#{maxMoney}
+    </if>
+    <if test="minBuyers!=null">
+      and b.buyers&gt;=#{minBuyers}
+    </if>
+    <if test="maxBuyers!=null">
+      and b.buyers&lt;=#{maxBuyers}
+    </if>
+    GROUP BY a.buyer_user_id
+    <if test="startTime!=null and startTime!=''">
+      HAVING b.time&gt;=#{startTime} and b.time&lt;=#{endTime}
+    </if>
+  </select>
+
+  <select id="getById" parameterType="java.lang.Object" resultType="com.shop.cereshop.admin.page.buyer.BuyerUserDetail">
+    SELECT buyer_user_id,IF(wechat_name IS NULL,`name`,wechat_name) `name`,
+    phone,sex,birthday,create_time,head_image from cere_buyer_user
+    where buyer_user_id=#{buyerUserId}
+  </select>
+
+  <select id="findLabels" parameterType="java.lang.Object" resultType="java.lang.Object">
+    SELECT b.label_name from cere_buyer_label a
+    LEFT JOIN cere_platform_label b ON a.buyer_label_id=b.buyer_label_id
+    where a.buyer_user_id=#{buyerUserId}
+  </select>
+
+  <select id="findOrders" parameterType="java.lang.Object" resultType="java.lang.Integer">
+    SELECT COUNT(*) from cere_shop_order where buyer_user_id=#{buyerUserId}
+  </select>
+
+  <select id="findPays" parameterType="java.lang.Object" resultType="java.lang.Integer">
+    SELECT COUNT(*) from cere_shop_order where buyer_user_id=#{buyerUserId} and state in (2,3,4)
+  </select>
+
+  <select id="findProducts" parameterType="java.lang.Object" resultType="java.lang.Integer">
+    SELECT COUNT(*) from cere_order_product a
+    LEFT JOIN cere_shop_order b ON a.order_id=b.order_id
+    where b.buyer_user_id=#{buyerUserId}
+  </select>
+
+  <select id="findPrice" parameterType="java.lang.Object" resultType="java.math.BigDecimal">
+    SELECT SUM(price) from cere_shop_order where buyer_user_id=#{buyerUserId} and state in (2,3,4)
+  </select>
+
+  <select id="findAfters" parameterType="java.lang.Object" resultType="java.lang.Integer">
+    SELECT COUNT(*) from cere_order_after a
+    LEFT JOIN cere_shop_order b ON a.order_id=b.order_id
+    where b.buyer_user_id=#{buyerUserId}
+  </select>
+
+  <select id="findAfterOrders" parameterType="java.lang.Object" resultType="java.lang.Integer">
+    SELECT COUNT(DISTINCT a.order_id) from cere_order_after a
+    LEFT JOIN cere_shop_order b ON a.order_id=b.order_id
+    where b.buyer_user_id=#{buyerUserId}
+  </select>
+
+  <select id="findSuccessAfters" parameterType="java.lang.Object" resultType="java.lang.Integer">
+    SELECT COUNT(DISTINCT a.order_id) from cere_order_after a
+    LEFT JOIN cere_shop_order b ON a.order_id=b.order_id
+    where b.buyer_user_id=#{buyerUserId} and a.after_state=2
+  </select>
+
+  <select id="findOrderList" parameterType="com.shop.cereshop.admin.param.buyer.BuyerGetByIdParam" resultType="com.shop.cereshop.admin.page.buyer.BuyerOrder">
+    SELECT a.order_formid,b.shop_name,COUNT(c.product_id) products,a.price,a.state from cere_shop_order a
+    LEFT JOIN cere_platform_shop b ON a.shop_id=b.shop_id
+    LEFT JOIN cere_order_product c ON a.order_id=c.order_id
+    where a.buyer_user_id=#{buyerUserId}
+    <if test="orderFormid!=null and orderFormid!=''">
+      and a.order_formid like concat('%',#{orderFormid},'%')
+    </if>
+    GROUP BY c.product_id
+  </select>
+
+  <select id="findComments" parameterType="java.lang.Object" resultType="com.shop.cereshop.admin.page.buyer.BuyerComment">
+    SELECT a.shop_name,a.comment_id,b.product_name from cere_shop_comment a
+    LEFT JOIN cere_shop_product b ON a.product_id=b.product_id
+    where a.buyer_user_id=#{buyerUserId}
+  </select>
+
+  <select id="findReceives" parameterType="java.lang.Object" resultType="com.shop.cereshop.commons.domain.buyer.CereBuyerReceive">
+    SELECT * FROM cere_buyer_receive where buyer_user_id=#{buyerUserId}
+  </select>
+
+  <select id="getLabels" parameterType="com.shop.cereshop.admin.param.buyer.BuyerGetLabelsParam" resultType="com.shop.cereshop.commons.domain.label.CerePlatformLabel">
+    SELECT buyer_label_id,label_name FROM cere_platform_label
+    where 1=1
+    <if test="labelName!=null and labelName!=''">
+      and label_name like concat('%',#{labelName},'%')
+    </if>
+  </select>
+
+  <select id="getUserLabels" parameterType="com.shop.cereshop.admin.param.buyer.BuyerGetLabelsParam" resultType="com.shop.cereshop.commons.domain.label.CerePlatformLabel">
+    SELECT b.* FROM cere_buyer_label a
+    LEFT JOIN cere_platform_label b ON a.buyer_label_id=b.buyer_label_id
+    where a.buyer_user_id=#{buyerUserId}
+  </select>
+</mapper>

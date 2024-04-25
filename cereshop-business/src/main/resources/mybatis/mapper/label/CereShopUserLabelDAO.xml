@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.cereshop.business.dao.label.CereShopUserLabelDAO">
+  <resultMap id="BaseResultMap" type="com.shop.cereshop.commons.domain.label.CereShopUserLabel">
+    <id column="label_id" jdbcType="BIGINT" property="labelId" />
+    <result column="shop_id" jdbcType="BIGINT" property="shopId" />
+    <result column="label_name" jdbcType="VARCHAR" property="labelName" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="create_time" jdbcType="VARCHAR" property="createTime" />
+    <result column="update_time" jdbcType="VARCHAR" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    label_id, shop_id, label_name, remark, create_time, update_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from cere_shop_user_label
+    where label_id = #{labelId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from cere_shop_user_label
+    where label_id = #{labelId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" keyColumn="label_id" keyProperty="labelId" parameterType="com.shop.cereshop.commons.domain.label.CereShopUserLabel" useGeneratedKeys="true">
+    insert into cere_shop_user_label (shop_id, label_name, remark, 
+      create_time, update_time)
+    values (#{shopId,jdbcType=BIGINT}, #{labelName,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=VARCHAR}, #{updateTime,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" keyColumn="label_id" keyProperty="labelId" parameterType="com.shop.cereshop.commons.domain.label.CereShopUserLabel" useGeneratedKeys="true">
+    insert into cere_shop_user_label
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="shopId != null">
+        shop_id,
+      </if>
+      <if test="labelName != null">
+        label_name,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="shopId != null">
+        #{shopId,jdbcType=BIGINT},
+      </if>
+      <if test="labelName != null">
+        #{labelName,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.shop.cereshop.commons.domain.label.CereShopUserLabel">
+    update cere_shop_user_label
+    <set>
+      <if test="shopId != null">
+        shop_id = #{shopId,jdbcType=BIGINT},
+      </if>
+      <if test="labelName != null">
+        label_name = #{labelName,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where label_id = #{labelId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.shop.cereshop.commons.domain.label.CereShopUserLabel">
+    update cere_shop_user_label
+    set shop_id = #{shopId,jdbcType=BIGINT},
+      label_name = #{labelName,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=VARCHAR}
+    where label_id = #{labelId,jdbcType=BIGINT}
+  </update>
+
+  <delete id="deleteBuyer" parameterType="java.lang.Object">
+    DELETE FROM cere_buyer_shop_label where label_id=#{labelId}
+  </delete>
+
+  <select id="getById" parameterType="java.lang.Object" resultType="com.shop.cereshop.commons.domain.label.CereShopUserLabel">
+    SELECT label_id,label_name,remark FROM cere_shop_user_label where label_id=#{labelId}
+  </select>
+
+  <select id="getAll" parameterType="com.shop.cereshop.business.param.label.UserLabelGetAllParam" resultType="com.shop.cereshop.business.page.label.ShopUserLabel">
+    SELECT a.label_id,a.shop_id,a.label_name,a.remark,b.person from cere_shop_user_label a
+    LEFT JOIN (SELECT COUNT(*) person,label_id from cere_buyer_shop_label GROUP BY label_id) b
+    ON a.label_id=b.label_id
+    where a.shop_id=#{shopId}
+    <if test="labelName!=null and labelName!=''">
+      and a.label_name like concat('%',#{labelName},'%')
+    </if>
+    <if test="minPerson!=null">
+      and b.person&gt;=#{minPerson}
+    </if>
+    <if test="maxPerson!=null">
+      and b.person&lt;=#{maxPerson}
+    </if>
+  </select>
+
+  <select id="getLabels" parameterType="java.lang.Object" resultType="com.shop.cereshop.commons.domain.label.CereShopUserLabel">
+    SELECT label_id,label_name,remark FROM cere_shop_user_label where shop_id=#{shopId}
+  </select>
+</mapper>

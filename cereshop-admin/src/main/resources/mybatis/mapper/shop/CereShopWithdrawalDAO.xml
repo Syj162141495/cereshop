@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.cereshop.admin.dao.shop.CereShopWithdrawalDAO">
+  <resultMap id="BaseResultMap" type="com.shop.cereshop.commons.domain.shop.CereShopWithdrawal">
+    <id column="withdrawal_id" jdbcType="BIGINT" property="withdrawalId" />
+    <result column="shop_id" jdbcType="BIGINT" property="shopId" />
+    <result column="shop_name" jdbcType="VARCHAR" property="shopName" />
+    <result column="shop_code" jdbcType="VARCHAR" property="shopCode" />
+    <result column="bank_name" jdbcType="VARCHAR" property="bankName" />
+    <result column="bank_card" jdbcType="VARCHAR" property="bankCard" />
+    <result column="collection_name" jdbcType="VARCHAR" property="collectionName" />
+    <result column="withdrawal_money" jdbcType="DECIMAL" property="withdrawalMoney" />
+    <result column="state" jdbcType="BIT" property="state" />
+    <result column="apply_time" jdbcType="VARCHAR" property="applyTime" />
+    <result column="handle_time" jdbcType="VARCHAR" property="handleTime" />
+  </resultMap>
+  <insert id="insert" keyColumn="withdrawal_id" keyProperty="withdrawalId" parameterType="com.shop.cereshop.commons.domain.shop.CereShopWithdrawal" useGeneratedKeys="true">
+    insert into cere_shop_withdrawal (shop_id,shop_name, shop_code, bank_name,
+      bank_card, collection_name, withdrawal_money, 
+      `state`, apply_time, handle_time
+      )
+    values (#{shopId,jdbcType=BIGINT},#{shopName,jdbcType=VARCHAR},  #{shopCode,jdbcType=VARCHAR}, #{bankName,jdbcType=VARCHAR},
+      #{bankCard,jdbcType=VARCHAR}, #{collectionName,jdbcType=VARCHAR}, #{withdrawalMoney,jdbcType=DECIMAL}, 
+      #{state,jdbcType=BIT}, #{applyTime,jdbcType=VARCHAR}, #{handleTime,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" keyColumn="withdrawal_id" keyProperty="withdrawalId" parameterType="com.shop.cereshop.commons.domain.shop.CereShopWithdrawal" useGeneratedKeys="true">
+    insert into cere_shop_withdrawal
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="shopId != null">
+        shop_id,
+      </if>
+      <if test="shopName != null and shopName!=''">
+        shop_name,
+      </if>
+      <if test="shopCode != null and shopCode!=''">
+        shop_code,
+      </if>
+      <if test="bankName != null and bankName!=''">
+        bank_name,
+      </if>
+      <if test="bankCard != null and bankCard!=''">
+        bank_card,
+      </if>
+      <if test="collectionName != null and collectionName!=''">
+        collection_name,
+      </if>
+      <if test="withdrawalMoney != null">
+        withdrawal_money,
+      </if>
+      <if test="state != null">
+        `state`,
+      </if>
+      <if test="applyTime != null and applyTime!=''">
+        apply_time,
+      </if>
+      <if test="handleTime != null and handleTime!=''">
+        handle_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="shopId != null">
+        #{shopId,jdbcType=BIGINT},
+      </if>
+      <if test="shopName != null and shopName!=''">
+        #{shopName,jdbcType=VARCHAR},
+      </if>
+      <if test="shopCode != null and shopCode!=''">
+        #{shopCode,jdbcType=VARCHAR},
+      </if>
+      <if test="bankName != null and bankName!=''">
+        #{bankName,jdbcType=VARCHAR},
+      </if>
+      <if test="bankCard != null and bankCard!=''">
+        #{bankCard,jdbcType=VARCHAR},
+      </if>
+      <if test="collectionName != null and collectionName!=''">
+        #{collectionName,jdbcType=VARCHAR},
+      </if>
+      <if test="withdrawalMoney != null">
+        #{withdrawalMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=BIT},
+      </if>
+      <if test="applyTime != null and applyTime!=''">
+        #{applyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="handleTime != null and handleTime!=''">
+        #{handleTime,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+  <update id="update" parameterType="com.shop.cereshop.commons.domain.shop.CereShopWithdrawal">
+    UPDATE cere_shop_withdrawal set state=#{state},handle_time=#{handleTime}
+    where withdrawal_id=#{withdrawalId}
+  </update>
+
+  <select id="getAll" parameterType="com.shop.cereshop.admin.param.withdrawal.WithdrawalGetAllParam" resultType="com.shop.cereshop.commons.domain.shop.CereShopWithdrawal">
+    SELECT withdrawal_id,shop_name,shop_code,withdrawal_money,state FROM cere_shop_withdrawal
+    where 1=1
+    <if test="shopName!=null and shopName!=''">
+      and shop_name like concat('%',#{shopName},'%')
+    </if>
+    <if test="shopCode!=null and shopCode!=''">
+      and shop_code like concat('%',#{shopCode},'%')
+    </if>
+    <if test="startTime!=null and startTime!=''">
+      and apply_time like concat('%',#{startTime},'%')
+    </if>
+    <if test="state!=null">
+      and state=#{state}
+    </if>
+    ORDER BY apply_time DESC
+  </select>
+
+  <select id="getById" parameterType="java.lang.Object" resultType="com.shop.cereshop.commons.domain.shop.CereShopWithdrawal">
+    SELECT withdrawal_id,shop_name,shop_code,bank_name,bank_card,collection_name,withdrawal_money,apply_time,handle_time
+    FROM cere_shop_withdrawal where withdrawal_id=#{withdrawalId}
+  </select>
+</mapper>

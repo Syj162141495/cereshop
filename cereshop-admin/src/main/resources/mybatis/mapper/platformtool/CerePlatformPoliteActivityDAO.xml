@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.cereshop.admin.dao.platformtool.CerePlatformPoliteActivityDAO">
+  <resultMap id="BaseResultMap" type="com.shop.cereshop.commons.domain.platformtool.CerePlatformPoliteActivity">
+    <result column="polite_id" jdbcType="BIGINT" property="politeId" />
+    <result column="activity_id" jdbcType="BIGINT" property="activityId" />
+    <result column="activity_name" jdbcType="VARCHAR" property="activityName" />
+    <result column="activity_type" jdbcType="BIT" property="activityType" />
+    <result column="threshold" jdbcType="DECIMAL" property="threshold" />
+    <result column="coupon_content" jdbcType="DECIMAL" property="couponContent" />
+  </resultMap>
+  <insert id="insert" parameterType="com.shop.cereshop.commons.domain.platformtool.CerePlatformPoliteActivity">
+    insert into cere_platform_polite_activity (polite_id, activity_id, activity_name, 
+      activity_type, threshold, coupon_content
+      )
+    values (#{politeId,jdbcType=BIGINT}, #{activityId,jdbcType=BIGINT}, #{activityName,jdbcType=VARCHAR}, 
+      #{activityType,jdbcType=BIT}, #{threshold,jdbcType=DECIMAL}, #{couponContent,jdbcType=DECIMAL}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.shop.cereshop.commons.domain.platformtool.CerePlatformPoliteActivity">
+    insert into cere_platform_polite_activity
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="politeId != null">
+        polite_id,
+      </if>
+      <if test="activityId != null">
+        activity_id,
+      </if>
+      <if test="activityName != null">
+        activity_name,
+      </if>
+      <if test="activityType != null">
+        activity_type,
+      </if>
+      <if test="threshold != null">
+        threshold,
+      </if>
+      <if test="couponContent != null">
+        coupon_content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="politeId != null">
+        #{politeId,jdbcType=BIGINT},
+      </if>
+      <if test="activityId != null">
+        #{activityId,jdbcType=BIGINT},
+      </if>
+      <if test="activityName != null">
+        #{activityName,jdbcType=VARCHAR},
+      </if>
+      <if test="activityType != null">
+        #{activityType,jdbcType=BIT},
+      </if>
+      <if test="threshold != null">
+        #{threshold,jdbcType=DECIMAL},
+      </if>
+      <if test="couponContent != null">
+        #{couponContent,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+
+  <select id="findByActivityId" parameterType="java.lang.Object" resultType="com.shop.cereshop.commons.domain.platformtool.CerePlatformPoliteActivity">
+    SELECT a.* FROM cere_platform_polite_activity a
+    LEFT JOIN cere_platform_polite b ON a.polite_id=b.polite_id
+    and (NOW()&lt;=b.start_time OR (NOW()&gt;b.start_time and NOW()&lt;=end_time))
+    where a.activity_id=#{activityId}
+  </select>
+
+  <update id="updateBatch" parameterType="java.util.List" >
+    update cere_platform_polite_activity
+    <trim prefix="set" suffixOverrides=",">
+      <trim prefix="activity_name =case" suffix="end,">
+        <foreach collection="list" item="i" index="index">
+          <if test="i.activityName!=null and i.activityName!=''">
+            when polite_id=#{i.politeId} and activity_id=#{i.activityId} then activity_name=#{i.activityName}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="activity_type =case" suffix="end,">
+        <foreach collection="list" item="i" index="index">
+          <if test="i.activityType!=null">
+            when polite_id=#{i.politeId} and activity_id=#{i.activityId} then activity_type=#{i.activityType}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="threshold =case" suffix="end,">
+        <foreach collection="list" item="i" index="index">
+          <if test="i.threshold!=null">
+            when polite_id=#{i.politeId} and activity_id=#{i.activityId} then threshold=#{i.threshold}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="coupon_content =case" suffix="end,">
+        <foreach collection="list" item="i" index="index">
+          <if test="i.couponContent!=null">
+            when polite_id=#{i.politeId} and activity_id=#{i.activityId} then coupon_content=#{i.couponContent}
+          </if>
+        </foreach>
+      </trim>
+    </trim>
+    where
+    <foreach collection="list" separator="or" item="i" index="index" >
+      polite_id=#{i.politeId} and activity_id=#{i.activityId}
+    </foreach>
+  </update>
+
+  <insert id="insertBatch" parameterType="java.util.List">
+    insert into cere_platform_polite_activity (polite_id, activity_id, activity_name,
+    activity_type, threshold, coupon_content) values
+    <foreach collection="list" item="item" index="index" separator=",">
+      (
+      #{item.politeId},
+      #{item.activityId},
+      #{item.activityName},
+      #{item.activityType},
+      #{item.threshold},
+      #{item.couponContent}
+      )
+    </foreach>
+  </insert>
+
+  <delete id="deleteByPoliteId" parameterType="java.lang.Object">
+    DELETE FROM cere_platform_polite_activity where polite_id=#{politeId}
+  </delete>
+
+  <select id="findByPoliteId" parameterType="java.lang.Object" resultType="com.shop.cereshop.admin.page.polite.PoliteActivityDetail">
+    SELECT a.*,activity_end_time endTime FROM cere_platform_polite_activity a
+    LEFT JOIN cere_platform_activity b ON a.activity_id=b.activity_id where a.polite_id=#{politeId}
+  </select>
+</mapper>

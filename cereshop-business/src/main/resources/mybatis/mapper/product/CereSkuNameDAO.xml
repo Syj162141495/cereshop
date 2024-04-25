@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.cereshop.business.dao.product.CereSkuNameDAO">
+  <resultMap id="BaseResultMap" type="com.shop.cereshop.commons.domain.product.CereSkuName">
+    <id column="sku_id" jdbcType="BIGINT" property="skuId" />
+    <result column="need" jdbcType="INTEGER" property="need" />
+    <result column="sku_name" jdbcType="VARCHAR" property="skuName" />
+    <result column="sku_value" jdbcType="VARCHAR" property="skuValue" />
+    <result column="image" jdbcType="VARCHAR" property="image" />
+    <result column="name_code" jdbcType="VARCHAR" property="nameCode" />
+    <result column="value_code" jdbcType="VARCHAR" property="valueCode" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    sku_id,need, sku_name, sku_value,image,name_code,value_code
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from cere_sku_name
+    where sku_id = #{skuId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from cere_sku_name
+    where sku_id = #{skuId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" keyColumn="sku_id" keyProperty="skuId" parameterType="com.shop.cereshop.commons.domain.product.CereSkuName" useGeneratedKeys="true">
+    insert into cere_sku_name (sku_id,need, sku_name, sku_value,image,name_code,value_code)
+    values (#{skuId,jdbcType=BIGINT},#{need,jdbcType=INTEGER},  #{skuName,jdbcType=VARCHAR}, #{skuValue,jdbcType=VARCHAR},#{image,jdbcType=VARCHAR},
+    #{nameCode,jdbcType=VARCHAR},#{valueCode,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" keyColumn="sku_id" keyProperty="skuId" parameterType="com.shop.cereshop.commons.domain.product.CereSkuName" useGeneratedKeys="true">
+    insert into cere_sku_name
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="skuId != null">
+        sku_id,
+      </if>
+      <if test="need != null">
+        need,
+      </if>
+      <if test="skuName != null and skuName!=''">
+        sku_name,
+      </if>
+      <if test="skuValue != null and skuValue!=''">
+        sku_value,
+      </if>
+      <if test="image != null and image!=''">
+        image,
+      </if>
+      <if test="nameCode != null and nameCode!=''">
+        name_code,
+      </if>
+      <if test="valueCode != null and valueCode!=''">
+        value_code,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="skuId != null">
+        #{skuId,jdbcType=BIGINT},
+      </if>
+      <if test="need != null">
+        #{need,jdbcType=INTEGER},
+      </if>
+      <if test="skuName != null and skuName!=''">
+        #{skuName,jdbcType=VARCHAR},
+      </if>
+      <if test="skuValue != null and skuValue!=''">
+        #{skuValue,jdbcType=VARCHAR},
+      </if>
+      <if test="image != null and image!=''">
+        #{image,jdbcType=VARCHAR},
+      </if>
+      <if test="nameCode != null and nameCode!=''">
+        #{nameCode,jdbcType=VARCHAR},
+      </if>
+      <if test="valueCode != null and valueCode!=''">
+        #{valueCode,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.shop.cereshop.commons.domain.product.CereSkuName">
+    update cere_sku_name
+    <set>
+      <if test="need != null">
+        need = #{need,jdbcType=INTEGER},
+      </if>
+      <if test="skuName != null and skuName!=''">
+        sku_name = #{skuName,jdbcType=VARCHAR},
+      </if>
+      <if test="skuValue != null and skuValue!=''">
+        sku_value = #{skuValue,jdbcType=VARCHAR},
+      </if>
+      <if test="image != null and image!=''">
+        image = #{image,jdbcType=VARCHAR},
+      </if>
+      <if test="nameCode != null and nameCode!=''">
+        name_code = #{nameCode,jdbcType=VARCHAR},
+      </if>
+      <if test="valueCode != null and valueCode!=''">
+        value_code = #{valueCode,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where sku_id = #{skuId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateByPrimaryKey" parameterType="com.shop.cereshop.commons.domain.product.CereSkuName">
+    update cere_sku_name
+    set need = #{need,jdbcType=INTEGER},
+      sku_name = #{skuName,jdbcType=VARCHAR},
+      sku_value = #{skuValue,jdbcType=VARCHAR},
+      image = #{image,jdbcType=VARCHAR},
+      name_code = #{nameCode,jdbcType=VARCHAR},
+      value_code = #{valueCode,jdbcType=VARCHAR}
+    where sku_id = #{skuId,jdbcType=BIGINT}
+  </update>
+
+  <insert id="insertBatch" parameterType="java.util.List">
+    insert into cere_sku_name (sku_id,need, sku_name, sku_value,image,name_code,value_code) values
+    <foreach collection="list" item="item" index="index" separator=",">
+      (
+      #{item.skuId},
+      #{item.need},
+      #{item.skuName},
+      #{item.skuValue},
+      #{item.image},
+      #{item.nameCode},
+      #{item.valueCode}
+      )
+    </foreach>
+  </insert>
+
+  <delete id="deleteByIds" parameterType="java.lang.Object">
+    DELETE FROM cere_sku_name where sku_id in (
+    <foreach collection="ids" item="id" index="index" separator=",">
+      #{id}
+    </foreach>
+    )
+  </delete>
+
+  <select id="findDeleteSkuIds" parameterType="java.lang.Object" resultType="java.lang.Long">
+    SELECT sku_id FROM cere_sku_name where (
+    <foreach collection="list" item="item" index="index" separator=" OR ">
+      (name_code=#{item.code} and value_code=#{item.valueCode})
+    </foreach>
+    ) and sku_id in (SELECT sku_id FROM cere_product_sku where product_id=#{productId})
+  </select>
+
+  <delete id="deleteByProductId" parameterType="java.lang.Object">
+    DELETE FROM cere_sku_name where sku_id in (SELECT sku_id FROM cere_product_sku where product_id=#{productId})
+  </delete>
+
+  <select id="findBySkuId" parameterType="java.lang.Object" resultType="com.shop.cereshop.business.param.product.SkuNameValueParam">
+    SELECT name_code code,value_code FROM cere_sku_name where sku_id=#{skuId}
+  </select>
+
+  <select id="findNameBySkuId" parameterType="java.lang.Object" resultType="com.shop.cereshop.business.param.product.SkuNameParam">
+    SELECT sku_name FROM cere_sku_name where sku_id=#{skuId} GROUP BY sku_name
+  </select>
+
+  <select id="findValueBySkuId" parameterType="java.lang.Object" resultType="com.shop.cereshop.commons.domain.product.CereSkuName">
+    SELECT sku_name,sku_value,image FROM cere_sku_name where sku_id=#{skuId}
+  </select>
+
+  <select id="findByNameAndSkuId" parameterType="java.lang.Object" resultType="com.shop.cereshop.business.param.product.SkuValueParam">
+    SELECT sku_value,image FROM cere_sku_name where sku_id=#{skuId} and sku_name=#{skuName}
+  </select>
+
+  <select id="findValueByProductId" parameterType="java.lang.Object" resultType="com.shop.cereshop.commons.domain.product.CereSkuName">
+    SELECT sku_value,image,need FROM cere_sku_name where sku_id in (select sku_id from cere_product_sku where product_id=#{productId})
+  </select>
+
+  <select id="findNameByProductId" parameterType="java.lang.Object" resultType="com.shop.cereshop.business.param.product.SkuNameParam">
+    SELECT sku_name,name_code code,sku_id,need FROM cere_sku_name where sku_id in (select sku_id from cere_product_sku where product_id=#{productId})
+    GROUP BY name_code
+  </select>
+
+  <select id="findByName" parameterType="java.lang.Object" resultType="com.shop.cereshop.business.param.product.SkuValueParam">
+    SELECT sku_value,image,value_code FROM cere_sku_name where sku_name=#{skuName}
+    and sku_id in (SELECT sku_id FROM cere_product_sku where product_id=#{productId})
+    GROUP BY value_code
+  </select>
+</mapper>

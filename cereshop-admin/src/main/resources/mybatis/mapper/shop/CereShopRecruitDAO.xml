@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.cereshop.admin.dao.shop.CereShopRecruitDAO">
+  <resultMap id="BaseResultMap" type="com.shop.cereshop.commons.domain.shop.CereShopRecruit">
+    <result column="shop_id" jdbcType="BIGINT" property="shopId" />
+    <result column="purchase_everything" jdbcType="BIT" property="purchaseEverything" />
+    <result column="order_frequency" jdbcType="BIT" property="orderFrequency" />
+    <result column="consumption_money" jdbcType="BIT" property="consumptionMoney" />
+    <result column="frequency" jdbcType="INTEGER" property="frequency" />
+    <result column="money" jdbcType="DECIMAL" property="money" />
+    <result column="if_examine" jdbcType="BIT" property="ifExamine" />
+    <result column="url" jdbcType="VARCHAR" property="url" />
+  </resultMap>
+  <insert id="insert" parameterType="com.shop.cereshop.commons.domain.shop.CereShopRecruit">
+    insert into cere_shop_recruit (shop_id, purchase_everything, order_frequency, 
+      consumption_money, frequency, money, 
+      if_examine, url)
+    values (#{shopId,jdbcType=BIGINT}, #{purchaseEverything,jdbcType=BIT}, #{orderFrequency,jdbcType=BIT}, 
+      #{consumptionMoney,jdbcType=BIT}, #{frequency,jdbcType=INTEGER}, #{money,jdbcType=DECIMAL}, 
+      #{ifExamine,jdbcType=BIT}, #{url,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.shop.cereshop.commons.domain.shop.CereShopRecruit">
+    insert into cere_shop_recruit
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="shopId != null">
+        shop_id,
+      </if>
+      <if test="purchaseEverything != null">
+        purchase_everything,
+      </if>
+      <if test="orderFrequency != null">
+        order_frequency,
+      </if>
+      <if test="consumptionMoney != null">
+        consumption_money,
+      </if>
+      <if test="frequency != null">
+        frequency,
+      </if>
+      <if test="money != null">
+        money,
+      </if>
+      <if test="ifExamine != null">
+        if_examine,
+      </if>
+      <if test="url != null and url!=''">
+        url,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="shopId != null">
+        #{shopId,jdbcType=BIGINT},
+      </if>
+      <if test="purchaseEverything != null">
+        #{purchaseEverything,jdbcType=BIT},
+      </if>
+      <if test="orderFrequency != null">
+        #{orderFrequency,jdbcType=BIT},
+      </if>
+      <if test="consumptionMoney != null">
+        #{consumptionMoney,jdbcType=BIT},
+      </if>
+      <if test="frequency != null">
+        #{frequency,jdbcType=INTEGER},
+      </if>
+      <if test="money != null">
+        #{money,jdbcType=DECIMAL},
+      </if>
+      <if test="ifExamine != null">
+        #{ifExamine,jdbcType=BIT},
+      </if>
+      <if test="url != null and url!=''">
+        #{url,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+</mapper>

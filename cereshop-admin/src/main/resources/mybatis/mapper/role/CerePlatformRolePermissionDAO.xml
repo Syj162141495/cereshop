@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.cereshop.admin.dao.role.CerePlatformRolePermissionDAO">
+  <resultMap id="BaseResultMap" type="com.shop.cereshop.commons.domain.role.CerePlatformRolePermission">
+    <result column="role_id" jdbcType="BIGINT" property="roleId" />
+    <result column="permission_id" jdbcType="BIGINT" property="permissionId" />
+  </resultMap>
+  <insert id="insert" parameterType="com.shop.cereshop.commons.domain.role.CerePlatformRolePermission">
+    insert into cere_platform_role_permission (role_id, permission_id)
+    values (#{roleId,jdbcType=BIGINT}, #{permissionId,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.shop.cereshop.commons.domain.role.CerePlatformRolePermission">
+    insert into cere_platform_role_permission
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="roleId != null">
+        role_id,
+      </if>
+      <if test="permissionId != null">
+        permission_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="roleId != null">
+        #{roleId,jdbcType=BIGINT},
+      </if>
+      <if test="permissionId != null">
+        #{permissionId,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+
+  <delete id="deleteByRoleId" parameterType="java.lang.Object" >
+    DELETE FROM cere_platform_role_permission where role_id=#{roleId}
+  </delete>
+
+  <delete id="deleteByPermissionId" parameterType="java.lang.Object" >
+    DELETE FROM cere_platform_role_permission where permission_id=#{permissionId}
+  </delete>
+
+  <delete id="deleteRolePermission">
+    delete from cere_platform_role_permission
+    where permission_id in
+    (
+        select permission_id from cere_platform_permission
+        <where>
+          resource_type = #{resourceType}
+          and permission in
+          <foreach collection="permissionList" item="per" open="(" separator="," close=")">
+            #{per}
+          </foreach>
+          <if test="project != null">
+            and project = #{project}
+          </if>
+          and project != 0
+        </where>
+    )
+  </delete>
+
+  <insert id="insertBatch" parameterType="java.util.ArrayList">
+    insert into cere_platform_role_permission (role_id, permission_id) values
+    <foreach collection="list" item="item" index="index" separator=",">
+      (
+      #{item.roleId},
+      #{item.permissionId}
+      )
+    </foreach>
+  </insert>
+</mapper>

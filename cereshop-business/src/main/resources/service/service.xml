@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+
+		http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+
+<!--    <dubbo:reference interface="com.shop.cereshop.redis.service.api.StringRedisService" id="stringRedisService" check="true" version="1.0" timeout="30000"/>-->
+<!--    <dubbo:reference interface="com.shop.cereshop.message.service.aliyun.AliyunMessageService" id="aliyunMessageService" check="true"  version="1.0" timeout="30000"/>-->
+<!--    <dubbo:reference interface="com.shop.cereshop.message.service.miaoxin.MiaoxinMessageService" id="miaoxinMessageService" check="true"  version="1.0" timeout="30000"/>-->
+<!--    <dubbo:reference interface="com.shpp.cereshop.alioss.service.UploadService" id="uploadService" check="true"  version="1.0" timeout="30000"/>-->
+<!--    <dubbo:reference interface="com.shop.cereshop.pay.service.weixin.WxPayService" id="wxPayService" check="true"  version="1.0" timeout="30000"/>-->
+</beans>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.cereshop.business.dao.tool.CereShopCouponDetailDAO">
+  <resultMap id="BaseResultMap" type="com.shop.cereshop.commons.domain.tool.CereShopCouponDetail">
+    <result column="shop_coupon_id" jdbcType="BIGINT" property="shopCouponId" />
+    <result column="product_id" jdbcType="BIGINT" property="productId" />
+  </resultMap>
+  <insert id="insert" parameterType="com.shop.cereshop.commons.domain.tool.CereShopCouponDetail">
+    insert into cere_shop_coupon_detail (shop_coupon_id, product_id)
+    values (#{shopCouponId,jdbcType=BIGINT}, #{productId,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.shop.cereshop.commons.domain.tool.CereShopCouponDetail">
+    insert into cere_shop_coupon_detail
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="shopCouponId != null">
+        shop_coupon_id,
+      </if>
+      <if test="productId != null">
+        product_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="shopCouponId != null">
+        #{shopCouponId,jdbcType=BIGINT},
+      </if>
+      <if test="productId != null">
+        #{productId,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+
+  <insert id="insertBatch" parameterType="java.util.List">
+    insert into cere_shop_coupon_detail (shop_coupon_id, product_id) values
+    <foreach collection="list" item="item" index="index" separator=",">
+      (
+      #{item.shopCouponId},
+      #{item.productId}
+      )
+    </foreach>
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Object">
+    DELETE FROM cere_shop_coupon_detail where shop_coupon_id=#{shopCouponId}
+  </delete>
+
+  <select id="findProducts" parameterType="java.lang.Object" resultType="com.shop.cereshop.business.page.tool.ToolProduct">
+    SELECT b.product_id,b.product_name,c.minMoney originalPrice,e.product_image image,g.stock_number from cere_shop_coupon_detail a
+    LEFT JOIN cere_shop_product b ON a.product_id=b.product_id
+    LEFT JOIN (SELECT product_id,MIN(price) minMoney from cere_product_sku GROUP BY product_id) c ON b.product_id=c.product_id
+    LEFT JOIN (SELECT product_id,MAX(price) maxMoney from cere_product_sku GROUP BY product_id) d ON b.product_id=d.product_id
+    LEFT JOIN (SELECT a.product_id,a.product_image from cere_product_image a,cere_shop_product b where a.product_id=b.product_id GROUP BY a.product_id) e
+    ON b.product_id=e.product_id
+    LEFT JOIN cere_product_classify f ON b.classify_id=f.classify_id
+    LEFT JOIN (SELECT SUM(stock_number) stock_number,product_id from cere_product_sku GROUP BY product_id) g ON b.product_id=g.product_id
+    where a.shop_coupon_id=#{shopCouponId}
+  </select>
+</mapper>

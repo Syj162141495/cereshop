@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.cereshop.business.dao.product.CereProductSkuDAO">
+    <resultMap id="BaseResultMap" type="com.shop.cereshop.commons.domain.product.CereProductSku">
+        <id column="sku_id" jdbcType="BIGINT" property="skuId"/>
+        <result column="product_id" jdbcType="BIGINT" property="productId"/>
+        <result column="SKU" jdbcType="VARCHAR" property="SKU"/>
+        <result column="price" jdbcType="DECIMAL" property="price"/>
+        <result column="original_price" jdbcType="DECIMAL" property="originalPrice"/>
+        <result column="stock_number" jdbcType="INTEGER" property="stockNumber"/>
+        <result column="total" jdbcType="INTEGER" property="total"/>
+        <result column="weight" jdbcType="DECIMAL" property="weight"/>
+        <result column="sku_image" jdbcType="VARCHAR" property="skuImage"/>
+        <result column="style" jdbcType="BIT" property="style"/>
+        <result column="create_time" jdbcType="VARCHAR" property="createTime"/>
+        <result column="update_time" jdbcType="VARCHAR" property="updateTime"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        sku_id
+        , product_id,SKU, price, original_price, stock_number,total, weight,
+    sku_image, `style`, create_time, update_time
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from cere_product_sku
+        where sku_id = #{skuId,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete
+        from cere_product_sku
+        where sku_id = #{skuId,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" keyColumn="sku_id" keyProperty="skuId"
+            parameterType="com.shop.cereshop.commons.domain.product.CereProductSku" useGeneratedKeys="true">
+        insert into cere_product_sku (product_id, SKU,
+                                      price, original_price, stock_number, total,
+                                      weight, sku_image, `style`,
+                                      create_time, update_time)
+        values (#{productId,jdbcType=BIGINT}, #{SKU,jdbcType=VARCHAR},
+                #{price,jdbcType=DECIMAL}, #{originalPrice,jdbcType=DECIMAL}, #{stockNumber,jdbcType=INTEGER},
+                #{total,jdbcType=INTEGER},
+                #{weight,jdbcType=DECIMAL}, #{skuImage,jdbcType=VARCHAR}, #{style,jdbcType=BIT},
+                #{createTime,jdbcType=VARCHAR}, #{updateTime,jdbcType=VARCHAR})
+    </insert>
+    <insert id="insertSelective" keyColumn="sku_id" keyProperty="skuId"
+            parameterType="com.shop.cereshop.commons.domain.product.CereProductSku" useGeneratedKeys="true">
+        insert into cere_product_sku
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="productId != null">
+                product_id,
+            </if>
+            <if test="SKU != null and SKU!=''">
+                SKU,
+            </if>
+            <if test="price != null">
+                price,
+            </if>
+            <if test="originalPrice != null">
+                original_price,
+            </if>
+            <if test="stockNumber != null">
+                stock_number,
+            </if>
+            <if test="total != null">
+                total,
+            </if>
+            <if test="weight != null">
+                weight,
+            </if>
+            <if test="skuImage != null and skuImage!=''">
+                sku_image,
+            </if>
+            <if test="style != null">
+                `style`,
+            </if>
+            <if test="createTime != null and createTime!=''">
+                create_time,
+            </if>
+            <if test="updateTime != null and updateTime!=''">
+                update_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="productId != null">
+                #{productId,jdbcType=BIGINT},
+            </if>
+            <if test="SKU != null and SKU!=''">
+                #{SKU,jdbcType=VARCHAR},
+            </if>
+            <if test="price != null">
+                #{price,jdbcType=DECIMAL},
+            </if>
+            <if test="originalPrice != null">
+                #{originalPrice,jdbcType=DECIMAL},
+            </if>
+            <if test="stockNumber != null">
+                #{stockNumber,jdbcType=INTEGER},
+            </if>
+            <if test="total != null">
+                #{total,jdbcType=INTEGER},
+            </if>
+            <if test="weight != null">
+                #{weight,jdbcType=DECIMAL},
+            </if>
+            <if test="skuImage != null and skuImage!=''">
+                #{skuImage,jdbcType=VARCHAR},
+            </if>
+            <if test="style != null">
+                #{style,jdbcType=BIT},
+            </if>
+            <if test="createTime != null and createTime!=''">
+                #{createTime,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null and updateTime!=''">
+                #{updateTime,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.shop.cereshop.commons.domain.product.CereProductSku">
+        update cere_product_sku
+        <set>
+            <if test="productId != null">
+                product_id = #{productId,jdbcType=BIGINT},
+            </if>
+            <if test="SKU != null and SKU!=''">
+                SKU = #{SKU,jdbcType=VARCHAR},
+            </if>
+            <if test="price != null">
+                price = #{price,jdbcType=DECIMAL},
+            </if>
+            <if test="originalPrice != null">
+                original_price = #{originalPrice,jdbcType=DECIMAL},
+            </if>
+            <if test="stockNumber != null">
+                stock_number = #{stockNumber,jdbcType=INTEGER},
+            </if>
+            <if test="total != null">
+                total = #{total,jdbcType=INTEGER},
+            </if>
+            <if test="weight != null">
+                weight = #{weight,jdbcType=DECIMAL},
+            </if>
+            <if test="skuImage != null and skuImage!=''">
+                sku_image = #{skuImage,jdbcType=VARCHAR},
+            </if>
+            <if test="style != null">
+                `style` = #{style,jdbcType=BIT},
+            </if>
+            <if test="createTime != null and createTime!=''">
+                create_time = #{createTime,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null and updateTime!=''">
+                update_time = #{updateTime,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where sku_id = #{skuId,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.shop.cereshop.commons.domain.product.CereProductSku">
+        update cere_product_sku
+        set product_id     = #{productId,jdbcType=BIGINT},
+            SKU            = #{SKU,jdbcType=VARCHAR},
+            price          = #{price,jdbcType=DECIMAL},
+            original_price = #{originalPrice,jdbcType=DECIMAL},
+            stock_number   = #{stockNumber,jdbcType=INTEGER},
+            total          = #{total,jdbcType=INTEGER},
+            weight         = #{weight,jdbcType=DECIMAL},
+            sku_image      = #{skuImage,jdbcType=VARCHAR},
+            `style`        = #{style,jdbcType=BIT},
+            create_time    = #{createTime,jdbcType=VARCHAR},
+            update_time    = #{updateTime,jdbcType=VARCHAR}
+        where sku_id = #{skuId,jdbcType=BIGINT}
+    </update>
+
+    <insert id="insertBatch" parameterType="java.util.List">
+        insert into cere_product_sku (product_id, sku_name, sku_value,
+        price, original_price, stock_number,
+        weight, sku_image, `style`,
+        create_time) values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (
+            #{item.productId},
+            #{item.skuName},
+            #{item.skuValue},
+            #{item.price},
+            #{item.originalPrice},
+            #{item.stockNumber},
+            #{item.weight},
+            #{item.skuImage},
+            #{item.style},
+            #{item.createTime}
+            )
+        </foreach>
+    </insert>
+
+    <delete id="deleteByIds" parameterType="java.util.List">
+        DELETE FROM cere_product_sku where sku_id in (
+        <foreach collection="ids" item="id" index="index" separator=",">
+            #{id}
+        </foreach>
+        )
+    </delete>
+
+    <delete id="deleteByProductId" parameterType="java.lang.Object">
+        DELETE
+        FROM cere_product_sku
+        where product_id = #{productId}
+    </delete>
+
+    <select id="findByProductId" parameterType="java.lang.Object"
+            resultType="com.shop.cereshop.business.page.product.Sku">
+        SELECT product_id,
+               sku_id,
+               price,
+               original_price,
+               stock_number,
+               weight,
+               sku_image,
+               `style`,
+               SKU
+        FROM cere_product_sku
+        where product_id = #{productId}
+    </select>
+
+    <select id="findVolumeByProductId" parameterType="java.lang.Object" resultType="java.lang.Integer">
+        SELECT IF(SUM(a.number) IS NULL, 0, SUM(a.number))
+        from cere_order_product a
+                 LEFT JOIN cere_shop_order b ON a.order_id = b.order_id
+        where a.product_id = #{productId}
+          and b.state = 5
+    </select>
+
+    <select id="findStockNumber" parameterType="java.lang.Object" resultType="java.lang.Integer">
+        SELECT stock_number
+        FROM cere_product_sku
+        where sku_id = #{skuId}
+    </select>
+
+    <select id="getToolSkus" parameterType="java.lang.Object"
+            resultType="com.shop.cereshop.business.page.tool.ToolProduct">
+        SELECT a.product_id,
+               c.product_name,
+               IF(b.image IS NULL, d.product_image, b.image) image,
+               a.original_price,
+               a.stock_number,
+               b.`value`
+        from cere_product_sku a
+                 LEFT JOIN (SELECT GROUP_CONCAT(sku_value) `value`, sku_id, image from cere_sku_name GROUP BY sku_id) b
+                           ON a.sku_id = b.sku_id
+                 LEFT JOIN cere_shop_product c ON a.product_id = c.product_id
+                 LEFT JOIN (SELECT a.product_id, a.product_image
+                            from cere_product_image a,
+                                 cere_shop_product b
+                            where a.product_id = b.product_id
+                            GROUP BY a.product_id) d
+                           ON a.product_id = d.product_id
+        where a.product_id = #{productId}
+    </select>
+
+    <select id="findStockNumberByOrderId" parameterType="java.lang.Object"
+            resultType="com.shop.cereshop.commons.domain.product.CereProductSku">
+        SELECT a.number stockNumber, a.sku_id
+        from cere_order_product a
+                 LEFT JOIN cere_product_sku b ON a.sku_id = b.sku_id
+                 LEFT JOIN cere_shop_product c ON b.product_id = c.product_id
+        where a.order_id = #{orderId}
+    </select>
+
+    <select id="findStockNumberBySkuId" parameterType="java.lang.Object" resultType="java.lang.Integer">
+        SELECT IF(b.if_oversold = 1, 999999, a.stock_number)
+        from cere_product_sku a
+                 LEFT JOIN cere_shop_product b ON a.product_id = b.product_id
+        where a.sku_id = #{skuId}
+    </select>
+
+
+    <update id="updateBatchSkus" parameterType="java.util.List" >
+        update cere_product_sku
+        <trim prefix="set" suffixOverrides=",">
+            <trim prefix="stock_number =case" suffix="end,">
+                <foreach collection="list" item="i" index="index">
+                    <if test="i.stockNumber!=null">
+                        when sku_id=#{i.skuId} then #{i.stockNumber}
+                    </if>
+                </foreach>
+            </trim>
+        </trim>
+        where
+        <foreach collection="list" separator="or" item="i" index="index" >
+            sku_id=#{i.skuId}
+        </foreach>
+    </update>
+</mapper>

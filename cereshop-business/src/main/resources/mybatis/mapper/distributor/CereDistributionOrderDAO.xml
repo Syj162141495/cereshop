@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.cereshop.business.dao.distributor.CereDistributionOrderDAO">
+  <resultMap id="BaseResultMap" type="com.shop.cereshop.commons.domain.distributor.CereDistributionOrder">
+    <result column="order_id" jdbcType="BIGINT" property="orderId" />
+    <result column="order_formid" jdbcType="VARCHAR" property="orderFormid" />
+    <result column="distributor_id" jdbcType="BIGINT" property="distributorId" />
+    <result column="distributor_name" jdbcType="VARCHAR" property="distributorName" />
+    <result column="distributor_phone" jdbcType="VARCHAR" property="distributorPhone" />
+    <result column="price" jdbcType="DECIMAL" property="price" />
+    <result column="commission" jdbcType="DECIMAL" property="commission" />
+    <result column="state" jdbcType="BIT" property="state" />
+    <result column="transaction_time" jdbcType="VARCHAR" property="transactionTime" />
+    <result column="type" jdbcType="BIT" property="type" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    order_id, order_formid, distributor_id, distributor_name, distributor_phone, price, 
+    commission, `state`, transaction_time, `type`
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from cere_distribution_order
+    where order_id = #{orderId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from cere_distribution_order
+    where order_id = #{orderId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.shop.cereshop.commons.domain.distributor.CereDistributionOrder">
+    insert into cere_distribution_order (order_id, order_formid, distributor_id, 
+      distributor_name, distributor_phone, price, 
+      commission, `state`, transaction_time, 
+      `type`)
+    values (#{orderId,jdbcType=BIGINT}, #{orderFormid,jdbcType=VARCHAR}, #{distributorId,jdbcType=BIGINT}, 
+      #{distributorName,jdbcType=VARCHAR}, #{distributorPhone,jdbcType=VARCHAR}, #{price,jdbcType=DECIMAL}, 
+      #{commission,jdbcType=DECIMAL}, #{state,jdbcType=BIT}, #{transactionTime,jdbcType=VARCHAR}, 
+      #{type,jdbcType=BIT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.shop.cereshop.commons.domain.distributor.CereDistributionOrder">
+    insert into cere_distribution_order
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="orderId != null">
+        order_id,
+      </if>
+      <if test="orderFormid != null and orderFormid!=''">
+        order_formid,
+      </if>
+      <if test="distributorId != null">
+        distributor_id,
+      </if>
+      <if test="distributorName != null">
+        distributor_name,
+      </if>
+      <if test="distributorPhone != null">
+        distributor_phone,
+      </if>
+      <if test="price != null">
+        price,
+      </if>
+      <if test="commission != null">
+        commission,
+      </if>
+      <if test="state != null">
+        `state`,
+      </if>
+      <if test="transactionTime != null">
+        transaction_time,
+      </if>
+      <if test="type != null">
+        `type`,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="orderId != null">
+        #{orderId,jdbcType=BIGINT},
+      </if>
+      <if test="orderFormid != null and orderFormid!=''">
+        #{orderFormid,jdbcType=VARCHAR},
+      </if>
+      <if test="distributorId != null">
+        #{distributorId,jdbcType=BIGINT},
+      </if>
+      <if test="distributorName != null">
+        #{distributorName,jdbcType=VARCHAR},
+      </if>
+      <if test="distributorPhone != null">
+        #{distributorPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null">
+        #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="commission != null">
+        #{commission,jdbcType=DECIMAL},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=BIT},
+      </if>
+      <if test="transactionTime != null">
+        #{transactionTime,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.shop.cereshop.commons.domain.distributor.CereDistributionOrder">
+    update cere_distribution_order
+    <set>
+      <if test="orderFormid != null and orderFormid!=''">
+        order_formid = #{orderFormid,jdbcType=VARCHAR},
+      </if>
+      <if test="distributorId != null">
+        distributor_id = #{distributorId,jdbcType=BIGINT},
+      </if>
+      <if test="distributorName != null">
+        distributor_name = #{distributorName,jdbcType=VARCHAR},
+      </if>
+      <if test="distributorPhone != null">
+        distributor_phone = #{distributorPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null">
+        price = #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="commission != null">
+        commission = #{commission,jdbcType=DECIMAL},
+      </if>
+      <if test="state != null">
+        `state` = #{state,jdbcType=BIT},
+      </if>
+      <if test="transactionTime != null">
+        transaction_time = #{transactionTime,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        `type` = #{type,jdbcType=BIT},
+      </if>
+    </set>
+    where order_id = #{orderId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.shop.cereshop.commons.domain.distributor.CereDistributionOrder">
+    update cere_distribution_order
+    set order_formid = #{orderFormid,jdbcType=VARCHAR},
+      distributor_id = #{distributorId,jdbcType=BIGINT},
+      distributor_name = #{distributorName,jdbcType=VARCHAR},
+      distributor_phone = #{distributorPhone,jdbcType=VARCHAR},
+      price = #{price,jdbcType=DECIMAL},
+      commission = #{commission,jdbcType=DECIMAL},
+      `state` = #{state,jdbcType=BIT},
+      transaction_time = #{transactionTime,jdbcType=VARCHAR},
+      `type` = #{type,jdbcType=BIT}
+    where order_id = #{orderId,jdbcType=BIGINT}
+  </update>
+
+  <select id="getAll" parameterType="com.shop.cereshop.business.param.distributorOrder.OrderGetAllParam" resultType="com.shop.cereshop.business.page.distribution.DistributionOrder">
+    SELECT a.order_id, a.order_formid, a.distributor_id, a.distributor_name, a.distributor_phone, a.price,
+    a.commission, a.`state`, a.transaction_time FROM cere_distribution_order a
+    LEFT JOIN cere_shop_order b ON a.order_id=b.order_id
+    where b.shop_id=#{shopId} and a.type=1
+    <if test="orderFormid!=null and orderFormid!=''">
+      and a.order_formid like concat('%',#{orderFormid},'%')
+    </if>
+    <if test="distributorName!=null and distributorName!=''">
+      and a.distributor_name like concat('%',#{distributorName},'%')
+    </if>
+    <if test="distributorPhone!=null and distributorPhone!=''">
+      and a.distributor_phone like concat('%',#{distributorPhone},'%')
+    </if>
+    <if test="startTime!=null and startTime!=''">
+      and a.transaction_time&gt;=#{startTime} and a.transaction_time&lt;=#{endTime}
+    </if>
+    <if test="state!=null">
+      and a.state=#{state}
+    </if>
+    ORDER BY b.update_time DESC,b.create_time DESC
+  </select>
+
+  <select id="findChilds" parameterType="com.shop.cereshop.business.param.distributorOrder.OrderGetAllParam" resultType="com.shop.cereshop.commons.domain.distributor.CereDistributionOrder">
+    SELECT a.order_id, a.order_formid, a.distributor_id, a.distributor_name, a.distributor_phone, a.price,
+    a.commission, a.`state`, a.transaction_time FROM cere_distribution_order a
+    LEFT JOIN cere_shop_order b ON a.order_id=b.order_id
+    where b.shop_id=#{shopId} and a.type=2
+    <if test="orderFormid!=null and orderFormid!=''">
+      and a.order_formid like concat('%',#{orderFormid},'%')
+    </if>
+    <if test="distributorName!=null and distributorName!=''">
+      and a.distributor_name like concat('%',#{distributorName},'%')
+    </if>
+    <if test="distributorPhone!=null and distributorPhone!=''">
+      and a.distributor_phone like concat('%',#{distributorPhone},'%')
+    </if>
+    <if test="startTime!=null and startTime!=''">
+      and a.transaction_time&gt;=#{startTime} and a.transaction_time&lt;=#{endTime}
+    </if>
+    <if test="state!=null">
+      and a.state=#{state}
+    </if>
+  </select>
+
+  <update id="updateStatByIds" parameterType="java.util.List" >
+    UPDATE cere_distribution_order set state=1
+    where order_id in (
+    <foreach collection="ids" item="id" index="index" separator=",">
+      #{id}
+    </foreach>
+    )
+  </update>
+
+  <select id="getAllAchievement" parameterType="com.shop.cereshop.business.param.distributor.DistributorGetAllAchievementParam" resultType="com.shop.cereshop.business.page.distribution.Achievement">
+    SELECT distributor_id,distributor_name,distributor_phone from cere_shop_distributor
+    where shop_id=#{shopId}
+    <if test="distributorName!=null and distributorName!=''">
+      and distributor_name like concat('%',#{distributorName},'%')
+    </if>
+    <if test="distributorPhone!=null and distributorPhone!=''">
+      and distributor_phone like concat('%',#{distributorPhone},'%')
+    </if>
+    <if test="startTime!=null and startTime!=''">
+      and create_time&gt;=#{startTime} and create_time&lt;=#{endTime}
+    </if>
+  </select>
+
+  <select id="findOrders" parameterType="java.lang.Object" resultType="java.lang.Integer">
+    SELECT COUNT(*) from cere_distribution_order
+    where distributor_id=#{distributorId}
+  </select>
+
+  <select id="findDealMoney" parameterType="java.lang.Object" resultType="java.math.BigDecimal">
+    SELECT IF(SUM(price) IS NULL,0,SUM(price)) from cere_distribution_order
+    where distributor_id=#{distributorId}
+  </select>
+
+  <select id="findCommissionMoney" parameterType="java.lang.Object" resultType="java.math.BigDecimal">
+    SELECT IF(SUM(commission) IS NULL,0,SUM(commission)) from cere_distribution_order
+    where distributor_id=#{distributorId}
+  </select>
+
+  <select id="findUnsettledMoney" parameterType="java.lang.Object" resultType="java.math.BigDecimal">
+    SELECT IF(SUM(commission) IS NULL,0,SUM(commission)) from cere_distribution_order
+    where distributor_id=#{distributorId} and state=0
+  </select>
+
+  <select id="getOrderDetailByType" parameterType="java.lang.Object" resultType="java.lang.Integer">
+    SELECT COUNT(*) from cere_distribution_order
+    where distributor_id=#{distributorId} and type=#{type}
+  </select>
+
+  <select id="getNotCommissionMoneyDetailByType" parameterType="java.lang.Object" resultType="java.math.BigDecimal">
+    SELECT SUM(commission) from cere_distribution_order
+    where distributor_id=#{distributorId} and type=#{type} and state=0
+  </select>
+
+  <select id="getDealMoneyDetailByType" parameterType="java.lang.Object" resultType="java.math.BigDecimal">
+    SELECT SUM(price) from cere_distribution_order
+    where distributor_id=#{distributorId} and type=#{type}
+  </select>
+
+  <select id="getCommissionMoneyDetailByType" parameterType="java.lang.Object" resultType="java.math.BigDecimal">
+    SELECT SUM(commission) from cere_distribution_order
+    where distributor_id=#{distributorId} and type=#{type}
+  </select>
+</mapper>

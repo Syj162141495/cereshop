@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.cereshop.business.dao.label.CereBuyerShopLabelDAO">
+  <resultMap id="BaseResultMap" type="com.shop.cereshop.commons.domain.label.CereBuyerShopLabel">
+    <result column="buyer_user_id" jdbcType="BIGINT" property="buyerUserId" />
+    <result column="label_id" jdbcType="BIGINT" property="labelId" />
+  </resultMap>
+  <insert id="insert" parameterType="com.shop.cereshop.commons.domain.label.CereBuyerShopLabel">
+    insert into cere_buyer_shop_label (buyer_user_id, label_id)
+    values (#{buyerUserId,jdbcType=BIGINT}, #{labelId,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.shop.cereshop.commons.domain.label.CereBuyerShopLabel">
+    insert into cere_buyer_shop_label
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="buyerUserId != null">
+        buyer_user_id,
+      </if>
+      <if test="labelId != null">
+        label_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="buyerUserId != null">
+        #{buyerUserId,jdbcType=BIGINT},
+      </if>
+      <if test="labelId != null">
+        #{labelId,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+
+  <insert id="insertBatch" parameterType="java.util.List">
+    insert into cere_buyer_shop_label (buyer_user_id, label_id) values
+    <foreach collection="list" item="item" index="index" separator=",">
+      (
+      #{item.buyerUserId},
+      #{item.labelId}
+      )
+    </foreach>
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Object">
+    DELETE FROM cere_buyer_shop_label where buyer_user_id=#{buyerUserId}
+  </delete>
+
+  <select id="findByUserId" parameterType="java.lang.Object" resultType="java.lang.Long">
+    SELECT label_id FROM cere_buyer_shop_label where buyer_user_id=#{buyerUserId}
+  </select>
+</mapper>

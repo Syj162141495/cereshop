@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.cereshop.business.dao.activity.CereShopMarketToolDAO">
+  <resultMap id="BaseResultMap" type="com.shop.cereshop.commons.domain.activity.CereShopMarketTool">
+    <id column="tool_id" jdbcType="BIGINT" property="toolId" />
+    <result column="shop_id" jdbcType="BIGINT" property="shopId" />
+    <result column="tool_name" jdbcType="VARCHAR" property="toolName" />
+    <result column="tool_type" jdbcType="BIT" property="toolType" />
+    <result column="tool_number" jdbcType="INTEGER" property="toolNumber" />
+    <result column="threshold" jdbcType="DECIMAL" property="threshold" />
+    <result column="content" jdbcType="VARCHAR" property="content" />
+    <result column="trial_product" jdbcType="VARCHAR" property="trialProduct" />
+    <result column="start_time" jdbcType="VARCHAR" property="startTime" />
+    <result column="end_time" jdbcType="VARCHAR" property="endTime" />
+    <result column="discount_mode" jdbcType="BIT" property="discountMode" />
+    <result column="discount_programme" jdbcType="BIT" property="discountProgramme" />
+    <result column="image" jdbcType="VARCHAR" property="image" />
+    <result column="state" jdbcType="INTEGER" property="state" />
+    <result column="create_time" jdbcType="VARCHAR" property="createTime" />
+    <result column="update_time" jdbcType="VARCHAR" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    tool_id,shop_id, tool_name, tool_type, tool_number, threshold, content, trial_product, start_time,
+    end_time, discount_mode, discount_programme,image,state, create_time, update_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from cere_shop_market_tool
+    where tool_id = #{toolId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from cere_shop_market_tool
+    where tool_id = #{toolId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" keyColumn="tool_id" keyProperty="toolId" parameterType="com.shop.cereshop.commons.domain.activity.CereShopMarketTool" useGeneratedKeys="true">
+    insert into cere_shop_market_tool (shop_id, tool_name, tool_type,
+      tool_number, threshold, content, 
+      trial_product, start_time, end_time, 
+      discount_mode, discount_programme, image,state,create_time,
+      update_time)
+    values (#{shopId,jdbcType=BIGINT}, #{toolName,jdbcType=VARCHAR}, #{toolType,jdbcType=BIT},
+      #{toolNumber,jdbcType=INTEGER}, #{threshold,jdbcType=DECIMAL}, #{content,jdbcType=VARCHAR}, 
+      #{trialProduct,jdbcType=VARCHAR}, #{startTime,jdbcType=VARCHAR}, #{endTime,jdbcType=VARCHAR},
+      #{discountMode,jdbcType=BIT}, #{discountProgramme,jdbcType=BIT},#{image,jdbcType=VARCHAR},#{state,jdbcType=INTEGER}, #{createTime,jdbcType=VARCHAR},
+      #{updateTime,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" keyColumn="tool_id" keyProperty="toolId" parameterType="com.shop.cereshop.commons.domain.activity.CereShopMarketTool" useGeneratedKeys="true">
+    insert into cere_shop_market_tool
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="shopId != null">
+        shop_id,
+      </if>
+      <if test="toolName != null">
+        tool_name,
+      </if>
+      <if test="toolType != null">
+        tool_type,
+      </if>
+      <if test="toolNumber != null">
+        tool_number,
+      </if>
+      <if test="threshold != null">
+        threshold,
+      </if>
+      <if test="content != null">
+        content,
+      </if>
+      <if test="trialProduct != null">
+        trial_product,
+      </if>
+      <if test="startTime != null">
+        start_time,
+      </if>
+      <if test="endTime != null and endTime!=''">
+        end_time,
+      </if>
+      <if test="discountMode != null">
+        discount_mode,
+      </if>
+      <if test="discountProgramme != null">
+        discount_programme,
+      </if>
+      <if test="image != null and image!=''">
+        image,
+      </if>
+      <if test="state != null">
+        state,
+      </if>
+      <if test="createTime != null and createTime!=''">
+        create_time,
+      </if>
+      <if test="updateTime != null and updateTime!=''">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="shopId != null">
+        #{shopId,jdbcType=BIGINT},
+      </if>
+      <if test="toolName != null">
+        #{toolName,jdbcType=VARCHAR},
+      </if>
+      <if test="toolType != null">
+        #{toolType,jdbcType=BIT},
+      </if>
+      <if test="toolNumber != null">
+        #{toolNumber,jdbcType=INTEGER},
+      </if>
+      <if test="threshold != null">
+        #{threshold,jdbcType=DECIMAL},
+      </if>
+      <if test="content != null">
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="trialProduct != null">
+        #{trialProduct,jdbcType=VARCHAR},
+      </if>
+      <if test="startTime != null">
+        #{startTime,jdbcType=VARCHAR},
+      </if>
+      <if test="endTime != null and endTime!=''">
+        #{endTime,jdbcType=VARCHAR},
+      </if>
+      <if test="discountMode != null">
+        #{discountMode,jdbcType=BIT},
+      </if>
+      <if test="discountProgramme != null">
+        #{discountProgramme,jdbcType=BIT},
+      </if>
+      <if test="image != null and image!=''">
+        #{image,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null and createTime!=''">
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null and updateTime!=''">
+        #{updateTime,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.shop.cereshop.commons.domain.activity.CereShopMarketTool">
+    update cere_shop_market_tool
+    <set>
+      <if test="shopId != null">
+        shop_id = #{shopId,jdbcType=BIGINT},
+      </if>
+      <if test="toolName != null">
+        tool_name = #{toolName,jdbcType=VARCHAR},
+      </if>
+      <if test="toolType != null">
+        tool_type = #{toolType,jdbcType=BIT},
+      </if>
+      <if test="toolNumber != null">
+        tool_number = #{toolNumber,jdbcType=INTEGER},
+      </if>
+      <if test="threshold != null">
+        threshold = #{threshold,jdbcType=DECIMAL},
+      </if>
+      <if test="content != null">
+        content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="trialProduct != null">
+        trial_product = #{trialProduct,jdbcType=VARCHAR},
+      </if>
+      <if test="startTime != null">
+        start_time = #{startTime,jdbcType=VARCHAR},
+      </if>
+      <if test="endTime != null and endTime!=''">
+        end_time = #{endTime,jdbcType=VARCHAR},
+      </if>
+      <if test="discountMode != null">
+        discount_mode = #{discountMode,jdbcType=BIT},
+      </if>
+      <if test="discountProgramme != null">
+        discount_programme = #{discountProgramme,jdbcType=BIT},
+      </if>
+      <if test="image != null and image!=''">
+        image = #{image,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null">
+        state = #{state,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null and createTime!=''">
+        create_time = #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null and updateTime!=''">
+        update_time = #{updateTime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where tool_id = #{toolId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.shop.cereshop.commons.domain.activity.CereShopMarketTool">
+    update cere_shop_market_tool
+    set shop_id = #{shopId,jdbcType=BIGINT},
+      tool_name = #{toolName,jdbcType=VARCHAR},
+      tool_type = #{toolType,jdbcType=BIT},
+      tool_number = #{toolNumber,jdbcType=INTEGER},
+      threshold = #{threshold,jdbcType=DECIMAL},
+      content = #{content,jdbcType=VARCHAR},
+      trial_product = #{trialProduct,jdbcType=VARCHAR},
+      start_time = #{startTime,jdbcType=VARCHAR},
+      end_time = #{endTime,jdbcType=VARCHAR},
+      discount_mode = #{discountMode,jdbcType=BIT},
+      discount_programme = #{discountProgramme,jdbcType=BIT},
+      image = #{image,jdbcType=VARCHAR},
+      state = #{state,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=VARCHAR}
+    where tool_id = #{toolId,jdbcType=BIGINT}
+  </update>
+
+  <select id="getById" parameterType="java.lang.Object" resultType="com.shop.cereshop.business.page.activity.MarketTool">
+    SELECT tool_id,shop_id, tool_name, tool_type, tool_number, threshold, content, trial_product, start_time,
+    end_time, discount_mode, discount_programme,image,state FROM cere_shop_market_tool where tool_id=#{toolId}
+  </select>
+
+  <select id="getAll" parameterType="com.shop.cereshop.business.param.tool.ToolGetAllParam" resultType="com.shop.cereshop.business.page.activity.MarketTool">
+    SELECT tool_id,tool_name,tool_type,content,tool_number,state FROM cere_shop_market_tool
+    where shop_id=#{shopId}
+    <if test="toolName!=null and toolName!=''">
+      and tool_name like concat('%',#{toolName},'%')
+    </if>
+    <if test="toolType!=null">
+      and tool_type=#{toolType}
+    </if>
+    <if test="state!=null">
+      and state=#{state}
+    </if>
+  </select>
+</mapper>

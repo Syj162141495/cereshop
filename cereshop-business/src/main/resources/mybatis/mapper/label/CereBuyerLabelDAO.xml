@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.cereshop.business.dao.label.CereBuyerLabelDAO">
+  <resultMap id="BaseResultMap" type="com.shop.cereshop.commons.domain.label.CereBuyerLabel">
+    <result column="buyer_user_id" jdbcType="BIGINT" property="buyerUserId" />
+    <result column="buyer_label_id" jdbcType="BIGINT" property="buyerLabelId" />
+  </resultMap>
+  <insert id="insert" parameterType="com.shop.cereshop.commons.domain.label.CereBuyerLabel">
+    insert into cere_buyer_label (buyer_user_id, buyer_label_id)
+    values (#{buyerUserId,jdbcType=BIGINT}, #{buyerLabelId,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.shop.cereshop.commons.domain.label.CereBuyerLabel">
+    insert into cere_buyer_label
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="buyerUserId != null">
+        buyer_user_id,
+      </if>
+      <if test="buyerLabelId != null">
+        buyer_label_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="buyerUserId != null">
+        #{buyerUserId,jdbcType=BIGINT},
+      </if>
+      <if test="buyerLabelId != null">
+        #{buyerLabelId,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+</mapper>

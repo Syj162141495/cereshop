@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.cereshop.business.dao.platformtool.CerePlatformPoliteDAO">
+  <resultMap id="BaseResultMap" type="com.shop.cereshop.commons.domain.platformtool.CerePlatformPolite">
+    <id column="polite_id" jdbcType="BIGINT" property="politeId" />
+    <result column="polite_name" jdbcType="VARCHAR" property="politeName" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="start_time" jdbcType="VARCHAR" property="startTime" />
+    <result column="end_time" jdbcType="VARCHAR" property="endTime" />
+    <result column="buyer_mode" jdbcType="BIT" property="buyerMode" />
+    <result column="buyer" jdbcType="DECIMAL" property="buyer" />
+    <result column="growth" jdbcType="INTEGER" property="growth" />
+    <result column="state" jdbcType="INTEGER" property="state" />
+    <result column="create_time" jdbcType="VARCHAR" property="createTime" />
+    <result column="update_time" jdbcType="VARCHAR" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    polite_id, polite_name, remark, start_time, end_time, buyer_mode, buyer, growth, `state`,
+    create_time, update_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from cere_platform_polite
+    where polite_id = #{politeId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from cere_platform_polite
+    where polite_id = #{politeId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" keyColumn="polite_id" keyProperty="politeId" parameterType="com.shop.cereshop.commons.domain.platformtool.CerePlatformPolite" useGeneratedKeys="true">
+    insert into cere_platform_polite (polite_name, remark, start_time,
+                                      end_time, buyer_mode, buyer,
+                                      growth,`state`, create_time, update_time
+    )
+    values (#{politeName,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{startTime,jdbcType=VARCHAR},
+            #{endTime,jdbcType=VARCHAR}, #{buyerMode,jdbcType=BIT}, #{buyer,jdbcType=DECIMAL},
+            #{growth,jdbcType=INTEGER},#{state,jdbcType=INTEGER}, #{createTime,jdbcType=VARCHAR}, #{updateTime,jdbcType=VARCHAR}
+           )
+  </insert>
+  <insert id="insertSelective" keyColumn="polite_id" keyProperty="politeId" parameterType="com.shop.cereshop.commons.domain.platformtool.CerePlatformPolite" useGeneratedKeys="true">
+    insert into cere_platform_polite
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="politeName != null">
+        polite_name,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+      <if test="startTime != null">
+        start_time,
+      </if>
+      <if test="endTime != null">
+        end_time,
+      </if>
+      <if test="buyerMode != null">
+        buyer_mode,
+      </if>
+      <if test="buyer != null">
+        buyer,
+      </if>
+      <if test="growth != null">
+        growth,
+      </if>
+      <if test="state != null">
+        `state`,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="politeName != null">
+        #{politeName,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="startTime != null">
+        #{startTime,jdbcType=VARCHAR},
+      </if>
+      <if test="endTime != null">
+        #{endTime,jdbcType=VARCHAR},
+      </if>
+      <if test="buyerMode != null">
+        #{buyerMode,jdbcType=BIT},
+      </if>
+      <if test="buyer != null">
+        #{buyer,jdbcType=DECIMAL},
+      </if>
+      <if test="growth != null">
+        #{growth,jdbcType=INTEGER},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.shop.cereshop.commons.domain.platformtool.CerePlatformPolite">
+    update cere_platform_polite
+    <set>
+      <if test="politeName != null">
+        polite_name = #{politeName,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="startTime != null">
+        start_time = #{startTime,jdbcType=VARCHAR},
+      </if>
+      <if test="endTime != null">
+        end_time = #{endTime,jdbcType=VARCHAR},
+      </if>
+      <if test="buyerMode != null">
+        buyer_mode = #{buyerMode,jdbcType=BIT},
+      </if>
+      <if test="buyer != null">
+        buyer = #{buyer,jdbcType=DECIMAL},
+      </if>
+      <if test="growth != null">
+        growth = #{growth,jdbcType=INTEGER},
+      </if>
+      <if test="state != null">
+        `state` = #{state,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where polite_id = #{politeId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.shop.cereshop.commons.domain.platformtool.CerePlatformPolite">
+    update cere_platform_polite
+    set polite_name = #{politeName,jdbcType=VARCHAR},
+        remark = #{remark,jdbcType=VARCHAR},
+        start_time = #{startTime,jdbcType=VARCHAR},
+        end_time = #{endTime,jdbcType=VARCHAR},
+        buyer_mode = #{buyerMode,jdbcType=BIT},
+        buyer = #{buyer,jdbcType=DECIMAL},
+        growth = #{growth,jdbcType=INTEGER},
+        `state` = #{state,jdbcType=INTEGER},
+        create_time = #{createTime,jdbcType=VARCHAR},
+        update_time = #{updateTime,jdbcType=VARCHAR}
+    where polite_id = #{politeId,jdbcType=BIGINT}
+  </update>
+
+  <select id="findPlatformPolite" resultType="com.shop.cereshop.commons.domain.platformtool.CerePlatformPolite">
+    SELECT * FROM cere_platform_polite where end_time&lt;NOW() and state<![CDATA[!= ]]>2
+  </select>
+
+  <update id="updatePoliteEndState" parameterType="java.lang.Object">
+    update cere_platform_polite SET state=2,update_time=#{time} where polite_id in (
+    <foreach collection="list" item="item" index="index" separator=",">
+      #{item.politeId}
+    </foreach>
+    )
+  </update>
+</mapper>

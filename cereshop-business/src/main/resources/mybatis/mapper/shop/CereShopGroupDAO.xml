@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.cereshop.business.dao.shop.CereShopGroupDAO">
+  <resultMap id="BaseResultMap" type="com.shop.cereshop.commons.domain.shop.CereShopGroup">
+    <id column="shop_group_id" jdbcType="BIGINT" property="shopGroupId" />
+    <result column="shop_id" jdbcType="BIGINT" property="shopId" />
+    <result column="group_name" jdbcType="VARCHAR" property="groupName" />
+    <result column="group_describe" jdbcType="VARCHAR" property="groupDescribe" />
+    <result column="group_image" jdbcType="VARCHAR" property="groupImage" />
+    <result column="create_time" jdbcType="VARCHAR" property="createTime" />
+    <result column="update_time" jdbcType="VARCHAR" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    shop_group_id, shop_id, group_name,group_describe, group_image, create_time, update_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from cere_shop_group
+    where shop_group_id = #{shopGroupId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from cere_shop_group
+    where shop_group_id = #{shopGroupId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" keyColumn="shop_group_id" keyProperty="shopGroupId" parameterType="com.shop.cereshop.commons.domain.shop.CereShopGroup" useGeneratedKeys="true">
+    insert into cere_shop_group (shop_id, group_name, group_describe,group_image,
+      create_time, update_time)
+    values (#{shopId,jdbcType=BIGINT}, #{groupName,jdbcType=VARCHAR},#{groupDescribe,jdbcType=VARCHAR}, #{groupImage,jdbcType=VARCHAR},
+      #{createTime,jdbcType=VARCHAR}, #{updateTime,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" keyColumn="shop_group_id" keyProperty="shopGroupId" parameterType="com.shop.cereshop.commons.domain.shop.CereShopGroup" useGeneratedKeys="true">
+    insert into cere_shop_group
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="shopId != null">
+        shop_id,
+      </if>
+      <if test="groupName != null and groupName!=''">
+        group_name,
+      </if>
+      <if test="groupDescribe != null and groupDescribe!=''">
+        group_describe,
+      </if>
+      <if test="groupImage != null and groupImage!=''">
+        group_image,
+      </if>
+      <if test="createTime != null and createTime!=''">
+        create_time,
+      </if>
+      <if test="updateTime != null and updateTime!=''">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="shopId != null">
+        #{shopId,jdbcType=BIGINT},
+      </if>
+      <if test="groupName != null and groupName!=''">
+        #{groupName,jdbcType=VARCHAR},
+      </if>
+      <if test="groupDescribe != null and groupDescribe!=''">
+        #{groupDescribe,jdbcType=VARCHAR},
+      </if>
+      <if test="groupImage != null and groupImage!=''">
+        #{groupImage,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null and createTime!=''">
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null and updateTime!=''">
+        #{updateTime,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.shop.cereshop.commons.domain.shop.CereShopGroup">
+    update cere_shop_group
+    <set>
+      <if test="shopId != null">
+        shop_id = #{shopId,jdbcType=BIGINT},
+      </if>
+      <if test="groupName != null and groupName!=''">
+        group_name = #{groupName,jdbcType=VARCHAR},
+      </if>
+      <if test="groupDescribe != null and groupDescribe!=''">
+        group_describe = #{groupDescribe,jdbcType=VARCHAR},
+      </if>
+      <if test="groupImage != null and groupImage!=''">
+        group_image = #{groupImage,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null and createTime!=''">
+        create_time = #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null and updateTime!=''">
+        update_time = #{updateTime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where shop_group_id = #{shopGroupId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.shop.cereshop.commons.domain.shop.CereShopGroup">
+    update cere_shop_group
+    set shop_id = #{shopId,jdbcType=BIGINT},
+      group_name = #{groupName,jdbcType=VARCHAR},
+      group_describe = #{groupDescribe,jdbcType=VARCHAR},
+      group_image = #{groupImage,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=VARCHAR}
+    where shop_group_id = #{shopGroupId,jdbcType=BIGINT}
+  </update>
+
+  <select id="getGroupSelect" parameterType="java.lang.Object" resultType="com.shop.cereshop.commons.domain.shop.CereShopGroup">
+    SELECT shop_group_id,group_name FROM cere_shop_group where shop_id=#{shopId}
+  </select>
+
+  <update id="updateGroup" parameterType="java.lang.Object">
+    UPDATE cere_shop_product set shop_group_id=NULL where shop_group_id=#{shopGroupId}
+  </update>
+
+  <select id="getById" parameterType="java.lang.Object" resultType="com.shop.cereshop.business.page.group.GroupDetail">
+    SELECT shop_group_id,group_name,group_image,group_describe FROM cere_shop_group where shop_group_id=#{shopGroupId}
+  </select>
+
+  <select id="getAll" parameterType="com.shop.cereshop.business.param.group.GroupGetAllParam" resultType="com.shop.cereshop.business.page.group.Group">
+    SELECT a.shop_group_id,a.group_name,a.group_image,b.number,a.group_describe,
+    IF(a.update_time IS NULL OR a.update_time='',a.create_time,a.update_time) update_time from cere_shop_group a
+    LEFT JOIN (SELECT COUNT(*) number,shop_group_id from cere_shop_product GROUP BY shop_group_id) b
+    ON a.shop_group_id=b.shop_group_id
+    where a.shop_id=#{shopId}
+    <if test="search!=null and search!=''">
+      and a.group_name like concat('%',#{search},'%')
+    </if>
+    ORDER BY a.update_time DESC,a.create_time DESC
+  </select>
+
+  <select id="findProducts" parameterType="java.lang.Long" resultType="com.shop.cereshop.business.page.group.GroupProduct">
+    SELECT a.product_id,a.product_name,d.product_image image,b.original_price,c.stock_number,a.shelve_state from cere_shop_product a
+    LEFT JOIN (SELECT MIN(original_price) original_price,product_id from cere_product_sku GROUP BY product_id) b
+    ON a.product_id=b.product_id
+    LEFT JOIN (SELECT SUM(stock_number) stock_number,product_id FROM cere_product_sku GROUP BY product_id) c
+    ON a.product_id=c.product_id
+    LEFT JOIN (SELECT a.product_id,a.product_image from cere_product_image a,cere_shop_product b where a.product_id=b.product_id
+    GROUP BY a.product_id) d ON a.product_id=d.product_id
+    where a.shop_group_id=#{shopGroupId}
+  </select>
+
+  <select id="getProducts" parameterType="com.shop.cereshop.business.param.group.GroupProductParam" resultType="com.shop.cereshop.business.page.group.GroupProduct">
+    SELECT a.product_id,a.product_name,d.product_image image,b.original_price,c.stock_number,a.shelve_state from cere_shop_product a
+    LEFT JOIN (SELECT MIN(original_price) original_price,product_id from cere_product_sku GROUP BY product_id) b
+    ON a.product_id=b.product_id
+    LEFT JOIN (SELECT SUM(stock_number) stock_number,product_id FROM cere_product_sku GROUP BY product_id) c
+    ON a.product_id=c.product_id
+    LEFT JOIN (SELECT a.product_id,a.product_image from cere_product_image a,cere_shop_product b where a.product_id=b.product_id
+    GROUP BY a.product_id) d ON a.product_id=d.product_id
+    where a.shop_id=#{shopId}
+    <if test="search!=null and search!=''">
+      and (a.product_id like concat('%',#{search},'%') OR
+      a.product_name like concat('%',#{search},'%'))
+    </if>
+    <if test="minStock!=null">
+      and c.stock_number&gt;=#{minStock}
+    </if>
+    <if test="maxStock!=null">
+      and c.stock_number&lt;=#{maxStock}
+    </if>
+    <if test="minPrice!=null">
+      and b.original_price&gt;=#{minPrice}
+    </if>
+    <if test="maxPrice!=null">
+      and b.original_price&lt;= #{maxPrice}
+    </if>
+  </select>
+
+  <update id="addProduct" parameterType="java.lang.Object" >
+    UPDATE cere_shop_product SET shop_group_id=#{shopGroupId}
+    where product_id in (
+    <foreach collection="ids" item="id" index="index" separator=",">
+      #{id}
+    </foreach>
+    )
+  </update>
+
+  <update id="deleteProduct" parameterType="java.lang.Object">
+    UPDATE cere_shop_product SET shop_group_id=NULL
+    where shop_group_id=#{shopGroupId}
+  </update>
+
+  <select id="findProductIds" parameterType="com.shop.cereshop.business.param.group.GroupCondition" resultType="java.lang.Long">
+    SELECT a.product_id from cere_shop_product a
+    LEFT JOIN (SELECT MIN(original_price) original_price,product_id,weight,sku_id from cere_product_sku GROUP BY product_id) b
+    ON a.product_id=b.product_id
+    LEFT JOIN (SELECT SUM(stock_number) stock_number,product_id,sku_id FROM cere_product_sku GROUP BY product_id) c
+    ON a.product_id=c.product_id
+    LEFT JOIN (SELECT SUM(number) number,sku_id,order_id from cere_order_product GROUP BY sku_id) f ON b.sku_id=f.sku_id
+    where a.shop_id=#{shopId}
+    <if test='type=="1"'>
+      <if test='calculation=="1"'>
+        and c.stock_number&gt;#{number}
+      </if>
+      <if test='calculation=="2"'>
+        and c.stock_number=#{number}
+      </if>
+      <if test='calculation=="3"'>
+        and c.stock_number&lt;#{number}
+      </if>
+    </if>
+    <if test='type=="2"'>
+      <if test='calculation=="1"'>
+        and b.original_price&gt;#{number}
+      </if>
+      <if test='calculation=="2"'>
+        and b.original_price=#{number}
+      </if>
+      <if test='calculation=="3"'>
+        and b.original_price&lt;#{number}
+      </if>
+    </if>
+    <if test='type=="3"'>
+      <if test='calculation=="1"'>
+        and b.weight&gt;#{number}
+      </if>
+      <if test='calculation=="2"'>
+        and b.weight=#{number}
+      </if>
+      <if test='calculation=="3"'>
+        and b.weight&lt;#{number}
+      </if>
+    </if>
+    <if test='type=="4"'>
+      <if test='calculation=="1"'>
+        and f.number&gt;#{number}
+      </if>
+      <if test='calculation=="2"'>
+        and f.number=#{number}
+      </if>
+      <if test='calculation=="3"'>
+        and f.number&lt;#{number}
+      </if>
+    </if>
+    <if test="ids!=null and ids.size()>0">
+      and a.product_id in (
+      <foreach collection="ids" item="id" index="index" separator=",">
+        #{id}
+      </foreach>
+      )
+    </if>
+  </select>
+
+  <select id="findProductByIds" parameterType="java.lang.Object" resultType="com.shop.cereshop.business.page.order.Product">
+    SELECT a.product_id,b.product_image image,a.product_name,c.price,c.original_price,
+    c.stock_number from cere_shop_product a
+    LEFT JOIN (SELECT a.product_id,a.product_image from cere_product_image a,
+    cere_shop_product b where a.product_id=b.product_id GROUP BY a.product_id) b ON a.product_id=b.product_id
+    LEFT JOIN (SELECT a.product_id,a.sku_id,MIN(a.price) price,MIN(a.original_price) original_price,
+    SUM(a.stock_number) stock_number,a.sku_image
+    from cere_product_sku a,cere_shop_product b where
+    a.product_id=b.product_id GROUP BY a.product_id) c ON a.product_id=c.product_id
+    LEFT JOIN cere_shop_group d ON a.shop_id=d.shop_id
+    LEFT JOIN cere_product_classify e ON a.classify_id=e.classify_id
+    where a.product_id in (
+    <foreach collection="ids" item="id" index="index" separator=",">
+      #{id}
+    </foreach>
+    )
+  </select>
+</mapper>

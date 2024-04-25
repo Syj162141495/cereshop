@@ -1,0 +1,399 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.cereshop.admin.dao.shop.CerePlatformShopDAO">
+  <resultMap id="BaseResultMap" type="com.shop.cereshop.commons.domain.shop.CerePlatformShop">
+    <id column="shop_id" jdbcType="BIGINT" property="shopId" />
+    <result column="shop_code" jdbcType="VARCHAR" property="shopCode" />
+    <result column="shop_name" jdbcType="VARCHAR" property="shopName" />
+    <result column="shop_brief" jdbcType="VARCHAR" property="shopBrief" />
+    <result column="shop_phone" jdbcType="VARCHAR" property="shopPhone" />
+    <result column="shop_password" jdbcType="VARCHAR" property="shopPassword" />
+    <result column="charge_person_name" jdbcType="VARCHAR" property="chargePersonName" />
+    <result column="charge_person_phone" jdbcType="VARCHAR" property="chargePersonPhone" />
+    <result column="shop_adress" jdbcType="VARCHAR" property="shopAdress" />
+    <result column="effective_date" jdbcType="VARCHAR" property="effectiveDate" />
+    <result column="effective_year" jdbcType="INTEGER" property="effectiveYear" />
+    <result column="contract_state" jdbcType="BIT" property="contractState" />
+    <result column="authentication_state" jdbcType="BIT" property="authenticationState" />
+    <result column="check_state" jdbcType="BIT" property="checkState" />
+    <result column="state" jdbcType="BIT" property="state" />
+    <result column="authen_type" jdbcType="BIT" property="authenType" />
+    <result column="create_time" jdbcType="VARCHAR" property="createTime" />
+    <result column="update_time" jdbcType="VARCHAR" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    shop_id, shop_code, shop_name, shop_brief, shop_phone, shop_password, charge_person_name,
+    charge_person_phone, shop_adress, effective_date, effective_year, contract_state,
+    authentication_state, check_state, `state`,authen_type, create_time, update_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from cere_platform_shop
+    where shop_id = #{shopId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from cere_platform_shop
+    where shop_id = #{shopId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" keyColumn="shop_id" keyProperty="shopId" parameterType="com.shop.cereshop.commons.domain.shop.CerePlatformShop" useGeneratedKeys="true">
+    insert into cere_platform_shop (shop_code, shop_name, shop_brief,
+      shop_phone, shop_password, charge_person_name,
+      charge_person_phone, shop_adress, effective_date,
+      effective_year, contract_state, authentication_state,
+      check_state, `state`,authen_type, create_time,
+      update_time)
+    values (#{shopCode,jdbcType=VARCHAR}, #{shopName,jdbcType=VARCHAR}, #{shopBrief,jdbcType=VARCHAR},
+      #{shopPhone,jdbcType=VARCHAR}, #{shopPassword,jdbcType=VARCHAR}, #{chargePersonName,jdbcType=VARCHAR},
+      #{chargePersonPhone,jdbcType=VARCHAR}, #{shopAdress,jdbcType=VARCHAR}, #{effectiveDate,jdbcType=VARCHAR},
+      #{effectiveYear,jdbcType=INTEGER}, #{contractState,jdbcType=BIT}, #{authenticationState,jdbcType=BIT},
+      #{checkState,jdbcType=BIT}, #{state,jdbcType=BIT},#{authenType,jdbcType=BIT}, #{createTime,jdbcType=VARCHAR},
+      #{updateTime,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" keyColumn="shop_id" keyProperty="shopId" parameterType="com.shop.cereshop.commons.domain.shop.CerePlatformShop" useGeneratedKeys="true">
+    insert into cere_platform_shop
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="shopCode != null and shopCode!=''">
+        shop_code,
+      </if>
+      <if test="shopName != null and shopName!=''">
+        shop_name,
+      </if>
+      <if test="shopBrief != null and shopBrief!=''">
+        shop_brief,
+      </if>
+      <if test="shopPhone != null and shopPhone!=''">
+        shop_phone,
+      </if>
+      <if test="shopPassword != null and shopPassword!=''">
+        shop_password,
+      </if>
+      <if test="chargePersonName != null and chargePersonName!=''">
+        charge_person_name,
+      </if>
+      <if test="chargePersonPhone != null and chargePersonPhone!=''">
+        charge_person_phone,
+      </if>
+      <if test="shopAdress != null and shopAdress!=''">
+        shop_adress,
+      </if>
+      <if test="effectiveDate != null and effectiveDate!=''">
+        effective_date,
+      </if>
+      <if test="effectiveYear != null">
+        effective_year,
+      </if>
+      <if test="contractState != null">
+        contract_state,
+      </if>
+      <if test="authenticationState != null">
+        authentication_state,
+      </if>
+      <if test="checkState != null">
+        check_state,
+      </if>
+      <if test="state != null">
+        `state`,
+      </if>
+      <if test="authenType != null">
+        authen_type,
+      </if>
+      <if test="createTime != null and createTime!=''">
+        create_time,
+      </if>
+      <if test="updateTime != null and updateTime!=''">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="shopCode != null and shopCode!=''">
+        #{shopCode,jdbcType=VARCHAR},
+      </if>
+      <if test="shopName != null and shopName!=''">
+        #{shopName,jdbcType=VARCHAR},
+      </if>
+      <if test="shopBrief != null and shopBrief!=''">
+        #{shopBrief,jdbcType=VARCHAR},
+      </if>
+      <if test="shopPhone != null and shopPhone!=''">
+        #{shopPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="shopPassword != null and shopPassword!=''">
+        #{shopPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="chargePersonName != null and chargePersonName!=''">
+        #{chargePersonName,jdbcType=VARCHAR},
+      </if>
+      <if test="chargePersonPhone != null and chargePersonPhone!=''">
+        #{chargePersonPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="shopAdress != null and shopAdress!=''">
+        #{shopAdress,jdbcType=VARCHAR},
+      </if>
+      <if test="effectiveDate != null and effectiveDate!=''">
+        #{effectiveDate,jdbcType=VARCHAR},
+      </if>
+      <if test="effectiveYear != null">
+        #{effectiveYear,jdbcType=INTEGER},
+      </if>
+      <if test="contractState != null">
+        #{contractState,jdbcType=BIT},
+      </if>
+      <if test="authenticationState != null">
+        #{authenticationState,jdbcType=BIT},
+      </if>
+      <if test="checkState != null">
+        #{checkState,jdbcType=BIT},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=BIT},
+      </if>
+      <if test="authenType != null">
+        #{authenType,jdbcType=BIT},
+      </if>
+      <if test="createTime != null and createTime!=''">
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null and updateTime!=''">
+        #{updateTime,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.shop.cereshop.commons.domain.shop.CerePlatformShop">
+    update cere_platform_shop
+    <set>
+      <if test="shopCode != null and shopCode!=''">
+        shop_code = #{shopCode,jdbcType=VARCHAR},
+      </if>
+      <if test="shopName != null and shopName!=''">
+        shop_name = #{shopName,jdbcType=VARCHAR},
+      </if>
+      <if test="shopBrief != null and shopBrief!=''">
+        shop_brief = #{shopBrief,jdbcType=VARCHAR},
+      </if>
+      <if test="shopPhone != null and shopPhone!=''">
+        shop_phone = #{shopPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="shopPassword != null and shopPassword!=''">
+        shop_password = #{shopPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="chargePersonName != null and chargePersonName!=''">
+        charge_person_name = #{chargePersonName,jdbcType=VARCHAR},
+      </if>
+      <if test="chargePersonPhone != null and chargePersonPhone!=''">
+        charge_person_phone = #{chargePersonPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="shopAdress != null and shopAdress!=''">
+        shop_adress = #{shopAdress,jdbcType=VARCHAR},
+      </if>
+      <if test="effectiveDate != null and effectiveDate!=''">
+        effective_date = #{effectiveDate,jdbcType=VARCHAR},
+      </if>
+      <if test="effectiveYear != null">
+        effective_year = #{effectiveYear,jdbcType=INTEGER},
+      </if>
+      <if test="contractState != null">
+        contract_state = #{contractState,jdbcType=BIT},
+      </if>
+      <if test="authenticationState != null">
+        authentication_state = #{authenticationState,jdbcType=BIT},
+      </if>
+      <if test="checkState != null">
+        check_state = #{checkState,jdbcType=BIT},
+      </if>
+      <if test="state != null">
+        `state` = #{state,jdbcType=BIT},
+      </if>
+      <if test="authenType != null">
+        authen_type = #{authenType,jdbcType=BIT},
+      </if>
+      <if test="createTime != null and createTime!=''">
+        create_time = #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null and updateTime!=''">
+        update_time = #{updateTime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where shop_id = #{shopId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.shop.cereshop.commons.domain.shop.CerePlatformShop">
+    update cere_platform_shop
+    set shop_code = #{shopCode,jdbcType=VARCHAR},
+      shop_name = #{shopName,jdbcType=VARCHAR},
+      shop_brief = #{shopBrief,jdbcType=VARCHAR},
+      shop_phone = #{shopPhone,jdbcType=VARCHAR},
+      shop_password = #{shopPassword,jdbcType=VARCHAR},
+      charge_person_name = #{chargePersonName,jdbcType=VARCHAR},
+      charge_person_phone = #{chargePersonPhone,jdbcType=VARCHAR},
+      shop_adress = #{shopAdress,jdbcType=VARCHAR},
+      effective_date = #{effectiveDate,jdbcType=VARCHAR},
+      effective_year = #{effectiveYear,jdbcType=INTEGER},
+      contract_state = #{contractState,jdbcType=BIT},
+      authentication_state = #{authenticationState,jdbcType=BIT},
+      check_state = #{checkState,jdbcType=BIT},
+      `state` = #{state,jdbcType=BIT},
+      authen_type = #{authenType,jdbcType=BIT},
+      create_time = #{createTime,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=VARCHAR}
+    where shop_id = #{shopId,jdbcType=BIGINT}
+  </update>
+
+  <select id="findByShopName" parameterType="java.lang.Object" resultType="com.shop.cereshop.commons.domain.shop.CerePlatformShop">
+    SELECT shop_id FROM cere_platform_shop where shop_name=#{shopName}
+  </select>
+
+  <select id="findByPhone" parameterType="java.lang.Object" resultType="com.shop.cereshop.commons.domain.shop.CerePlatformShop">
+    SELECT shop_id FROM cere_platform_shop where shop_phone=#{shopPhone}
+  </select>
+
+  <select id="checkShopIdByName" parameterType="java.lang.Object" resultType="com.shop.cereshop.commons.domain.shop.CerePlatformShop">
+    SELECT shop_id FROM cere_platform_shop where shop_name=#{shopName} and shop_id<![CDATA[!= ]]>#{shopId}
+  </select>
+
+  <select id="checkShopIdByPhone" parameterType="java.lang.Object" resultType="com.shop.cereshop.commons.domain.shop.CerePlatformShop">
+    SELECT shop_id FROM cere_platform_shop where shop_phone=#{shopPhone} and shop_id<![CDATA[!= ]]>#{shopId}
+  </select>
+
+  <select id="findBusinessByShopId" parameterType="java.lang.Object" resultType="com.shop.cereshop.commons.domain.business.CerePlatformBusiness">
+    SELECT a.business_user_id from cere_platform_business a
+    LEFT JOIN cere_business_shop b ON a.business_user_id=b.business_user_id
+    LEFT JOIN cere_platform_shop c ON b.shop_id=c.shop_id
+    where c.shop_id=#{shopId}
+  </select>
+
+  <select id="getById" parameterType="java.lang.Object" resultType="com.shop.cereshop.admin.page.shop.ShopGetAll">
+    SELECT a.shop_id, a.shop_code, a.shop_name, a.shop_brief, a.shop_phone, a.shop_password, a.charge_person_name,
+      a.charge_person_phone, a.shop_adress, a.effective_date, a.effective_year, a.contract_state,
+      a.authentication_state, a.check_state, a.`state`, a.authen_type, a.create_time, a.update_time,
+      b.business_user_id
+    FROM cere_platform_shop a,
+         cere_platform_business b
+    where a.shop_phone = b.username
+      and shop_id = #{shopId}
+  </select>
+
+  <select id="getAll" parameterType="com.shop.cereshop.admin.param.shop.ShopGetAllParam" resultType="com.shop.cereshop.admin.page.shop.ShopGetAll">
+    SELECT a.shop_id,a.shop_name,a.shop_code,a.charge_person_name,a.charge_person_phone,
+    a.state,a.create_time,a.contract_state,b.business_user_id
+    FROM cere_platform_shop a,cere_platform_business b
+    where a.shop_phone=b.username
+    <if test="shopName!=null and shopName!=''">
+      and shop_name like concat('%',#{shopName},'%')
+    </if>
+    <if test="shopCode!=null and shopCode!=''">
+      and shop_code like concat('%',#{shopCode},'%')
+    </if>
+    <if test="chargePersonName!=null and chargePersonName!=''">
+      and charge_person_name like concat('%',#{chargePersonName},'%')
+    </if>
+    <if test="contractState!=null">
+      and contract_state=#{contractState}
+    </if>
+    order by create_time desc
+  </select>
+
+  <select id="findShop" parameterType="java.lang.Object" resultType="com.shop.cereshop.admin.page.shop.Shop">
+    SELECT shop_id,shop_logo,shop_name,shop_adress,shop_brief,shop_phone,authen_type,
+    authentication_state,check_state,effective_date,effective_year,charge_person_name,charge_person_phone
+    FROM cere_platform_shop where shop_id = #{shopId}
+  </select>
+
+  <update id="updateDate" parameterType="com.shop.cereshop.commons.domain.shop.CerePlatformShop">
+    update cere_platform_shop
+    <set>
+      <if test="effectiveDate != null and effectiveDate!=''">
+        effective_date = #{effectiveDate,jdbcType=VARCHAR},
+      </if>
+      <if test="effectiveYear != null">
+        effective_year = #{effectiveYear,jdbcType=INTEGER},
+      </if>
+      <if test="checkState != null">
+        check_state = #{checkState,jdbcType=BIT},
+      </if>
+      <if test="updateTime != null and updateTime!=''">
+        update_time = #{updateTime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where shop_id = #{shopId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateShopStop" parameterType="com.shop.cereshop.commons.domain.shop.CerePlatformShop">
+    update cere_platform_shop
+    <set>
+      <if test="contractState != null">
+        contract_state = #{contractState,jdbcType=BIT},
+      </if>
+      <if test="state != null">
+        `state` = #{state,jdbcType=BIT},
+      </if>
+      <if test="updateTime != null and updateTime!=''">
+        update_time = #{updateTime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where shop_id = #{shopId,jdbcType=BIGINT}
+  </update>
+
+  <select id="getAllFinance" parameterType="com.shop.cereshop.admin.param.finance.FinanceParam" resultType="com.shop.cereshop.admin.page.finance.Finance">
+    SELECT a.shop_id,a.shop_name,a.shop_code,b.revenue from cere_platform_shop a
+    LEFT JOIN (SELECT SUM(price) revenue,shop_id,state from cere_shop_order where state in (2,3,4) GROUP BY shop_id) b ON a.shop_id=b.shop_id
+    where 1=1
+    <if test="shopName!=null and shopName!=''">
+      and a.shop_name like concat('%',#{shopName},'%')
+    </if>
+    <if test="shopCode!=null and shopCode!=''">
+      and a.shop_code like concat('%',#{shopCode},'%')
+    </if>
+  </select>
+
+  <select id="finFrozen" parameterType="java.lang.Object" resultType="java.math.BigDecimal">
+    SELECT IF(SUM(price) IS NULL,0,SUM(price)) FROM cere_shop_order where state in (2,3)
+    <if test="shopId!=null">
+      and shop_id=#{shopId}
+    </if>
+  </select>
+
+  <select id="findHaveWithdrawal" parameterType="java.lang.Object" resultType="java.math.BigDecimal">
+    SELECT IF(SUM(withdrawal_money) IS NULL,0,SUM(withdrawal_money)) FROM cere_shop_withdrawal
+    where state=1
+    <if test="shopId!=null">
+      and shop_id=#{shopId}
+    </if>
+  </select>
+
+  <select id="findRefund" parameterType="java.lang.Object" resultType="java.math.BigDecimal">
+    SELECT IF(SUM(money) IS NULL,0,SUM(money)) FROM cere_order_reconciliation a
+    LEFT JOIN cere_shop_order b ON a.order_id=b.order_id
+    where a.type=2
+    <if test="shopId!=null">
+      and b.shop_id=#{shopId}
+    </if>
+  </select>
+
+  <select id="findRevenue" resultType="java.math.BigDecimal">
+    SELECT IF(SUM(price) IS NULL,0,SUM(price)) FROM cere_shop_order where state in (2,3,4)
+  </select>
+
+  <select id="getAllWithdrawableMoney" resultType="java.math.BigDecimal">
+    SELECT IF(SUM(price) IS NULL,0,SUM(price)) FROM cere_shop_order where state=4
+  </select>
+
+  <select id="getWithdrawableStayMoney" resultType="java.math.BigDecimal">
+    SELECT IF(SUM(withdrawal_money) IS NULL,0,SUM(withdrawal_money)) FROM cere_shop_withdrawal
+    where state=0
+  </select>
+
+  <select id="findBusinessId" parameterType="java.lang.Object" resultType="java.lang.Object">
+    SELECT a.business_user_id FROM cere_platform_business a
+    LEFT JOIN cere_business_shop b ON a.business_user_id=b.business_user_id
+    LEFT JOIN cere_platform_shop c ON b.shop_id=c.shop_id
+    where c.shop_id=#{shopId}
+  </select>
+
+  <select id="findBusiness" parameterType="java.lang.Object" resultType="com.shop.cereshop.commons.domain.business.CerePlatformBusiness">
+    SELECT * FROM cere_platform_business where business_user_id=#{businessUserId}
+  </select>
+
+  <select id="findAll" resultType="com.shop.cereshop.commons.domain.shop.CerePlatformShop">
+    SELECT * FROM cere_platform_shop where check_state=1 and state=1
+  </select>
+</mapper>

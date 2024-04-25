@@ -1,0 +1,534 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.cereshop.business.dao.tool.CereShopCrowdDAO">
+  <resultMap id="BaseResultMap" type="com.shop.cereshop.commons.domain.tool.CereShopCrowd">
+    <id column="shop_crowd_id" jdbcType="BIGINT" property="shopCrowdId" />
+    <result column="shop_id" jdbcType="BIGINT" property="shopId" />
+    <result column="crowd_name" jdbcType="VARCHAR" property="crowdName" />
+    <result column="shop_buy_yes" jdbcType="INTEGER" property="shopBuyYes" />
+    <result column="shop_buy_no" jdbcType="INTEGER" property="shopBuyNo" />
+    <result column="shop_order_yes" jdbcType="INTEGER" property="shopOrderYes" />
+    <result column="shop_order_no" jdbcType="INTEGER" property="shopOrderNo" />
+    <result column="shop_add_yes" jdbcType="INTEGER" property="shopAddYes" />
+    <result column="shop_add_no" jdbcType="INTEGER" property="shopAddNo" />
+    <result column="shop_visit_yes" jdbcType="INTEGER" property="shopVisitYes" />
+    <result column="shop_visit_no" jdbcType="INTEGER" property="shopVisitNo" />
+    <result column="effective_buy" jdbcType="BIT" property="effectiveBuy" />
+    <result column="effective_buy_count" jdbcType="INTEGER" property="effectiveBuyCount" />
+    <result column="effective_price" jdbcType="BIT" property="effectivePrice" />
+    <result column="effective_price_count" jdbcType="DECIMAL" property="effectivePriceCount" />
+    <result column="users" jdbcType="INTEGER" property="users" />
+    <result column="label_id" jdbcType="VARCHAR" property="labelId" />
+    <result column="ids" jdbcType="VARCHAR" property="ids" />
+    <result column="create_time" jdbcType="VARCHAR" property="createTime" />
+    <result column="update_time" jdbcType="VARCHAR" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    shop_crowd_id, shop_id, crowd_name, shop_buy_yes, shop_buy_no, shop_order_yes, shop_order_no,
+    shop_add_yes, shop_add_no, shop_visit_yes, shop_visit_no, effective_buy, effective_buy_count,
+    effective_price, effective_price_count, users, label_id,ids, create_time, update_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from cere_shop_crowd
+    where shop_crowd_id = #{shopCrowdId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from cere_shop_crowd
+    where shop_crowd_id = #{shopCrowdId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" keyColumn="shop_crowd_id" keyProperty="shopCrowdId" parameterType="com.shop.cereshop.commons.domain.tool.CereShopCrowd" useGeneratedKeys="true">
+    insert into cere_shop_crowd (shop_id, crowd_name, shop_buy_yes,
+      shop_buy_no, shop_order_yes, shop_order_no,
+      shop_add_yes, shop_add_no, shop_visit_yes,
+      shop_visit_no, effective_buy, effective_buy_count,
+      effective_price, effective_price_count, users,
+      label_id,ids, create_time, update_time
+      )
+    values (#{shopId,jdbcType=BIGINT}, #{crowdName,jdbcType=VARCHAR}, #{shopBuyYes,jdbcType=INTEGER},
+      #{shopBuyNo,jdbcType=INTEGER}, #{shopOrderYes,jdbcType=INTEGER}, #{shopOrderNo,jdbcType=INTEGER},
+      #{shopAddYes,jdbcType=INTEGER}, #{shopAddNo,jdbcType=INTEGER}, #{shopVisitYes,jdbcType=INTEGER},
+      #{shopVisitNo,jdbcType=INTEGER}, #{effectiveBuy,jdbcType=BIT}, #{effectiveBuyCount,jdbcType=INTEGER},
+      #{effectivePrice,jdbcType=BIT}, #{effectivePriceCount,jdbcType=DECIMAL}, #{users,jdbcType=INTEGER},
+      #{labelId,jdbcType=VARCHAR},#{ids,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR}, #{updateTime,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" keyColumn="shop_crowd_id" keyProperty="shopCrowdId" parameterType="com.shop.cereshop.commons.domain.tool.CereShopCrowd" useGeneratedKeys="true">
+    insert into cere_shop_crowd
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="shopId != null">
+        shop_id,
+      </if>
+      <if test="crowdName != null">
+        crowd_name,
+      </if>
+      <if test="shopBuyYes != null">
+        shop_buy_yes,
+      </if>
+      <if test="shopBuyNo != null">
+        shop_buy_no,
+      </if>
+      <if test="shopOrderYes != null">
+        shop_order_yes,
+      </if>
+      <if test="shopOrderNo != null">
+        shop_order_no,
+      </if>
+      <if test="shopAddYes != null">
+        shop_add_yes,
+      </if>
+      <if test="shopAddNo != null">
+        shop_add_no,
+      </if>
+      <if test="shopVisitYes != null">
+        shop_visit_yes,
+      </if>
+      <if test="shopVisitNo != null">
+        shop_visit_no,
+      </if>
+      <if test="effectiveBuy != null">
+        effective_buy,
+      </if>
+      <if test="effectiveBuyCount != null">
+        effective_buy_count,
+      </if>
+      <if test="effectivePrice != null">
+        effective_price,
+      </if>
+      <if test="effectivePriceCount != null">
+        effective_price_count,
+      </if>
+      <if test="users != null">
+        users,
+      </if>
+      <if test="labelId != null">
+        label_id,
+      </if>
+      <if test="ids != null">
+        ids,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="shopId != null">
+        #{shopId,jdbcType=BIGINT},
+      </if>
+      <if test="crowdName != null">
+        #{crowdName,jdbcType=VARCHAR},
+      </if>
+      <if test="shopBuyYes != null">
+        #{shopBuyYes,jdbcType=INTEGER},
+      </if>
+      <if test="shopBuyNo != null">
+        #{shopBuyNo,jdbcType=INTEGER},
+      </if>
+      <if test="shopOrderYes != null">
+        #{shopOrderYes,jdbcType=INTEGER},
+      </if>
+      <if test="shopOrderNo != null">
+        #{shopOrderNo,jdbcType=INTEGER},
+      </if>
+      <if test="shopAddYes != null">
+        #{shopAddYes,jdbcType=INTEGER},
+      </if>
+      <if test="shopAddNo != null">
+        #{shopAddNo,jdbcType=INTEGER},
+      </if>
+      <if test="shopVisitYes != null">
+        #{shopVisitYes,jdbcType=INTEGER},
+      </if>
+      <if test="shopVisitNo != null">
+        #{shopVisitNo,jdbcType=INTEGER},
+      </if>
+      <if test="effectiveBuy != null">
+        #{effectiveBuy,jdbcType=BIT},
+      </if>
+      <if test="effectiveBuyCount != null">
+        #{effectiveBuyCount,jdbcType=INTEGER},
+      </if>
+      <if test="effectivePrice != null">
+        #{effectivePrice,jdbcType=BIT},
+      </if>
+      <if test="effectivePriceCount != null">
+        #{effectivePriceCount,jdbcType=DECIMAL},
+      </if>
+      <if test="users != null">
+        #{users,jdbcType=INTEGER},
+      </if>
+      <if test="labelId != null">
+        #{labelId,jdbcType=VARCHAR},
+      </if>
+      <if test="ids != null">
+        #{ids,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.shop.cereshop.commons.domain.tool.CereShopCrowd">
+    update cere_shop_crowd
+    <set>
+      <if test="shopId != null">
+        shop_id = #{shopId,jdbcType=BIGINT},
+      </if>
+      <if test="crowdName != null and crowdName!=''">
+        crowd_name = #{crowdName,jdbcType=VARCHAR},
+      </if>
+        shop_buy_yes = #{shopBuyYes,jdbcType=INTEGER},
+        shop_buy_no = #{shopBuyNo,jdbcType=INTEGER},
+        shop_order_yes = #{shopOrderYes,jdbcType=INTEGER},
+        shop_order_no = #{shopOrderNo,jdbcType=INTEGER},
+        shop_add_yes = #{shopAddYes,jdbcType=INTEGER},
+        shop_add_no = #{shopAddNo,jdbcType=INTEGER},
+        shop_visit_yes = #{shopVisitYes,jdbcType=INTEGER},
+        shop_visit_no = #{shopVisitNo,jdbcType=INTEGER},
+        effective_buy = #{effectiveBuy,jdbcType=BIT},
+        effective_buy_count = #{effectiveBuyCount,jdbcType=INTEGER},
+        effective_price = #{effectivePrice,jdbcType=BIT},
+        effective_price_count = #{effectivePriceCount,jdbcType=DECIMAL},
+      <if test="users != null">
+        users = #{users,jdbcType=INTEGER},
+      </if>
+        label_id = #{labelId,jdbcType=VARCHAR},
+        ids = #{ids,jdbcType=VARCHAR},
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where shop_crowd_id = #{shopCrowdId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.shop.cereshop.commons.domain.tool.CereShopCrowd">
+    update cere_shop_crowd
+    set shop_id = #{shopId,jdbcType=BIGINT},
+      crowd_name = #{crowdName,jdbcType=VARCHAR},
+      shop_buy_yes = #{shopBuyYes,jdbcType=INTEGER},
+      shop_buy_no = #{shopBuyNo,jdbcType=INTEGER},
+      shop_order_yes = #{shopOrderYes,jdbcType=INTEGER},
+      shop_order_no = #{shopOrderNo,jdbcType=INTEGER},
+      shop_add_yes = #{shopAddYes,jdbcType=INTEGER},
+      shop_add_no = #{shopAddNo,jdbcType=INTEGER},
+      shop_visit_yes = #{shopVisitYes,jdbcType=INTEGER},
+      shop_visit_no = #{shopVisitNo,jdbcType=INTEGER},
+      effective_buy = #{effectiveBuy,jdbcType=BIT},
+      effective_buy_count = #{effectiveBuyCount,jdbcType=INTEGER},
+      effective_price = #{effectivePrice,jdbcType=BIT},
+      effective_price_count = #{effectivePriceCount,jdbcType=DECIMAL},
+      users = #{users,jdbcType=INTEGER},
+      label_id = #{labelId,jdbcType=VARCHAR},
+      ids = #{labelId,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=VARCHAR}
+    where shop_crowd_id = #{shopCrowdId,jdbcType=BIGINT}
+  </update>
+
+  <select id="checkName" parameterType="java.lang.Object" resultType="com.shop.cereshop.commons.domain.tool.CereShopCrowd">
+    SELECT shop_crowd_id FROM cere_shop_crowd where crowd_name=#{crowdName}
+    <if test="shopCrowdId!=null">
+      and shop_crowd_id<![CDATA[!= ]]>#{shopCrowdId}
+    </if>
+  </select>
+
+  <select id="findUserByShopBuyCondition" parameterType="com.shop.cereshop.business.param.tool.CrowdCondition" resultType="java.lang.String">
+    SELECT a.buyer_user_id from cere_business_buyer_user a
+    INNER JOIN cere_shop_order b ON a.buyer_user_id=b.buyer_user_id
+    where a.shop_id = #{shopId}
+    <if test='type=="1"'>
+      and b.shop_id=#{shopId} and DATE_SUB(CURDATE(), INTERVAL #{number} DAY) &lt;= date(b.create_time)
+    </if>
+    <if test="ids!=null and ids.size()>0">
+      and a.buyer_user_id in (
+      <foreach collection="ids" item="id" index="index" separator=",">
+        #{id}
+      </foreach>
+      )
+    </if>
+    GROUP BY a.buyer_user_id
+  </select>
+
+  <select id="findUserByShopOrderCondition" parameterType="com.shop.cereshop.business.param.tool.CrowdCondition" resultType="java.lang.String">
+    SELECT a.buyer_user_id from cere_business_buyer_user a
+    INNER JOIN cere_shop_order b ON a.buyer_user_id=b.buyer_user_id
+    where a.shop_id = #{shopId}
+    <if test='type=="3"'>
+      and b.shop_id=#{shopId} and DATE_SUB(CURDATE(), INTERVAL #{number} DAY) &lt;= date(b.payment_time)
+    </if>
+    <if test="ids!=null and ids.size()>0">
+      and a.buyer_user_id in (
+      <foreach collection="ids" item="id" index="index" separator=",">
+        #{id}
+      </foreach>
+      )
+    </if>
+    GROUP BY a.buyer_user_id
+  </select>
+
+  <select id="findUserByShopAddCondition" parameterType="com.shop.cereshop.business.param.tool.CrowdCondition" resultType="java.lang.String">
+    SELECT a.buyer_user_id from cere_business_buyer_user a
+    INNER JOIN cere_shop_order b ON a.buyer_user_id=b.buyer_user_id
+    LEFT JOIN (SELECT buyer_user_id from cere_shop_cart where shop_id=#{shopId} GROUP BY buyer_user_id) c ON a.buyer_user_id=c.buyer_user_id
+    where a.shop_id = #{shopId}
+    <if test='type=="5"'>
+      and b.shop_id=#{shopId} and c.buyer_user_id IS NOT NULL
+    </if>
+    <if test='type=="6"'>
+      and b.shop_id=#{shopId} and c.buyer_user_id IS NULL
+    </if>
+    <if test="ids!=null and ids.size()>0">
+      and a.buyer_user_id in (
+      <foreach collection="ids" item="id" index="index" separator=",">
+        #{id}
+      </foreach>
+      )
+    </if>
+    GROUP BY a.buyer_user_id
+  </select>
+
+  <select id="findUserByShopVisitCondition" parameterType="com.shop.cereshop.business.param.tool.CrowdCondition" resultType="java.lang.String">
+    SELECT a.buyer_user_id from cere_business_buyer_user a
+    INNER JOIN cere_shop_visit d ON a.buyer_user_id=d.buyer_user_id
+    where a.shop_id = #{shopId}
+    <if test='type=="7"'>
+      and DATE_SUB(CURDATE(), INTERVAL #{number} DAY) &lt;= date(d.visit_time)
+    </if>
+    <if test="ids!=null and ids.size()>0">
+      and a.buyer_user_id in (
+      <foreach collection="ids" item="id" index="index" separator=",">
+        #{id}
+      </foreach>
+      )
+    </if>
+    GROUP BY a.buyer_user_id
+  </select>
+
+  <select id="findUserByCountCondition" parameterType="com.shop.cereshop.business.param.tool.CrowdCondition" resultType="java.lang.String">
+    SELECT a.buyer_user_id from cere_business_buyer_user a
+    INNER JOIN cere_shop_order b ON a.buyer_user_id=b.buyer_user_id
+    INNER JOIN (SELECT COUNT(*) frequency,SUM(price) price,buyer_user_id from cere_shop_order where state in (2,3,4) GROUP BY buyer_user_id) e
+    ON a.buyer_user_id=e.buyer_user_id
+    where a.shop_id = #{shopId}
+    and b.shop_id=#{shopId}
+    <if test='calculation=="1"'>
+      and e.frequency&gt;#{number}
+    </if>
+    <if test='calculation=="2"'>
+      and e.frequency=#{number}
+    </if>
+    <if test='calculation=="3"'>
+      and e.frequency&lt;#{number}
+    </if>
+    <if test="ids!=null and ids.size()>0">
+      and a.buyer_user_id in (
+      <foreach collection="ids" item="id" index="index" separator=",">
+        #{id}
+      </foreach>
+      )
+    </if>
+    GROUP BY a.buyer_user_id
+  </select>
+
+  <select id="findUserByPriceCondition" parameterType="com.shop.cereshop.business.param.tool.CrowdCondition" resultType="java.lang.String">
+    SELECT a.buyer_user_id from cere_business_buyer_user a
+    INNER JOIN cere_shop_order b ON a.buyer_user_id=b.buyer_user_id
+    INNER JOIN (SELECT COUNT(*) frequency,SUM(price) price,buyer_user_id from cere_shop_order where state in (2,3,4) GROUP BY buyer_user_id) e
+    ON a.buyer_user_id=e.buyer_user_id
+    where a.shop_id = #{shopId}
+    and b.shop_id=#{shopId}
+    <if test='calculation=="1"'>
+      and e.price&gt;#{number}
+    </if>
+    <if test='calculation=="2"'>
+      and e.price=#{number}
+    </if>
+    <if test='calculation=="3"'>
+      and e.price&lt;#{number}
+    </if>
+    <if test="ids!=null and ids.size()>0">
+      and a.buyer_user_id in (
+      <foreach collection="ids" item="id" index="index" separator=",">
+        #{id}
+      </foreach>
+      )
+    </if>
+    GROUP BY a.buyer_user_id
+  </select>
+
+  <select id="findUserByLabelCondition" parameterType="com.shop.cereshop.business.param.tool.CrowdCondition" resultType="java.lang.String">
+    SELECT a.buyer_user_id from cere_business_buyer_user a
+    LEFT JOIN (SELECT GROUP_CONCAT(label_id) label_id,buyer_user_id from cere_buyer_shop_label GROUP BY buyer_user_id) f ON a.buyer_user_id=f.buyer_user_id
+    where a.shop_id = #{shopId}
+    <if test='type=="11"'>
+      <if test="labelIds!=null">
+        and (
+        <foreach collection="labelIds" item="id" index="index" separator="OR ">
+          FIND_IN_SET(#{id}, f.label_id)
+        </foreach>
+        )
+      </if>
+    </if>
+    <if test="ids!=null and ids.size()>0">
+      and a.buyer_user_id in (
+      <foreach collection="ids" item="id" index="index" separator=",">
+        #{id}
+      </foreach>
+      )
+    </if>
+    GROUP BY a.buyer_user_id
+  </select>
+
+  <select id="findNoBuy" parameterType="com.shop.cereshop.business.param.tool.CrowdCondition" resultType="java.lang.String">
+    SELECT a.buyer_user_id from cere_business_buyer_user a
+    LEFT JOIN (SELECT COUNT(*) count,buyer_user_id,shop_id from cere_shop_order where shop_id=#{shopId} and DATE_SUB(CURDATE(), INTERVAL #{number} DAY) &lt;= date(payment_time)
+    GROUP BY buyer_user_id) b ON a.buyer_user_id=b.buyer_user_id
+    where a.shop_id = #{shopId} and b.count is null
+    <if test="ids!=null and ids.size()>0">
+      and a.buyer_user_id in (
+      <foreach collection="ids" item="id" index="index" separator=",">
+        #{id}
+      </foreach>
+      )
+    </if>
+  </select>
+
+  <select id="findNoOrder" parameterType="com.shop.cereshop.business.param.tool.CrowdCondition" resultType="java.lang.String">
+    SELECT a.buyer_user_id from cere_business_buyer_user a
+    LEFT JOIN (SELECT COUNT(*) count,buyer_user_id,shop_id from cere_shop_order where shop_id = #{shopId} and DATE_SUB(CURDATE(), INTERVAL #{number} DAY) &lt;= date(create_time)
+    GROUP BY buyer_user_id) b ON a.buyer_user_id=b.buyer_user_id
+    where a.shop_id = #{shopId} and b.count is NULL
+    <if test="ids!=null and ids.size()>0">
+      and a.buyer_user_id in (
+      <foreach collection="ids" item="id" index="index" separator=",">
+        #{id}
+      </foreach>
+      )
+    </if>
+  </select>
+
+  <select id="findNoVisit" parameterType="com.shop.cereshop.business.param.tool.CrowdCondition" resultType="java.lang.String">
+    SELECT a.buyer_user_id from cere_business_buyer_user a
+    LEFT JOIN (SELECT COUNT(*) count,buyer_user_id from cere_shop_visit where shop_id = #{shopId} and DATE_SUB(CURDATE(), INTERVAL #{number} DAY) &lt;= date(visit_time)
+    GROUP BY buyer_user_id) b ON a.buyer_user_id=b.buyer_user_id
+    where a.shop_id = #{shopId} and b.count is null
+    <if test="ids!=null and ids.size()>0">
+      and a.buyer_user_id in (
+      <foreach collection="ids" item="id" index="index" separator=",">
+        #{id}
+      </foreach>
+      )
+    </if>
+  </select>
+
+  <select id="getById" parameterType="java.lang.Object" resultType="com.shop.cereshop.commons.domain.tool.CereShopCrowd">
+    SELECT shop_crowd_id, shop_id, crowd_name, shop_buy_yes, shop_buy_no, shop_order_yes, shop_order_no,
+    shop_add_yes, shop_add_no, shop_visit_yes, shop_visit_no, effective_buy, effective_buy_count,
+    effective_price, effective_price_count, users, label_id,ids FROM cere_shop_crowd where shop_crowd_id=#{shopCrowdId}
+  </select>
+
+  <select id="getAll" parameterType="com.shop.cereshop.business.param.tool.ShopCrowdGetAllParam" resultType="com.shop.cereshop.business.page.tool.ShopCrowd">
+    SELECT a.shop_crowd_id, a.shop_id, crowd_name, shop_buy_yes, shop_buy_no, shop_order_yes, shop_order_no,
+    shop_add_yes, shop_add_no, shop_visit_yes, shop_visit_no, effective_buy, effective_buy_count,
+    effective_price, effective_price_count, users, b.label_id,b.label_name FROM cere_shop_crowd a
+    LEFT JOIN (SELECT a.label_id,b.shop_crowd_id,GROUP_CONCAT(a.label_name) label_name FROM cere_shop_user_label a,cere_shop_crowd b
+    WHERE b.label_id LIKE CONCAT('%,',a.label_id,'%')) b ON a.shop_crowd_id=b.shop_crowd_id
+    where a.shop_id=#{shopId}
+    <if test="crowdName!=null and crowdName!=''">
+      and a.crowd_name like concat('%',#{crowdName},'%')
+    </if>
+    <if test="min!=null">
+      and a.users&gt;=#{min}
+    </if>
+    <if test="max!=null">
+      and a.users&lt;=#{max}
+    </if>
+    ORDER BY a.update_time DESC,a.create_time DESC
+  </select>
+
+  <select id="selectCrowd" parameterType="com.shop.cereshop.business.param.tool.ShopCrowdGetAllParam" resultType="com.shop.cereshop.business.page.tool.ShopCrowd">
+    SELECT a.shop_crowd_id, a.shop_id, crowd_name, shop_buy_yes, shop_buy_no, shop_order_yes, shop_order_no,
+    shop_add_yes, shop_add_no, shop_visit_yes, shop_visit_no, effective_buy, effective_buy_count,
+    effective_price, effective_price_count, users, b.label_id,b.label_name FROM cere_shop_crowd a
+    LEFT JOIN (SELECT a.label_id,b.shop_crowd_id,GROUP_CONCAT(a.label_name) label_name FROM cere_shop_user_label a,cere_shop_crowd b
+    WHERE b.label_id LIKE CONCAT('%,',a.label_id,'%')) b ON a.shop_crowd_id=b.shop_crowd_id
+    where a.shop_id=#{shopId}
+    <if test="crowdName!=null and crowdName!=''">
+      and a.crowd_name like concat('%',#{crowdName},'%')
+    </if>
+  </select>
+
+  <select id="findUserIds" parameterType="java.lang.Object" resultType="java.lang.String">
+    SELECT ids FROM cere_shop_crowd where shop_crowd_id=#{shopCrowdId}
+  </select>
+
+  <select id="getUsers" parameterType="java.util.List" resultType="com.shop.cereshop.business.page.buyer.BuyerUser">
+    SELECT a.buyer_user_id,IF(a.wechat_name IS NULL,a.`name`,a.wechat_name) `name`,
+    a.phone,b.frequency,b.total,c.lastTime,a.create_time time,d.labelName from cere_buyer_user a
+    LEFT JOIN (SELECT COUNT(*) frequency,SUM(price) total,buyer_user_id from cere_shop_order where state in (2,3,4) GROUP BY buyer_user_id) b
+    ON a.buyer_user_id=b.buyer_user_id
+    LEFT JOIN (SELECT buyer_user_id,create_time lastTime from cere_shop_order where state in (2,3,4) ORDER BY create_time DESC LIMIT 1) c
+    ON a.buyer_user_id=c.buyer_user_id
+    LEFT JOIN (SELECT a.buyer_user_id,GROUP_CONCAT(b.label_name) labelName,GROUP_CONCAT(a.label_id) labelIds from
+    cere_buyer_shop_label a,cere_shop_user_label b where a.label_id=b.label_id GROUP BY a.buyer_user_id) d
+    ON a.buyer_user_id=d.buyer_user_id
+    where a.buyer_user_id in (
+    <foreach collection="ids" item="id" index="index" separator=",">
+      #{id}
+    </foreach>
+    )
+    GROUP BY a.buyer_user_id
+  </select>
+
+  <delete id="deleteByIds" parameterType="java.lang.Object">
+    DELETE FROM cere_shop_crowd where shop_crowd_id in (
+    <foreach collection="ids" item="id" index="index" separator=",">
+      #{id}
+    </foreach>
+    )
+  </delete>
+
+  <select id="findAll" resultType="com.shop.cereshop.commons.domain.tool.CereShopCrowd">
+    SELECT * FROM cere_shop_crowd where shop_id=75
+  </select>
+
+  <update id="updateBatch" parameterType="java.util.List">
+    update cere_shop_crowd
+    <trim prefix="set" suffixOverrides=",">
+      <trim prefix="ids =case" suffix="end,">
+        <foreach collection="list" item="i" index="index">
+          <if test="i.ids!=null">
+            when shop_crowd_id=#{i.shopCrowdId} then #{i.ids}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="users =case" suffix="end,">
+        <foreach collection="list" item="i" index="index">
+          <if test="i.users!=null">
+            when shop_crowd_id=#{i.shopCrowdId} then #{i.users}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="update_time =case" suffix="end,">
+        <foreach collection="list" item="i" index="index">
+          <if test="i.updateTime!=null">
+            when shop_crowd_id=#{i.shopCrowdId} then #{i.updateTime}
+          </if>
+        </foreach>
+      </trim>
+    </trim>
+    where
+    <foreach collection="list" separator="or" item="i" index="index" >
+      shop_crowd_id=#{i.shopCrowdId}
+    </foreach>
+  </update>
+</mapper>

@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.cereshop.admin.dao.shop.CereShopCheckDAO">
+  <resultMap id="BaseResultMap" type="com.shop.cereshop.commons.domain.shop.CereShopCheck">
+    <id column="check_id" jdbcType="BIGINT" property="checkId" />
+    <result column="shop_id" jdbcType="BIGINT" property="shopId" />
+    <result column="check_handle" jdbcType="BIT" property="checkHandle" />
+    <result column="reason" jdbcType="VARCHAR" property="reason" />
+    <result column="create_time" jdbcType="VARCHAR" property="createTime" />
+    <result column="update_time" jdbcType="VARCHAR" property="updateTime" />
+  </resultMap>
+  <insert id="insert" parameterType="com.shop.cereshop.commons.domain.shop.CereShopCheck">
+    insert into cere_shop_check (shop_id, check_handle, reason, create_time,
+      update_time)
+    values (#{shopId,jdbcType=BIGINT}, #{checkHandle,jdbcType=BIT},#{reason,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR},
+      #{updateTime,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" keyColumn="check_id" keyProperty="checkId" parameterType="com.shop.cereshop.commons.domain.shop.CereShopCheck" useGeneratedKeys="true">
+    insert into cere_shop_check
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="shopId != null">
+        shop_id,
+      </if>
+      <if test="checkHandle != null">
+        check_handle,
+      </if>
+      <if test="reason != null and reason!=''">
+        reason,
+      </if>
+      <if test="createTime != null and createTime!=''">
+        create_time,
+      </if>
+      <if test="updateTime != null and updateTime!=''">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="shopId != null">
+        #{shopId,jdbcType=BIGINT},
+      </if>
+      <if test="checkHandle != null">
+        #{checkHandle,jdbcType=BIT},
+      </if>
+      <if test="reason != null and reason!=''">
+        #{reason,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null and createTime!=''">
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null and updateTime!=''">
+        #{updateTime,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+  <select id="getAll" parameterType="com.shop.cereshop.admin.param.shopcheck.CheckGetAllParam" resultType="com.shop.cereshop.admin.page.shop.Shop">
+    SELECT b.shop_id,b.shop_name,b.authen_type,b.shop_phone,
+    b.create_time,a.check_id from cere_shop_check a
+    LEFT JOIN cere_platform_shop b ON a.shop_id=b.shop_id
+    where 1=1
+    <if test="shopName!=null and shopName!=''">
+      and b.shop_name like concat('%',#{shopName},'%')
+    </if>
+    <if test="shopPhone!=null and shopPhone!=''">
+      and b.shop_phone like concat('%',#{shopPhone},'%')
+    </if>
+    <if test="authenType!=null">
+      and b.authen_type=#{authenType}
+    </if>
+    <if test="startTime!=null and startTime!=''">
+      and b.create_time&gt;=#{startTime} and a.create_time&lt;=#{endTime}
+    </if>
+    <if test="checkState!=null">
+      and b.check_state=#{checkState}
+    </if>
+    ORDER BY a.update_time DESC,a.create_time DESC
+  </select>
+
+  <select id="getStayAll" parameterType="com.shop.cereshop.admin.param.shopcheck.CheckGetAllParam" resultType="com.shop.cereshop.admin.page.shop.Shop">
+    SELECT a.shop_id,a.shop_name,a.authen_type,a.shop_phone,
+    a.create_time,b.check_id from cere_platform_shop a
+    LEFT JOIN cere_shop_check b ON a.shop_id=b.shop_id
+    where 1=1
+    <if test="shopName!=null and shopName!=''">
+      and a.shop_name like concat('%',#{shopName},'%')
+    </if>
+    <if test="shopPhone!=null and shopPhone!=''">
+      and a.shop_phone like concat('%',#{shopPhone},'%')
+    </if>
+    <if test="authenType!=null">
+      and a.authen_type=#{authenType}
+    </if>
+    <if test="startTime!=null and startTime!=''">
+      and a.create_time&gt;=#{startTime} and a.create_time&lt;=#{endTime}
+    </if>
+    <if test="checkState!=null">
+      and a.check_state=#{checkState}
+    </if>
+    ORDER BY a.update_time DESC,a.create_time DESC
+  </select>
+
+  <delete id="deleteById" parameterType="java.lang.Object">
+    DELETE FROM cere_shop_check where check_id=#{checkId}
+  </delete>
+</mapper>

@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.cereshop.business.dao.shop.CereShopBannerDAO">
+  <resultMap id="BaseResultMap" type="com.shop.cereshop.commons.domain.shop.CereShopBanner">
+    <id column="banner_id" jdbcType="BIGINT" property="bannerId" />
+    <result column="shop_id" jdbcType="BIGINT" property="shopId" />
+    <result column="banner_style" jdbcType="BIT" property="bannerStyle" />
+    <result column="banner_image" jdbcType="VARCHAR" property="bannerImage" />
+    <result column="banner_url" jdbcType="VARCHAR" property="bannerUrl" />
+    <result column="state" jdbcType="BIT" property="state" />
+    <result column="create_time" jdbcType="VARCHAR" property="createTime" />
+    <result column="update_time" jdbcType="VARCHAR" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    banner_id, shop_id, banner_style, banner_image, banner_url, `state`, create_time, 
+    update_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from cere_shop_banner
+    where banner_id = #{bannerId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from cere_shop_banner
+    where banner_id = #{bannerId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" keyColumn="banner_id" keyProperty="bannerId" parameterType="com.shop.cereshop.commons.domain.shop.CereShopBanner" useGeneratedKeys="true">
+    insert into cere_shop_banner (shop_id, banner_style, banner_image, 
+      banner_url, `state`, create_time, 
+      update_time)
+    values (#{shopId,jdbcType=BIGINT}, #{bannerStyle,jdbcType=BIT}, #{bannerImage,jdbcType=VARCHAR}, 
+      #{bannerUrl,jdbcType=VARCHAR}, #{state,jdbcType=BIT}, #{createTime,jdbcType=VARCHAR}, 
+      #{updateTime,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" keyColumn="banner_id" keyProperty="bannerId" parameterType="com.shop.cereshop.commons.domain.shop.CereShopBanner" useGeneratedKeys="true">
+    insert into cere_shop_banner
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="shopId != null">
+        shop_id,
+      </if>
+      <if test="bannerStyle != null">
+        banner_style,
+      </if>
+      <if test="bannerImage != null and bannerImage!=''">
+        banner_image,
+      </if>
+      <if test="bannerUrl != null and bannerUrl!=''">
+        banner_url,
+      </if>
+      <if test="state != null">
+        `state`,
+      </if>
+      <if test="createTime != null and createTime!=''">
+        create_time,
+      </if>
+      <if test="updateTime != null and updateTime!=''">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="shopId != null">
+        #{shopId,jdbcType=BIGINT},
+      </if>
+      <if test="bannerStyle != null">
+        #{bannerStyle,jdbcType=BIT},
+      </if>
+      <if test="bannerImage != null and bannerImage!=''">
+        #{bannerImage,jdbcType=VARCHAR},
+      </if>
+      <if test="bannerUrl != null and bannerUrl!=''">
+        #{bannerUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=BIT},
+      </if>
+      <if test="createTime != null and createTime!=''">
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null and updateTime!=''">
+        #{updateTime,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.shop.cereshop.commons.domain.shop.CereShopBanner">
+    update cere_shop_banner
+    <set>
+      <if test="shopId != null">
+        shop_id = #{shopId,jdbcType=BIGINT},
+      </if>
+      <if test="bannerStyle != null">
+        banner_style = #{bannerStyle,jdbcType=BIT},
+      </if>
+      <if test="bannerImage != null and bannerImage!=''">
+        banner_image = #{bannerImage,jdbcType=VARCHAR},
+      </if>
+      <if test="bannerUrl != null and bannerUrl!=''">
+        banner_url = #{bannerUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null">
+        `state` = #{state,jdbcType=BIT},
+      </if>
+      <if test="createTime != null and createTime!=''">
+        create_time = #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null and updateTime!=''">
+        update_time = #{updateTime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where banner_id = #{bannerId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.shop.cereshop.commons.domain.shop.CereShopBanner">
+    update cere_shop_banner
+    set shop_id = #{shopId,jdbcType=BIGINT},
+      banner_style = #{bannerStyle,jdbcType=BIT},
+      banner_image = #{bannerImage,jdbcType=VARCHAR},
+      banner_url = #{bannerUrl,jdbcType=VARCHAR},
+      `state` = #{state,jdbcType=BIT},
+      create_time = #{createTime,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=VARCHAR}
+    where banner_id = #{bannerId,jdbcType=BIGINT}
+  </update>
+
+  <select id="getById" parameterType="java.lang.Object" resultType="com.shop.cereshop.business.page.shop.ShopBanner">
+    SELECT banner_id,banner_style,banner_image,banner_url FROM cere_shop_banner where banner_id=#{bannerId}
+  </select>
+</mapper>

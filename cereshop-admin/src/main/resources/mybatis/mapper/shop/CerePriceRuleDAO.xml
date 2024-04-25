@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.cereshop.admin.dao.shop.CerePriceRuleDAO">
+  <resultMap id="BaseResultMap" type="com.shop.cereshop.commons.domain.tool.CerePriceRule">
+    <result column="price_id" jdbcType="BIGINT" property="priceId" />
+    <result column="number" jdbcType="INTEGER" property="number" />
+    <result column="price" jdbcType="DECIMAL" property="price" />
+  </resultMap>
+  <insert id="insert" parameterType="com.shop.cereshop.commons.domain.tool.CerePriceRule">
+    insert into cere_price_rule (price_id, `number`, price
+      )
+    values (#{priceId,jdbcType=BIGINT}, #{number,jdbcType=INTEGER}, #{price,jdbcType=DECIMAL}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.shop.cereshop.commons.domain.tool.CerePriceRule">
+    insert into cere_price_rule
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="priceId != null">
+        price_id,
+      </if>
+      <if test="number != null">
+        `number`,
+      </if>
+      <if test="price != null">
+        price,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="priceId != null">
+        #{priceId,jdbcType=BIGINT},
+      </if>
+      <if test="number != null">
+        #{number,jdbcType=INTEGER},
+      </if>
+      <if test="price != null">
+        #{price,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+</mapper>

@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.cereshop.business.dao.label.CerePlatformLabelDAO">
+  <resultMap id="BaseResultMap" type="com.shop.cereshop.commons.domain.label.CerePlatformLabel">
+    <id column="buyer_label_id" jdbcType="BIGINT" property="buyerLabelId" />
+    <result column="label_name" jdbcType="VARCHAR" property="labelName" />
+    <result column="label_type" jdbcType="BIT" property="labelType" />
+    <result column="meet_conditions" jdbcType="BIT" property="meetConditions" />
+    <result column="last_consumption_time" jdbcType="BIT" property="lastConsumptionTime" />
+    <result column="consumption_frequency" jdbcType="BIT" property="consumptionFrequency" />
+    <result column="consumption_money" jdbcType="BIT" property="consumptionMoney" />
+    <result column="consumption_day" jdbcType="INTEGER" property="consumptionDay" />
+    <result column="consumption_start_time" jdbcType="VARCHAR" property="consumptionStartTime" />
+    <result column="consumption_end_time" jdbcType="VARCHAR" property="consumptionEndTime" />
+    <result column="frequency_start" jdbcType="INTEGER" property="frequencyStart" />
+    <result column="frequency_end" jdbcType="INTEGER" property="frequencyEnd" />
+    <result column="money_start" jdbcType="DECIMAL" property="moneyStart" />
+    <result column="money_end" jdbcType="DECIMAL" property="moneyEnd" />
+    <result column="create_time" jdbcType="VARCHAR" property="createTime" />
+    <result column="update_time" jdbcType="VARCHAR" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    buyer_label_id, label_name, label_type, meet_conditions, last_consumption_time, consumption_frequency, 
+    consumption_money, consumption_day, consumption_start_time, consumption_end_time, 
+    frequency_start, frequency_end, money_start, money_end, create_time, update_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from cere_platform_label
+    where buyer_label_id = #{buyerLabelId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from cere_platform_label
+    where buyer_label_id = #{buyerLabelId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" keyColumn="buyer_label_id" keyProperty="buyerLabelId" parameterType="com.shop.cereshop.commons.domain.label.CerePlatformLabel" useGeneratedKeys="true">
+    insert into cere_platform_label (label_name, label_type, meet_conditions, 
+      last_consumption_time, consumption_frequency, consumption_money, 
+      consumption_day, consumption_start_time, consumption_end_time, 
+      frequency_start, frequency_end, money_start, 
+      money_end, create_time, update_time
+      )
+    values (#{labelName,jdbcType=VARCHAR}, #{labelType,jdbcType=BIT}, #{meetConditions,jdbcType=BIT}, 
+      #{lastConsumptionTime,jdbcType=BIT}, #{consumptionFrequency,jdbcType=BIT}, #{consumptionMoney,jdbcType=BIT}, 
+      #{consumptionDay,jdbcType=INTEGER}, #{consumptionStartTime,jdbcType=VARCHAR}, #{consumptionEndTime,jdbcType=VARCHAR}, 
+      #{frequencyStart,jdbcType=INTEGER}, #{frequencyEnd,jdbcType=INTEGER}, #{moneyStart,jdbcType=DECIMAL}, 
+      #{moneyEnd,jdbcType=DECIMAL}, #{createTime,jdbcType=VARCHAR}, #{updateTime,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" keyColumn="buyer_label_id" keyProperty="buyerLabelId" parameterType="com.shop.cereshop.commons.domain.label.CerePlatformLabel" useGeneratedKeys="true">
+    insert into cere_platform_label
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="labelName != null and labelName!=''">
+        label_name,
+      </if>
+      <if test="labelType != null">
+        label_type,
+      </if>
+      <if test="meetConditions != null">
+        meet_conditions,
+      </if>
+      <if test="lastConsumptionTime != null">
+        last_consumption_time,
+      </if>
+      <if test="consumptionFrequency != null">
+        consumption_frequency,
+      </if>
+      <if test="consumptionMoney != null">
+        consumption_money,
+      </if>
+      <if test="consumptionDay != null">
+        consumption_day,
+      </if>
+      <if test="consumptionStartTime != null and consumptionStartTime!=''">
+        consumption_start_time,
+      </if>
+      <if test="consumptionEndTime != null and consumptionEndTime!=''">
+        consumption_end_time,
+      </if>
+      <if test="frequencyStart != null">
+        frequency_start,
+      </if>
+      <if test="frequencyEnd != null">
+        frequency_end,
+      </if>
+      <if test="moneyStart != null">
+        money_start,
+      </if>
+      <if test="moneyEnd != null">
+        money_end,
+      </if>
+      <if test="createTime != null and createTime!=''">
+        create_time,
+      </if>
+      <if test="updateTime != null and updateTime!=''">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="labelName != null and labelName!=''">
+        #{labelName,jdbcType=VARCHAR},
+      </if>
+      <if test="labelType != null">
+        #{labelType,jdbcType=BIT},
+      </if>
+      <if test="meetConditions != null">
+        #{meetConditions,jdbcType=BIT},
+      </if>
+      <if test="lastConsumptionTime != null">
+        #{lastConsumptionTime,jdbcType=BIT},
+      </if>
+      <if test="consumptionFrequency != null">
+        #{consumptionFrequency,jdbcType=BIT},
+      </if>
+      <if test="consumptionMoney != null">
+        #{consumptionMoney,jdbcType=BIT},
+      </if>
+      <if test="consumptionDay != null">
+        #{consumptionDay,jdbcType=INTEGER},
+      </if>
+      <if test="consumptionStartTime != null and consumptionStartTime!=''">
+        #{consumptionStartTime,jdbcType=VARCHAR},
+      </if>
+      <if test="consumptionEndTime != null and consumptionEndTime!=''">
+        #{consumptionEndTime,jdbcType=VARCHAR},
+      </if>
+      <if test="frequencyStart != null">
+        #{frequencyStart,jdbcType=INTEGER},
+      </if>
+      <if test="frequencyEnd != null">
+        #{frequencyEnd,jdbcType=INTEGER},
+      </if>
+      <if test="moneyStart != null">
+        #{moneyStart,jdbcType=DECIMAL},
+      </if>
+      <if test="moneyEnd != null">
+        #{moneyEnd,jdbcType=DECIMAL},
+      </if>
+      <if test="createTime != null and createTime!=''">
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null and updateTime!=''">
+        #{updateTime,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.shop.cereshop.commons.domain.label.CerePlatformLabel">
+    update cere_platform_label
+    <set>
+      <if test="labelName != null and labelName!=''">
+        label_name = #{labelName,jdbcType=VARCHAR},
+      </if>
+      <if test="labelType != null">
+        label_type = #{labelType,jdbcType=BIT},
+      </if>
+        meet_conditions = #{meetConditions,jdbcType=BIT},
+        last_consumption_time = #{lastConsumptionTime,jdbcType=BIT},
+        consumption_frequency = #{consumptionFrequency,jdbcType=BIT},
+        consumption_money = #{consumptionMoney,jdbcType=BIT},
+        consumption_day = #{consumptionDay,jdbcType=INTEGER},
+        consumption_start_time = #{consumptionStartTime,jdbcType=VARCHAR},
+        consumption_end_time = #{consumptionEndTime,jdbcType=VARCHAR},
+        frequency_start = #{frequencyStart,jdbcType=INTEGER},
+        frequency_end = #{frequencyEnd,jdbcType=INTEGER},
+        money_start = #{moneyStart,jdbcType=DECIMAL},
+        money_end = #{moneyEnd,jdbcType=DECIMAL},
+      <if test="createTime != null and createTime!=''">
+        create_time = #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null and updateTime!=''">
+        update_time = #{updateTime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where buyer_label_id = #{buyerLabelId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.shop.cereshop.commons.domain.label.CerePlatformLabel">
+    update cere_platform_label
+    set label_name = #{labelName,jdbcType=VARCHAR},
+      label_type = #{labelType,jdbcType=BIT},
+      meet_conditions = #{meetConditions,jdbcType=BIT},
+      last_consumption_time = #{lastConsumptionTime,jdbcType=BIT},
+      consumption_frequency = #{consumptionFrequency,jdbcType=BIT},
+      consumption_money = #{consumptionMoney,jdbcType=BIT},
+      consumption_day = #{consumptionDay,jdbcType=INTEGER},
+      consumption_start_time = #{consumptionStartTime,jdbcType=VARCHAR},
+      consumption_end_time = #{consumptionEndTime,jdbcType=VARCHAR},
+      frequency_start = #{frequencyStart,jdbcType=INTEGER},
+      frequency_end = #{frequencyEnd,jdbcType=INTEGER},
+      money_start = #{moneyStart,jdbcType=DECIMAL},
+      money_end = #{moneyEnd,jdbcType=DECIMAL},
+      create_time = #{createTime,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=VARCHAR}
+    where buyer_label_id = #{buyerLabelId,jdbcType=BIGINT}
+  </update>
+</mapper>

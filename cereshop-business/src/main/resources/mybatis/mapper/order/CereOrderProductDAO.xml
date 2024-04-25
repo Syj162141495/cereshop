@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.cereshop.business.dao.order.CereOrderProductDAO">
+  <resultMap id="BaseResultMap" type="com.shop.cereshop.commons.domain.order.CereOrderProduct">
+    <id column="order_product_id" jdbcType="BIGINT" property="orderProductId" />
+    <result column="order_id" jdbcType="BIGINT" property="orderId" />
+    <result column="product_id" jdbcType="BIGINT" property="productId" />
+    <result column="sku_id" jdbcType="BIGINT" property="skuId" />
+    <result column="product_name" jdbcType="VARCHAR" property="productName" />
+    <result column="number" jdbcType="INTEGER" property="number" />
+    <result column="product_price" jdbcType="DECIMAL" property="productPrice" />
+    <result column="image" jdbcType="VARCHAR" property="image" />
+    <result column="SKU" jdbcType="VARCHAR" property="SKU" />
+    <result column="weight" jdbcType="DECIMAL" property="weight" />
+  </resultMap>
+  <insert id="insert" keyColumn="order_product_id" keyProperty="orderProductId" parameterType="com.shop.cereshop.commons.domain.order.CereOrderProduct" useGeneratedKeys="true">
+    insert into cere_order_product (order_id, product_id, sku_id,
+    product_name,
+    `number`, product_price, image,SKU,weight
+    )
+    values (#{orderId,jdbcType=BIGINT}, #{productId,jdbcType=BIGINT}, #{skuId,jdbcType=BIGINT},
+    #{productName,jdbcType=VARCHAR},
+    #{number,jdbcType=INTEGER}, #{productPrice,jdbcType=DECIMAL}, #{image,jdbcType=VARCHAR},#{SKU,jdbcType=VARCHAR},#{weight,jdbcType=DECIMAL}
+    )
+  </insert>
+  <insert id="insertSelective" keyColumn="order_product_id" keyProperty="orderProductId" parameterType="com.shop.cereshop.commons.domain.order.CereOrderProduct" useGeneratedKeys="true">
+    insert into cere_order_product
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="orderId != null">
+        order_id,
+      </if>
+      <if test="productId != null">
+        product_id,
+      </if>
+      <if test="skuId != null">
+        sku_id,
+      </if>
+      <if test="productName != null and productName!=''">
+        product_name,
+      </if>
+      <if test="number != null">
+        `number`,
+      </if>
+      <if test="productPrice != null">
+        product_price,
+      </if>
+      <if test="image != null and image!=''">
+        image,
+      </if>
+      <if test="SKU != null and SKU!=''">
+        SKU,
+      </if>
+      <if test="weight != null">
+        weight,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="orderId != null">
+        #{orderId,jdbcType=BIGINT},
+      </if>
+      <if test="productId != null">
+        #{productId,jdbcType=BIGINT},
+      </if>
+      <if test="skuId != null">
+        #{skuId,jdbcType=BIGINT},
+      </if>
+      <if test="productName != null and productName!=''">
+        #{productName,jdbcType=VARCHAR},
+      </if>
+      <if test="number != null">
+        #{number,jdbcType=INTEGER},
+      </if>
+      <if test="productPrice != null">
+        #{productPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="image != null and image!=''">
+        #{image,jdbcType=VARCHAR},
+      </if>
+      <if test="SKU != null and SKU!=''">
+        #{SKU,jdbcType=VARCHAR},
+      </if>
+      <if test="weight != null">
+        #{weight,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+</mapper>

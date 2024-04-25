@@ -1,0 +1,470 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.cereshop.business.dao.activity.CereActivitySignDAO">
+  <resultMap id="BaseResultMap" type="com.shop.cereshop.commons.domain.activity.CereActivitySign">
+    <id column="sign_id" jdbcType="BIGINT" property="signId" />
+    <result column="sign_code" jdbcType="VARCHAR" property="signCode" />
+    <result column="shop_id" jdbcType="BIGINT" property="shopId" />
+    <result column="activity_id" jdbcType="BIGINT" property="activityId" />
+    <result column="bond_money" jdbcType="DECIMAL" property="bondMoney" />
+    <result column="payment_mode" jdbcType="BIT" property="paymentMode" />
+    <result column="qr_image" jdbcType="VARCHAR" property="qrImage" />
+    <result column="state" jdbcType="BIT" property="state" />
+    <result column="bond_state" jdbcType="BIT" property="bondState" />
+    <result column="payment_time" jdbcType="VARCHAR" property="paymentTime" />
+    <result column="return_time" jdbcType="VARCHAR" property="returnTime" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="sign_type" jdbcType="INTEGER" property="signType" />
+    <result column="create_time" jdbcType="VARCHAR" property="createTime" />
+    <result column="update_time" jdbcType="VARCHAR" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    sign_id, sign_code, shop_id, activity_id, bond_money, payment_mode, qr_image, `state`,
+    bond_state, payment_time, return_time,remark,sign_type, create_time, update_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from cere_activity_sign
+    where sign_id = #{signId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from cere_activity_sign
+    where sign_id = #{signId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" keyColumn="sign_id" keyProperty="signId" parameterType="com.shop.cereshop.commons.domain.activity.CereActivitySign" useGeneratedKeys="true">
+    insert into cere_activity_sign (sign_code, shop_id, activity_id,
+                                    bond_money, payment_mode, qr_image,
+                                    `state`, bond_state, payment_time,
+                                    return_time,remark,sign_type, create_time, update_time
+    )
+    values (#{signCode,jdbcType=VARCHAR}, #{shopId,jdbcType=BIGINT}, #{activityId,jdbcType=BIGINT},
+            #{bondMoney,jdbcType=DECIMAL}, #{paymentMode,jdbcType=BIT}, #{qrImage,jdbcType=VARCHAR},
+            #{state,jdbcType=BIT}, #{bondState,jdbcType=BIT}, #{paymentTime,jdbcType=VARCHAR},
+            #{returnTime,jdbcType=VARCHAR},#{remark,jdbcType=VARCHAR},#{signType,jdbcType=INTEGER}, #{createTime,jdbcType=VARCHAR}, #{updateTime,jdbcType=VARCHAR}
+           )
+  </insert>
+  <insert id="insertSelective" keyColumn="sign_id" keyProperty="signId" parameterType="com.shop.cereshop.commons.domain.activity.CereActivitySign" useGeneratedKeys="true">
+    insert into cere_activity_sign
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="signCode != null and signCode!=''">
+        sign_code,
+      </if>
+      <if test="shopId != null">
+        shop_id,
+      </if>
+      <if test="activityId != null">
+        activity_id,
+      </if>
+      <if test="bondMoney != null">
+        bond_money,
+      </if>
+      <if test="paymentMode != null">
+        payment_mode,
+      </if>
+      <if test="qrImage != null and qrImage!=''">
+        qr_image,
+      </if>
+      <if test="state != null">
+        `state`,
+      </if>
+      <if test="bondState != null">
+        bond_state,
+      </if>
+      <if test="paymentTime != null and paymentTime!=''">
+        payment_time,
+      </if>
+      <if test="returnTime != null and returnTime!=''">
+        return_time,
+      </if>
+      <if test="remark != null and remark!=''">
+        remark,
+      </if>
+      <if test="signType != null">
+        sign_type,
+      </if>
+      <if test="createTime != null and createTime!=''">
+        create_time,
+      </if>
+      <if test="updateTime != null and updateTime!=''">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="signCode != null and signCode!=''">
+        #{signCode,jdbcType=VARCHAR},
+      </if>
+      <if test="shopId != null">
+        #{shopId,jdbcType=BIGINT},
+      </if>
+      <if test="activityId != null">
+        #{activityId,jdbcType=BIGINT},
+      </if>
+      <if test="bondMoney != null">
+        #{bondMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="paymentMode != null">
+        #{paymentMode,jdbcType=BIT},
+      </if>
+      <if test="qrImage != null and qrImage!=''">
+        #{qrImage,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=BIT},
+      </if>
+      <if test="bondState != null">
+        #{bondState,jdbcType=BIT},
+      </if>
+      <if test="paymentTime != null and paymentTime!=''">
+        #{paymentTime,jdbcType=VARCHAR},
+      </if>
+      <if test="returnTime != null and returnTime!=''">
+        #{returnTime,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null and remark!=''">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="signType != null">
+        #{signType,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null and createTime!=''">
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null and updateTime!=''">
+        #{updateTime,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.shop.cereshop.commons.domain.activity.CereActivitySign">
+    update cere_activity_sign
+    <set>
+      <if test="signCode != null and signCode!=''">
+        sign_code = #{signCode,jdbcType=VARCHAR},
+      </if>
+      <if test="shopId != null">
+        shop_id = #{shopId,jdbcType=BIGINT},
+      </if>
+      <if test="activityId != null">
+        activity_id = #{activityId,jdbcType=BIGINT},
+      </if>
+      <if test="bondMoney != null">
+        bond_money = #{bondMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="paymentMode != null">
+        payment_mode = #{paymentMode,jdbcType=BIT},
+      </if>
+      <if test="qrImage != null and qrImage!=''">
+        qr_image = #{qrImage,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null">
+        `state` = #{state,jdbcType=BIT},
+      </if>
+      <if test="bondState != null">
+        bond_state = #{bondState,jdbcType=BIT},
+      </if>
+      <if test="paymentTime != null and paymentTime!=''">
+        payment_time = #{paymentTime,jdbcType=VARCHAR},
+      </if>
+      <if test="returnTime != null and returnTime!=''">
+        return_time = #{returnTime,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null and remark!=''">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="signType != null">
+        sign_type = #{signType,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null and createTime!=''">
+        create_time = #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null and updateTime!=''">
+        update_time = #{updateTime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where sign_id = #{signId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.shop.cereshop.commons.domain.activity.CereActivitySign">
+    update cere_activity_sign
+    set sign_code = #{signCode,jdbcType=VARCHAR},
+        shop_id = #{shopId,jdbcType=BIGINT},
+        activity_id = #{activityId,jdbcType=BIGINT},
+        bond_money = #{bondMoney,jdbcType=DECIMAL},
+        payment_mode = #{paymentMode,jdbcType=BIT},
+        qr_image = #{qrImage,jdbcType=VARCHAR},
+        `state` = #{state,jdbcType=BIT},
+        bond_state = #{bondState,jdbcType=BIT},
+        payment_time = #{paymentTime,jdbcType=VARCHAR},
+        return_time = #{returnTime,jdbcType=VARCHAR},
+        remark = #{remark,jdbcType=VARCHAR},
+        sign_type = #{signType,jdbcType=INTEGER},
+        create_time = #{createTime,jdbcType=VARCHAR},
+        update_time = #{updateTime,jdbcType=VARCHAR}
+    where sign_id = #{signId,jdbcType=BIGINT}
+  </update>
+
+  <select id="getAll" parameterType="com.shop.cereshop.business.param.activity.ActivitiSignGetAllParam" resultType="com.shop.cereshop.business.page.activity.ActivitySign">
+    SELECT a.activity_id,activity_name,a.state,IF(a.bond_money IS NULL,0,a.bond_money) bond_money,a.image productImage,
+    activity_introduce,discount_mode,a.if_bond,
+    CONCAT(activity_start_time,'至',activity_end_time) activityTime,
+    CONCAT(sign_start_time,'至',sign_end_time) signTime,a.activity_end_time,
+    b.details,c.sign_id,c.state signState,1 as signType
+    from cere_platform_activity a
+    LEFT JOIN (SELECT activity_id,GROUP_CONCAT(CONCAT('满',full_money,'减',reduce_money)) details
+    FROM cere_platform_activity_detail GROUP BY activity_id) b ON a.activity_id=b.activity_id
+    LEFT JOIN (SELECT b.shop_id,b.sign_id,b.state,b.activity_id from cere_platform_activity a,(SELECT * FROM cere_activity_sign ORDER BY create_time DESC) b
+    where a.activity_id=b.activity_id and b.shop_id=#{shopId} GROUP BY b.sign_id) c ON a.activity_id=c.activity_id
+    where 1=1
+    <if test="type != null and type == 2">
+      and c.shop_id=#{shopId}
+    </if>
+    <if test="activityName!=null and activityName!=''">
+      and a.activity_name like concat('%',#{activityName},'%')
+    </if>
+    <if test="state!=null">
+      and a.state=#{state}
+    </if>
+    <if test="examineState!=null">
+      and c.state=#{examineState}
+    </if>
+    ORDER BY a.update_time DESC,a.create_time DESC
+  </select>
+
+  <select id="getSeckillAll" parameterType="com.shop.cereshop.business.param.activity.ActivitiSignGetAllParam" resultType="com.shop.cereshop.business.page.activity.ActivitySign">
+    SELECT a.seckill_id activity_id,a.seckill_name activity_name,a.state,IF(a.bond_money IS NULL,0,a.bond_money) bond_money,
+    a.remark activity_introduce,a.if_bond,
+    CONCAT(start_time,'至',end_time) activityTime,
+    CONCAT(sign_start_time,'至',sign_end_time) signTime,
+    concat('直降',a.seckill_money,'元') details,c.sign_id,c.state signState,a.end_time activity_end_time,2 as signType
+    from cere_platform_seckill a
+    LEFT JOIN (SELECT b.shop_id,b.sign_id,b.state,b.activity_id from cere_platform_seckill a,(SELECT * FROM cere_activity_sign ORDER BY create_time DESC) b
+    where a.seckill_id=b.activity_id and b.shop_id=#{shopId} and b.sign_type=2 GROUP BY b.sign_id) c ON a.seckill_id=c.activity_id
+    where 1=1
+    <if test="type != null and type == 2">
+      and c.shop_id=#{shopId}
+    </if>
+    <if test="activityName!=null and activityName!=''">
+      and a.seckill_name like concat('%',#{activityName},'%')
+    </if>
+    <if test="state!=null">
+      and a.state=#{state}
+    </if>
+    <if test="examineState!=null">
+      and c.state=#{examineState}
+    </if>
+    ORDER BY a.update_time DESC,a.create_time DESC
+  </select>
+
+  <select id="getDiscountAll" parameterType="com.shop.cereshop.business.param.activity.ActivitiSignGetAllParam" resultType="com.shop.cereshop.business.page.activity.ActivitySign">
+    SELECT a.discount_id activity_id,a.discount_name activity_name,a.state,IF(a.bond_money IS NULL,0,a.bond_money) bond_money,
+    a.remark activity_introduce,a.if_bond,
+    CONCAT(start_time,'至',end_time) activityTime,
+    CONCAT(sign_start_time,'至',sign_end_time) signTime,
+    concat('全场',a.discount,'折')details,c.sign_id,c.state signState,a.end_time activity_end_time,3 as signType
+    from cere_platform_discount a
+    LEFT JOIN (SELECT b.shop_id,b.sign_id,b.state,b.activity_id from cere_platform_discount a,(SELECT * FROM cere_activity_sign ORDER BY create_time DESC) b
+    where a.discount_id=b.activity_id and b.shop_id=#{shopId} GROUP BY b.sign_id) c ON a.discount_id=c.activity_id
+    where 1=1
+    <if test="type != null and type == 2">
+      and c.shop_id=#{shopId}
+    </if>
+    <if test="activityName!=null and activityName!=''">
+      and a.discount_name like concat('%',#{activityName},'%')
+    </if>
+    <if test="state!=null">
+      and a.state=#{state}
+    </if>
+    <if test="examineState!=null">
+      and c.state=#{examineState}
+    </if>
+    ORDER BY a.update_time DESC,a.create_time DESC
+  </select>
+
+  <select id="getById" parameterType="java.lang.Object" resultType="com.shop.cereshop.business.page.order.Product">
+    SELECT a.product_id,b.product_name,c.maxMoney,c.minMoney from cere_sign_product a
+    LEFT JOIN cere_shop_product b ON a.product_id=b.product_id
+    LEFT JOIN (SELECT a.product_id,MIN(b.price) minMoney,MAX(b.price) maxMoney
+    from cere_shop_product a,cere_product_sku b WHERE
+    a.product_id=b.product_id) c ON a.product_id=c.product_id
+    where a.sign_id=#{signId}
+  </select>
+
+  <select id="getProducts" parameterType="com.shop.cereshop.business.param.activity.ActivitySignGetProductParam" resultType="com.shop.cereshop.business.page.order.Product">
+    SELECT a.product_id,a.product_name,b.minMoney,c.maxMoney,b.stock_number,d.product_image image,concat('￥',b.minMoney,'~￥',c.maxMoney) sectionPrice from cere_shop_product a
+    LEFT JOIN (SELECT a.product_id,MIN(a.price) minMoney,
+    SUM(a.stock_number) stock_number
+    from cere_product_sku a,cere_shop_product b where
+    a.product_id=b.product_id GROUP BY a.product_id) b ON a.product_id=b.product_id
+    LEFT JOIN (SELECT a.product_id,MAX(a.price) maxMoney
+    from cere_product_sku a,cere_shop_product b where
+    a.product_id=b.product_id GROUP BY a.product_id) c ON a.product_id=c.product_id
+    LEFT JOIN (SELECT a.product_id,a.product_image from cere_product_image a,cere_shop_product b where a.product_id=b.product_id GROUP BY a.product_id) d
+    ON a.product_id=d.product_id
+    LEFT JOIN cere_product_classify e ON a.classify_id=e.classify_id
+    where a.shop_id=#{shopId}
+    <if test='condition=="1"'>
+      and a.product_id like concat('%',#{search},'%')
+    </if>
+    <if test='condition=="2"'>
+      and a.product_name like concat('%',#{search},'%')
+    </if>
+    <if test="classifyId!=null">
+      and (a.classify_id=#{classifyId} or e.classify_level_hierarchy like concat('%/',#{classifyId},'%'))
+    </if>
+    <if test="groupId!=null">
+      and a.shop_group_id=#{groupId}
+    </if>
+  </select>
+
+  <select id="getGroups" parameterType="java.lang.Object" resultType="com.shop.cereshop.commons.domain.shop.CereShopGroup">
+    SELECT shop_group_id,group_name from cere_shop_group
+    where shop_id=#{shopId}
+  </select>
+
+  <select id="findByShopIdAndActivityId" parameterType="java.lang.Object" resultType="com.shop.cereshop.commons.domain.activity.CereActivitySign">
+    SELECT sign_id,shop_id,activity_id,bond_money,payment_mode,bond_state,sign_code FROM cere_activity_sign
+    where shop_id=#{shopId} and activity_id=#{activityId}
+  </select>
+
+  <select id="findIfBond" parameterType="java.lang.Object" resultType="com.shop.cereshop.commons.domain.activity.CerePlatformActivity">
+    SELECT if_bond,activity_start_time,activity_end_time FROM cere_platform_activity where activity_id=#{activityId}
+  </select>
+
+  <select id="findSeckillIfBond" parameterType="java.lang.Object" resultType="com.shop.cereshop.commons.domain.platformtool.CerePlatformSeckill">
+    SELECT if_bond,start_time,end_time,seckill_money FROM cere_platform_seckill where seckill_id=#{activityId}
+  </select>
+
+  <select id="findDiscountIfBond" parameterType="java.lang.Object" resultType="com.shop.cereshop.commons.domain.platformtool.CerePlatformDiscount">
+    SELECT if_bond,start_time,end_time FROM cere_platform_discount where discount_id=#{activityId}
+  </select>
+
+  <select id="findBySignId" parameterType="java.lang.Object" resultType="com.shop.cereshop.commons.domain.activity.CereActivitySign">
+    SELECT * FROM cere_activity_sign where sign_id=#{signId}
+  </select>
+
+  <select id="findActivityState" parameterType="java.lang.Object" resultType="java.lang.Integer">
+    SELECT state FROM cere_platform_activity where activity_id=#{activityId}
+  </select>
+
+  <select id="getAllBond" parameterType="com.shop.cereshop.business.param.finance.BondParam" resultType="com.shop.cereshop.business.page.finance.ShopBond">
+    SELECT c.activity_name,a.sign_id,a.bond_money,a.bond_state,
+    a.payment_time,a.return_time FROM cere_activity_sign a
+    LEFT JOIN cere_platform_shop b ON a.shop_id=b.shop_id
+    LEFT JOIN cere_platform_activity c ON a.activity_id=c.activity_id
+    where a.shop_id=#{shopId} and a.state in (0,1) and c.if_bond=1
+    ORDER BY a.update_time DESC,a.create_time DESC
+  </select>
+
+  <select id="findTransactionId" parameterType="java.lang.Object" resultType="java.lang.String">
+    SELECT transaction_id FROM cere_pay_log where order_formid like concat('%',#{formid},'%')
+  </select>
+
+  <select id="findBondTotal" resultType="java.math.BigDecimal">
+    SELECT IF(SUM(bond_money) IS NULL,0,SUM(bond_money)) from cere_activity_sign where state in (0,1)
+    and shop_id=#{shopId} and bond_state=1
+  </select>
+
+  <select id="findShopUserId" parameterType="java.lang.Long" resultType="java.lang.Long">
+    SELECT a.business_user_id FROM cere_platform_business a
+    LEFT JOIN cere_platform_shop b ON a.username=b.shop_phone
+    LEFT JOIN cere_business_shop c ON a.business_user_id=c.business_user_id and c.if_binding=1
+    where b.shop_id=#{shopId}
+  </select>
+
+  <select id="findOrders" parameterType="com.shop.cereshop.business.param.activity.ActivityGetDataParam" resultType="java.lang.Integer">
+    SELECT count(*) FROM cere_shop_order
+    where state in (2,3,4) and shop_id=#{shopId}
+    <if test='signType==1'>
+      and coupon_id=#{activityId}
+    </if>
+    <if test='signType==2'>
+      and seckill_id=#{activityId}
+    </if>
+    <if test='signType==3'>
+      and discount_id=#{activityId}
+    </if>
+  </select>
+
+  <select id="findUsers" parameterType="com.shop.cereshop.business.param.activity.ActivityGetDataParam" resultType="java.lang.Integer">
+    SELECT COUNT(*) from (SELECT a.* from (SELECT * FROM cere_shop_order where state in (2,3,4) and shop_id=#{shopId}
+    <if test='signType==1'>
+      and coupon_id=#{activityId}
+    </if>
+    <if test='signType==2'>
+      and seckill_id=#{activityId}
+    </if>
+    <if test='signType==3'>
+      and discount_id=#{activityId}
+    </if>
+    ) a
+    GROUP BY a.buyer_user_id) b
+  </select>
+
+  <select id="findTotal" parameterType="com.shop.cereshop.business.param.activity.ActivityGetDataParam" resultType="java.math.BigDecimal">
+    SELECT IF(SUM(price) IS NULL,0,SUM(price)) FROM cere_shop_order
+    where state in (2,3,4) and shop_id=#{shopId}
+    <if test='signType==1'>
+      and coupon_id=#{activityId}
+    </if>
+    <if test='signType==2'>
+      and seckill_id=#{activityId}
+    </if>
+    <if test='signType==3'>
+      and discount_id=#{activityId}
+    </if>
+  </select>
+
+  <select id="findActivityProducts" parameterType="com.shop.cereshop.business.param.activity.ActivityGetDataParam" resultType="com.shop.cereshop.business.page.activity.ActivityProductData">
+    SELECT a.product_id,c.image,c.product_name,d.stock_number,d.minPrice,e.maxPrice,
+    f.coupon_content,f.discount_mode,a.number FROM cere_sign_product a
+    LEFT JOIN cere_activity_sign b ON a.sign_id=b.sign_id and b.sign_id=#{signId}
+    LEFT JOIN (SELECT b.product_id,b.product_image image,a.product_name FROM cere_shop_product a,cere_product_image b
+    where a.product_id=b.product_id GROUP BY b.product_id) c ON a.product_id=c.product_id
+    LEFT JOIN (SELECT a.product_id,a.sku_id,MIN(a.price) minPrice,
+    SUM(a.stock_number) stock_number
+    from cere_product_sku a,cere_shop_product b where
+    a.product_id=b.product_id GROUP BY a.product_id) d ON a.product_id=d.product_id
+    LEFT JOIN (SELECT a.product_id,MAX(a.price) maxPrice
+    from cere_product_sku a,cere_shop_product b where
+    a.product_id=b.product_id GROUP BY a.product_id) e ON a.product_id=e.product_id
+    <if test='signType==1'>
+      LEFT JOIN cere_platform_activity f ON b.activity_id=f.activity_id and f.activity_id=#{activityId}
+    </if>
+    <if test='signType==2'>
+      LEFT JOIN (SELECT seckill_id,seckill_money coupon_content,1 as discount_mode FROM cere_platform_seckill) f ON b.activity_id=f.seckill_id and f.seckill_id=#{activityId}
+    </if>
+    <if test='signType==3'>
+      LEFT JOIN (SELECT discount,discount coupon_content,2 as discount_mode FROM cere_platform_discount) f ON b.activity_id=f.discount_id and f.discount_id=#{activityId}
+    </if>
+    where a.sign_id=#{signId}
+  </select>
+
+  <select id="findValume" parameterType="java.lang.Object" resultType="java.lang.Integer">
+    SELECT IF(SUM(number) IS NULL,0,SUM(number)) FROM cere_order_product a
+    LEFT JOIN cere_shop_order b ON a.order_id=b.order_id and b.state in (2,3,4)
+    where a.product_id=#{productId}
+    <if test='signType==1'>
+      and b.coupon_id=#{activityId}
+    </if>
+    <if test='signType==2'>
+      and b.seckill_id=#{activityId}
+    </if>
+    <if test='signType==3'>
+      and b.discount_id=#{activityId}
+    </if>
+  </select>
+
+  <select id="findProductTotal" parameterType="java.lang.Object" resultType="java.math.BigDecimal">
+    SELECT IF(SUM(product_price) IS NULL,0,SUM(product_price)) FROM cere_order_product a
+    LEFT JOIN cere_shop_order b ON a.order_id=b.order_id and b.state in (2,3,4)
+    where a.product_id=#{productId}
+    <if test='signType==1'>
+      and b.coupon_id=#{activityId}
+    </if>
+    <if test='signType==2'>
+      and b.seckill_id=#{activityId}
+    </if>
+    <if test='signType==3'>
+      and b.discount_id=#{activityId}
+    </if>
+  </select>
+</mapper>

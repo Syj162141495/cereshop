@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.cereshop.business.dao.business.CereBusinessUserRoleDAO">
+  <resultMap id="BaseResultMap" type="com.shop.cereshop.commons.domain.business.CereBusinessUserRole">
+    <result column="business_user_id" jdbcType="BIGINT" property="businessUserId" />
+    <result column="role_id" jdbcType="BIGINT" property="roleId" />
+  </resultMap>
+  <insert id="insert" parameterType="com.shop.cereshop.commons.domain.business.CereBusinessUserRole">
+    insert into cere_business_user_role (business_user_id, role_id)
+    values (#{businessUserId,jdbcType=BIGINT}, #{roleId,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.shop.cereshop.commons.domain.business.CereBusinessUserRole">
+    insert into cere_business_user_role
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="businessUserId != null">
+        business_user_id,
+      </if>
+      <if test="roleId != null">
+        role_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="businessUserId != null">
+        #{businessUserId,jdbcType=BIGINT},
+      </if>
+      <if test="roleId != null">
+        #{roleId,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+
+  <delete id="deleteByUserId" parameterType="java.lang.Object">
+    DELETE FROM cere_business_user_role where business_user_id=#{businessUserId}
+  </delete>
+
+  <select id="findRolesByUserId" parameterType="java.lang.Object" resultType="com.shop.cereshop.business.page.role.PlatformUserRole">
+    SELECT b.role_id,b.role_name FROM cere_business_user_role a
+    LEFT JOIN cere_platform_role b ON a.role_id=b.role_id
+    where a.business_user_id=#{businessUserId}
+  </select>
+</mapper>

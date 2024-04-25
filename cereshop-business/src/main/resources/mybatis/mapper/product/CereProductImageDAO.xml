@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.cereshop.business.dao.product.CereProductImageDAO">
+  <resultMap id="BaseResultMap" type="com.shop.cereshop.commons.domain.product.CereProductImage">
+    <result column="product_id" jdbcType="BIGINT" property="productId" />
+    <result column="product_image" jdbcType="VARCHAR" property="productImage" />
+    <result column="sort" jdbcType="INTEGER" property="sort" />
+  </resultMap>
+  <insert id="insert" parameterType="com.shop.cereshop.commons.domain.product.CereProductImage">
+    insert into cere_product_image (product_id, product_image, sort
+      )
+    values (#{productId,jdbcType=BIGINT}, #{productImage,jdbcType=VARCHAR}, #{sort,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.shop.cereshop.commons.domain.product.CereProductImage">
+    insert into cere_product_image
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="productId != null">
+        product_id,
+      </if>
+      <if test="productImage != null and productImage!=''">
+        product_image,
+      </if>
+      <if test="sort != null">
+        sort,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="productId != null">
+        #{productId,jdbcType=BIGINT},
+      </if>
+      <if test="productImage != null and productImage!=''">
+        #{productImage,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null">
+        #{sort,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+
+  <insert id="insertBatch" parameterType="java.util.List">
+    insert into cere_product_image (product_id, product_image, sort) values
+    <foreach collection="list" item="item" index="index" separator=",">
+      (
+      #{item.productId},
+      #{item.productImage},
+      #{item.sort}
+      )
+    </foreach>
+  </insert>
+
+  <delete id="deleteByProductId" parameterType="java.lang.Object">
+    DELETE FROM cere_product_image where product_id=#{productId}
+  </delete>
+
+  <select id="findByProductId" parameterType="java.lang.Object" resultType="java.lang.String">
+    SELECT product_image FROM cere_product_image where product_id=#{productId}
+  </select>
+</mapper>

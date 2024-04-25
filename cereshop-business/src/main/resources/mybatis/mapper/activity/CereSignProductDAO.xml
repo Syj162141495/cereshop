@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.cereshop.business.dao.activity.CereSignProductDAO">
+  <resultMap id="BaseResultMap" type="com.shop.cereshop.commons.domain.activity.CereSignProduct">
+    <result column="sign_id" jdbcType="BIGINT" property="signId" />
+    <result column="product_id" jdbcType="BIGINT" property="productId" />
+    <result column="number" jdbcType="INTEGER" property="number" />
+    <result column="total" jdbcType="INTEGER" property="total" />
+  </resultMap>
+  <insert id="insert" parameterType="com.shop.cereshop.commons.domain.activity.CereSignProduct">
+    insert into cere_sign_product (sign_id, product_id,`number`,`total`)
+    values (#{signId,jdbcType=BIGINT}, #{productId,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.shop.cereshop.commons.domain.activity.CereSignProduct">
+    insert into cere_sign_product
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="signId != null">
+        sign_id,
+      </if>
+      <if test="productId != null">
+        product_id,
+      </if>
+      <if test="number != null">
+        `number`,
+      </if>
+      <if test="total != null">
+        `total`,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="signId != null">
+        #{signId,jdbcType=BIGINT},
+      </if>
+      <if test="productId != null">
+        #{productId,jdbcType=BIGINT},
+      </if>
+      <if test="number != null">
+        #{number,jdbcType=INTEGER},
+      </if>
+      <if test="total != null">
+        #{total,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+
+  <insert id="insertBatch" parameterType="java.util.List">
+    insert into cere_sign_product (sign_id, product_id,`number`,`total`) values
+    <foreach collection="list" item="item" index="index" separator=",">
+      (
+      #{item.signId},
+      #{item.productId},
+      #{item.number},
+      #{item.total}
+      )
+    </foreach>
+  </insert>
+
+  <delete id="deleteBySignId" parameterType="java.lang.Long">
+    DELETE FROM cere_sign_product where sign_id=#{signId}
+  </delete>
+
+  <select id="selectProductListBySignId" resultType="java.lang.Long">
+    select product_id from cere_sign_product
+    where sign_id = #{signId}
+  </select>
+</mapper>

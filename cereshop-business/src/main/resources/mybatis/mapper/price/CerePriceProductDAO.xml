@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.cereshop.business.dao.price.CerePriceProductDAO">
+  <resultMap id="BaseResultMap" type="com.shop.cereshop.commons.domain.tool.CerePriceProduct">
+    <result column="price_id" jdbcType="BIGINT" property="priceId" />
+    <result column="product_id" jdbcType="BIGINT" property="productId" />
+  </resultMap>
+  <insert id="insert" parameterType="com.shop.cereshop.commons.domain.tool.CerePriceProduct">
+    insert into cere_price_product (price_id, product_id)
+    values (#{priceId,jdbcType=BIGINT}, #{productId,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.shop.cereshop.commons.domain.tool.CerePriceProduct">
+    insert into cere_price_product
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="priceId != null">
+        price_id,
+      </if>
+      <if test="productId != null">
+        product_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="priceId != null">
+        #{priceId,jdbcType=BIGINT},
+      </if>
+      <if test="productId != null">
+        #{productId,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+
+  <insert id="insertBatch" parameterType="java.util.List">
+    insert into cere_price_product (price_id, product_id) values
+    <foreach collection="list" item="item" index="index" separator=",">
+      (
+      #{item.priceId},
+      #{item.productId}
+      )
+    </foreach>
+  </insert>
+
+  <delete id="deleteByPriceId" parameterType="java.lang.Object">
+    DELETE FROM cere_price_product where price_id=#{priceId}
+  </delete>
+
+  <select id="findProducts" parameterType="java.lang.Object"
+          resultType="com.shop.cereshop.business.page.compose.ComposeProduct">
+    SELECT a.product_id,
+           c.product_name,
+           b.product_image image,
+           c.stock_number,
+           c.price,
+           c.original_price,
+           CONCAT('￥', c.price, '~￥', d.price) sectionPrice
+    FROM cere_price_product a
+           LEFT JOIN (SELECT a.product_id, a.product_image
+                      from cere_product_image a,
+                           cere_shop_product b
+                      where a.product_id = b.product_id
+                      GROUP BY a.product_id) b ON a.product_id = b.product_id
+           LEFT JOIN (SELECT a.product_id, b.product_name, MIN(a.price) price,a.original_price, SUM(a.stock_number) stock_number
+                      from cere_product_sku a,
+                           cere_shop_product b
+                      where a.product_id = b.product_id
+                      GROUP BY a.product_id) c ON a.product_id = c.product_id
+           LEFT JOIN (SELECT a.product_id, MAX(a.price) price
+                      from cere_product_sku a,
+                           cere_shop_product b
+                      where a.product_id = b.product_id
+                      GROUP BY a.product_id) d ON a.product_id = d.product_id
+    where a.price_id=#{priceId}
+  </select>
+
+  <select id="getPriceProducts" parameterType="com.shop.cereshop.business.page.canvas.CanvasProductParam" resultType="com.shop.cereshop.business.page.canvas.CanvasProduct">
+      SELECT s.shop_id,d.shop_name,a.product_id,s.product_name,x.users,d.shop_logo,
+      IF(h.image IS NULL OR h.image='',c.product_image,h.image) image,y.rules,
+      b.price,b.sku_id,b.original_price,IF(f.number IS NULL,0,f.number) number,b.stock_number from cere_price_product a
+      LEFT JOIN cere_shop_product s ON a.product_id=s.product_id
+      LEFT JOIN (SELECT price_id,GROUP_CONCAT('任选',number,'件',price,'元') rules FROM cere_price_rule GROUP BY price_id) y ON a.price_id=y.price_id
+      LEFT JOIN (SELECT a.product_id,a.price,a.sku_id,a.original_price,a.stock_number from cere_product_sku
+      a,cere_shop_product b
+      where a.product_id=b.product_id GROUP BY a.product_id) b ON a.product_id=b.product_id
+      LEFT JOIN (SELECT a.product_id,a.product_image from cere_product_image a,cere_shop_product b
+      where a.product_id=b.product_id GROUP BY a.product_id) c ON a.product_id=c.product_id
+      LEFT JOIN cere_platform_shop d ON s.shop_id=d.shop_id
+      LEFT JOIN cere_product_classify e ON s.classify_id=e.classify_id
+      LEFT JOIN (SELECT SUM(number) number,sku_id,order_id from cere_order_product GROUP BY sku_id) f ON
+      b.sku_id=f.sku_id
+      LEFT JOIN cere_shop_order g ON f.order_id=g.order_id and g.state in (2,3,4)
+      LEFT JOIN (SELECT a.sku_id,a.image from cere_sku_name a,cere_product_sku b where a.sku_id=b.sku_id LIMIT 1) h ON
+      b.sku_id=h.sku_id
+      LEFT JOIN (SELECT COUNT(a.buyer_user_id) users,a.product_id FROM (SELECT b.buyer_user_id,a.product_id FROM
+      cere_order_product a,cere_shop_order b
+      where a.order_id=b.order_id and b.state in (2,3,4) GROUP BY a.product_id,b.buyer_user_id) a GROUP BY
+      a.product_id) x ON a.product_id=x.product_id
+      where s.shelve_state=1
+      <if test="shopId!=null">
+          and s.shop_id=#{shopId}
+      </if>
+      <if test="search!=null and search!=''">
+          and (d.shop_name like concat('%',#{search},'%') OR
+          a.product_id like concat('%',#{search},'%') OR
+          s.product_name like concat('%',#{search},'%'))
+      </if>
+      <if test="shelveState!=null">
+          and s.shelve_state=#{shelveState}
+      </if>
+      <if test="classifyId!=null">
+          and (s.classify_id=#{classifyId} OR e.classify_level_hierarchy like concat('%/',#{classifyId},'%'))
+      </if>
+      <if test="ids!=null and ids.size()>0">
+          and a.product_id in (
+          <foreach collection="ids" item="id" index="index" separator=",">
+              #{id}
+          </foreach>
+          )
+      </if>
+  </select>
+</mapper>

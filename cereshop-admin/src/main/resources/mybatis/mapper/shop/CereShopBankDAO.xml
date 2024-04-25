@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.cereshop.admin.dao.shop.CereShopBankDAO">
+  <resultMap id="BaseResultMap" type="com.shop.cereshop.commons.domain.shop.CereShopBank">
+    <result column="shop_id" jdbcType="BIGINT" property="shopId" />
+    <result column="card_name" jdbcType="VARCHAR" property="cardName" />
+    <result column="card_number" jdbcType="VARCHAR" property="cardNumber" />
+    <result column="bank" jdbcType="BIGINT" property="bank" />
+  </resultMap>
+  <insert id="insert" parameterType="com.shop.cereshop.commons.domain.shop.CereShopBank">
+    insert into cere_shop_bank (shop_id, card_name, card_number, 
+      bank)
+    values (#{shopId,jdbcType=BIGINT}, #{cardName,jdbcType=VARCHAR}, #{cardNumber,jdbcType=VARCHAR}, 
+      #{bank,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.shop.cereshop.commons.domain.shop.CereShopBank">
+    insert into cere_shop_bank
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="shopId != null">
+        shop_id,
+      </if>
+      <if test="cardName != null and cardName!=''">
+        card_name,
+      </if>
+      <if test="cardNumber != null and cardNumber!=''">
+        card_number,
+      </if>
+      <if test="bank != null">
+        bank,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="shopId != null">
+        #{shopId,jdbcType=BIGINT},
+      </if>
+      <if test="cardName != null and cardName!=''">
+        #{cardName,jdbcType=VARCHAR},
+      </if>
+      <if test="cardNumber != null and cardNumber!=''">
+        #{cardNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="bank != null">
+        #{bank,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+</mapper>

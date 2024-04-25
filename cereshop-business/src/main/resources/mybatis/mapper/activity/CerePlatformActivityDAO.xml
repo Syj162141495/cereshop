@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.cereshop.business.dao.activity.CerePlatformActivityDAO">
+  <resultMap id="BaseResultMap" type="com.shop.cereshop.commons.domain.activity.CerePlatformActivity">
+    <id column="activity_id" jdbcType="BIGINT" property="activityId"/>
+    <result column="activity_name" jdbcType="VARCHAR" property="activityName"/>
+    <result column="activity_introduce" jdbcType="VARCHAR" property="activityIntroduce"/>
+    <result column="sign_start_time" jdbcType="VARCHAR" property="signStartTime"/>
+    <result column="sign_end_time" jdbcType="VARCHAR" property="signEndTime"/>
+    <result column="activity_start_time" jdbcType="VARCHAR" property="activityStartTime"/>
+    <result column="activity_end_time" jdbcType="VARCHAR" property="activityEndTime"/>
+    <result column="if_bond" jdbcType="BIT" property="ifBond"/>
+    <result column="bond_money" jdbcType="DECIMAL" property="bondMoney"/>
+    <result column="threshold" jdbcType="DECIMAL" property="threshold"/>
+    <result column="discount_mode" jdbcType="BIT" property="discountMode"/>
+    <result column="coupon_content" jdbcType="DECIMAL" property="couponContent"/>
+    <result column="number" jdbcType="INTEGER" property="number"/>
+    <result column="stock_number" jdbcType="INTEGER" property="stockNumber"/>
+    <result column="receive_type" jdbcType="INTEGER" property="receiveType"/>
+    <result column="frequency" jdbcType="INTEGER" property="frequency"/>
+    <result column="image" jdbcType="VARCHAR" property="image"/>
+    <result column="state" jdbcType="BIT" property="state"/>
+    <result column="create_time" jdbcType="VARCHAR" property="createTime"/>
+    <result column="update_time" jdbcType="VARCHAR" property="updateTime"/>
+  </resultMap>
+  <sql id="Base_Column_List">
+    activity_id
+    , activity_name, activity_introduce, sign_start_time, sign_end_time, activity_start_time,
+    activity_end_time, if_bond, bond_money,threshold, discount_mode, coupon_content,`number`,stock_number,receive_type,frequency, image,
+    `state`, create_time, update_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from cere_platform_activity
+    where activity_id = #{activityId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete
+    from cere_platform_activity
+    where activity_id = #{activityId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" keyColumn="activity_id" keyProperty="activityId"
+          parameterType="com.shop.cereshop.commons.domain.activity.CerePlatformActivity" useGeneratedKeys="true">
+    insert into cere_platform_activity (activity_name, activity_introduce,
+                                        sign_start_time, sign_end_time, activity_start_time,
+                                        activity_end_time, if_bond, bond_money,
+                                        threshold, discount_mode, coupon_content, `number`,stock_number, receive_type, frequency,
+                                        `state`, image, create_time, update_time)
+    values (#{activityName,jdbcType=VARCHAR}, #{activityIntroduce,jdbcType=VARCHAR},
+            #{signStartTime,jdbcType=VARCHAR}, #{signEndTime,jdbcType=VARCHAR},
+            #{activityStartTime,jdbcType=VARCHAR},
+            #{activityEndTime,jdbcType=VARCHAR}, #{ifBond,jdbcType=BIT}, #{bondMoney,jdbcType=DECIMAL},
+            #{threshold,jdbcType=DECIMAL}, #{discountMode,jdbcType=BIT},
+            #{couponContent,jdbcType=DECIMAL}, #{number,jdbcType=INTEGER},#{stockNumber,jdbcType=INTEGER}, #{receiveType,jdbcType=INTEGER},
+            #{frequency,jdbcType=INTEGER},
+            #{state,jdbcType=BIT}, #{image,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR},
+            #{updateTime,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" keyColumn="activity_id" keyProperty="activityId"
+          parameterType="com.shop.cereshop.commons.domain.activity.CerePlatformActivity" useGeneratedKeys="true">
+    insert into cere_platform_activity
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="activityName != null and activityName!=''">
+        activity_name,
+      </if>
+      <if test="activityIntroduce != null and activityIntroduce!=''">
+        activity_introduce,
+      </if>
+      <if test="signStartTime != null and signStartTime!=''">
+        sign_start_time,
+      </if>
+      <if test="signEndTime != null and signEndTime!=''">
+        sign_end_time,
+      </if>
+      <if test="activityStartTime != null and activityStartTime!=''">
+        activity_start_time,
+      </if>
+      <if test="activityEndTime != null and activityEndTime!=''">
+        activity_end_time,
+      </if>
+      <if test="ifBond != null">
+        if_bond,
+      </if>
+      <if test="bondMoney != null">
+        bond_money,
+      </if>
+      <if test="threshold != null">
+        threshold,
+      </if>
+      <if test="discountMode != null">
+        discount_mode,
+      </if>
+      <if test="couponContent != null">
+        coupon_content,
+      </if>
+      <if test="number != null">
+        `number`,
+      </if>
+      <if test="stockNumber != null">
+        stock_number,
+      </if>
+      <if test="receiveType != null">
+        receive_type,
+      </if>
+      <if test="frequency != null">
+        frequency,
+      </if>
+      <if test="image != null and image!=''">
+        image,
+      </if>
+      <if test="state != null">
+        `state`,
+      </if>
+      <if test="createTime != null and createTime!=''">
+        create_time,
+      </if>
+      <if test="updateTime != null and updateTime!=''">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="activityName != null and activityName!=''">
+        #{activityName,jdbcType=VARCHAR},
+      </if>
+      <if test="activityIntroduce != null and activityIntroduce!=''">
+        #{activityIntroduce,jdbcType=VARCHAR},
+      </if>
+      <if test="signStartTime != null and signStartTime!=''">
+        #{signStartTime,jdbcType=VARCHAR},
+      </if>
+      <if test="signEndTime != null and signEndTime!=''">
+        #{signEndTime,jdbcType=VARCHAR},
+      </if>
+      <if test="activityStartTime != null and activityStartTime!=''">
+        #{activityStartTime,jdbcType=VARCHAR},
+      </if>
+      <if test="activityEndTime != null and activityEndTime!=''">
+        #{activityEndTime,jdbcType=VARCHAR},
+      </if>
+      <if test="ifBond != null">
+        #{ifBond,jdbcType=BIT},
+      </if>
+      <if test="bondMoney != null">
+        #{bondMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="threshold != null">
+        #{threshold,jdbcType=DECIMAL},
+      </if>
+      <if test="discountMode != null">
+        #{discountMode,jdbcType=BIT},
+      </if>
+      <if test="couponContent != null">
+        #{couponContent,jdbcType=DECIMAL},
+      </if>
+      <if test="number != null">
+        #{number,jdbcType=INTEGER},
+      </if>
+      <if test="stockNumber != null">
+        #{stockNumber,jdbcType=INTEGER},
+      </if>
+      <if test="receiveType != null">
+        #{receiveType,jdbcType=INTEGER},
+      </if>
+      <if test="frequency != null">
+        #{frequency,jdbcType=INTEGER},
+      </if>
+      <if test="image != null and image!=''">
+        #{image,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=BIT},
+      </if>
+      <if test="createTime != null and createTime!=''">
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null and updateTime!=''">
+        #{updateTime,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective"
+          parameterType="com.shop.cereshop.commons.domain.activity.CerePlatformActivity">
+    update cere_platform_activity
+    <set>
+      <if test="activityName != null and activityName!=''">
+        activity_name = #{activityName,jdbcType=VARCHAR},
+      </if>
+      <if test="activityIntroduce != null and activityIntroduce!=''">
+        activity_introduce = #{activityIntroduce,jdbcType=VARCHAR},
+      </if>
+      <if test="signStartTime != null and signStartTime!=''">
+        sign_start_time = #{signStartTime,jdbcType=VARCHAR},
+      </if>
+      <if test="signEndTime != null and signEndTime!=''">
+        sign_end_time = #{signEndTime,jdbcType=VARCHAR},
+      </if>
+      <if test="activityStartTime != null and activityStartTime!=''">
+        activity_start_time = #{activityStartTime,jdbcType=VARCHAR},
+      </if>
+      <if test="activityEndTime != null and activityEndTime!=''">
+        activity_end_time = #{activityEndTime,jdbcType=VARCHAR},
+      </if>
+      <if test="ifBond != null">
+        if_bond = #{ifBond,jdbcType=BIT},
+      </if>
+      <if test="bondMoney != null">
+        bond_money = #{bondMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="threshold != null">
+        threshold = #{threshold,jdbcType=DECIMAL},
+      </if>
+      <if test="discountMode != null">
+        discount_mode = #{discountMode,jdbcType=BIT},
+      </if>
+      <if test="couponContent != null">
+        coupon_content = #{couponContent,jdbcType=DECIMAL},
+      </if>
+      <if test="number != null">
+        `number` = #{number,jdbcType=INTEGER},
+      </if>
+      <if test="stockNumber != null">
+        stock_number = #{stockNumber,jdbcType=INTEGER},
+      </if>
+      <if test="receiveType != null">
+        receive_type = #{receiveType,jdbcType=INTEGER},
+      </if>
+      <if test="frequency != null">
+        frequency = #{frequency,jdbcType=INTEGER},
+      </if>
+      <if test="state != null">
+        `state` = #{state,jdbcType=BIT},
+      </if>
+      <if test="image != null and image!=''">
+        image = #{image,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null and createTime!=''">
+        create_time = #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null and updateTime!=''">
+        update_time = #{updateTime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where activity_id = #{activityId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.shop.cereshop.commons.domain.activity.CerePlatformActivity">
+    update cere_platform_activity
+    set activity_name       = #{activityName,jdbcType=VARCHAR},
+        activity_introduce  = #{activityIntroduce,jdbcType=VARCHAR},
+        sign_start_time     = #{signStartTime,jdbcType=VARCHAR},
+        sign_end_time       = #{signEndTime,jdbcType=VARCHAR},
+        activity_start_time = #{activityStartTime,jdbcType=VARCHAR},
+        activity_end_time   = #{activityEndTime,jdbcType=VARCHAR},
+        if_bond             = #{ifBond,jdbcType=BIT},
+        bond_money          = #{bondMoney,jdbcType=DECIMAL},
+        threshold           = #{threshold,jdbcType=DECIMAL},
+        discount_mode       = #{discountMode,jdbcType=BIT},
+        coupon_content      = #{couponContent,jdbcType=DECIMAL},
+        `number`            = #{number,jdbcType=INTEGER},
+        stock_number        = #{stockNumber,jdbcType=INTEGER},
+        receive_type        = #{receiveType,jdbcType=INTEGER},
+        frequency           = #{frequency,jdbcType=INTEGER},
+        image               = #{image,jdbcType=VARCHAR},
+        `state`             = #{state,jdbcType=BIT},
+        create_time         = #{createTime,jdbcType=VARCHAR},
+        update_time         = #{updateTime,jdbcType=VARCHAR}
+    where activity_id = #{activityId,jdbcType=BIGINT}
+  </update>
+
+  <select id="getCoupons" parameterType="com.shop.cereshop.business.param.canvas.CanvasCouponParam" resultType="com.shop.cereshop.business.page.canvas.CanvasCoupon">
+    SELECT activity_id couponId,activity_id,activity_name,activity_introduce,activity_start_time,
+           activity_end_time,threshold full_money,coupon_content reduce_money
+    FROM cere_platform_activity where state in (2,3)
+    <if test="search!=null and search!=''">
+      and activity_name like concat('%',#{search},'%')
+    </if>
+    <if test="ids!=null and ids.size()>0">
+      and activity_id in (
+      <foreach collection="ids" item="id" index="index" separator=",">
+        #{id}
+      </foreach>
+      )
+    </if>
+  </select>
+
+  <select id="findDetail" parameterType="java.lang.Object" resultType="com.shop.cereshop.business.page.canvas.CanvasCouponDetail">
+    SELECT coupon_id,full_money,reduce_money FROM cere_platform_activity_detail WHERE activity_id=#{activityId}
+  </select>
+
+  <select id="findPlatformCoupon" resultType="com.shop.cereshop.commons.domain.activity.CerePlatformActivity">
+    SELECT * FROM cere_platform_activity where activity_end_time&lt;NOW() and state<![CDATA[!= ]]>4
+  </select>
+
+  <update id="updateActivityEndState" parameterType="java.lang.Object">
+    update cere_platform_activity SET state=4,update_time=#{time} where activity_id in (
+    <foreach collection="list" item="item" index="index" separator=",">
+      #{item.activityId}
+    </foreach>
+    )
+  </update>
+
+</mapper>

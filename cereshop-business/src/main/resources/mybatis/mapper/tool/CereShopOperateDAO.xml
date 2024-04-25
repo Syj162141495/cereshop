@@ -1,0 +1,463 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.cereshop.business.dao.tool.CereShopOperateDAO">
+    <resultMap id="BaseResultMap" type="com.shop.cereshop.commons.domain.tool.CereShopOperate">
+        <id column="shop_operate_id" jdbcType="BIGINT" property="shopOperateId"/>
+        <result column="shop_id" jdbcType="BIGINT" property="shopId"/>
+        <result column="operate_name" jdbcType="VARCHAR" property="operateName"/>
+        <result column="shop_crowd_id" jdbcType="BIGINT" property="shopCrowdId"/>
+        <result column="plan_mode" jdbcType="BIT" property="planMode"/>
+        <result column="state" jdbcType="BIT" property="state"/>
+        <result column="plan_start" jdbcType="VARCHAR" property="planStart"/>
+        <result column="plan_end" jdbcType="VARCHAR" property="planEnd"/>
+        <result column="manual_time" jdbcType="VARCHAR" property="manualTime"/>
+        <result column="create_time" jdbcType="VARCHAR" property="createTime"/>
+        <result column="update_time" jdbcType="VARCHAR" property="updateTime"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        shop_operate_id
+        , shop_id, operate_name, shop_crowd_id, plan_mode,state, plan_start, plan_end,
+    manual_time, create_time, update_time
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from cere_shop_operate
+        where shop_operate_id = #{shopOperateId,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete
+        from cere_shop_operate
+        where shop_operate_id = #{shopOperateId,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" keyColumn="shop_operate_id" keyProperty="shopOperateId"
+            parameterType="com.shop.cereshop.commons.domain.tool.CereShopOperate" useGeneratedKeys="true">
+        insert into cere_shop_operate (shop_id, operate_name, shop_crowd_id,
+                                       plan_mode, state, plan_start, plan_end,
+                                       manual_time, create_time, update_time)
+        values (#{shopId,jdbcType=BIGINT}, #{operateName,jdbcType=VARCHAR}, #{shopCrowdId,jdbcType=BIGINT},
+                #{planMode,jdbcType=BIT}, #{state,jdbcType=BIT}, #{planStart,jdbcType=VARCHAR},
+                #{planEnd,jdbcType=VARCHAR},
+                #{manualTime,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR}, #{updateTime,jdbcType=VARCHAR})
+    </insert>
+    <insert id="insertSelective" keyColumn="shop_operate_id" keyProperty="shopOperateId"
+            parameterType="com.shop.cereshop.commons.domain.tool.CereShopOperate" useGeneratedKeys="true">
+        insert into cere_shop_operate
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="shopId != null">
+                shop_id,
+            </if>
+            <if test="operateName != null">
+                operate_name,
+            </if>
+            <if test="shopCrowdId != null">
+                shop_crowd_id,
+            </if>
+            <if test="planMode != null">
+                plan_mode,
+            </if>
+            <if test="state != null">
+                state,
+            </if>
+            <if test="planStart != null">
+                plan_start,
+            </if>
+            <if test="planEnd != null">
+                plan_end,
+            </if>
+            <if test="manualTime != null">
+                manual_time,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="shopId != null">
+                #{shopId,jdbcType=BIGINT},
+            </if>
+            <if test="operateName != null">
+                #{operateName,jdbcType=VARCHAR},
+            </if>
+            <if test="shopCrowdId != null">
+                #{shopCrowdId,jdbcType=BIGINT},
+            </if>
+            <if test="planMode != null">
+                #{planMode,jdbcType=BIT},
+            </if>
+            <if test="state != null">
+                #{state,jdbcType=BIT},
+            </if>
+            <if test="planStart != null">
+                #{planStart,jdbcType=VARCHAR},
+            </if>
+            <if test="planEnd != null">
+                #{planEnd,jdbcType=VARCHAR},
+            </if>
+            <if test="manualTime != null">
+                #{manualTime,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.shop.cereshop.commons.domain.tool.CereShopOperate">
+        update cere_shop_operate
+        <set>
+            <if test="shopId != null">
+                shop_id = #{shopId,jdbcType=BIGINT},
+            </if>
+            <if test="operateName != null">
+                operate_name = #{operateName,jdbcType=VARCHAR},
+            </if>
+            <if test="shopCrowdId != null">
+                shop_crowd_id = #{shopCrowdId,jdbcType=BIGINT},
+            </if>
+            <if test="planMode != null">
+                plan_mode = #{planMode,jdbcType=BIT},
+            </if>
+            <if test="state != null">
+                state = #{state,jdbcType=BIT},
+            </if>
+            <if test="planStart != null">
+                plan_start = #{planStart,jdbcType=VARCHAR},
+            </if>
+            <if test="planEnd != null">
+                plan_end = #{planEnd,jdbcType=VARCHAR},
+            </if>
+            <if test="manualTime != null">
+                manual_time = #{manualTime,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where shop_operate_id = #{shopOperateId,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.shop.cereshop.commons.domain.tool.CereShopOperate">
+        update cere_shop_operate
+        set shop_id       = #{shopId,jdbcType=BIGINT},
+            operate_name  = #{operateName,jdbcType=VARCHAR},
+            shop_crowd_id = #{shopCrowdId,jdbcType=BIGINT},
+            plan_mode     = #{planMode,jdbcType=BIT},
+            state         = #{state,jdbcType=BIT},
+            plan_start    = #{planStart,jdbcType=VARCHAR},
+            plan_end      = #{planEnd,jdbcType=VARCHAR},
+            manual_time   = #{manualTime,jdbcType=VARCHAR},
+            create_time   = #{createTime,jdbcType=VARCHAR},
+            update_time   = #{updateTime,jdbcType=VARCHAR}
+        where shop_operate_id = #{shopOperateId,jdbcType=BIGINT}
+    </update>
+
+    <select id="findAll" resultType="com.shop.cereshop.commons.domain.tool.CereShopOperate">
+        SELECT shop_id, operate_name, shop_crowd_id, shop_operate_id
+        FROM cere_shop_operate
+        where plan_start &lt;= NOW()
+          and plan_end &gt;= NOW()
+    </select>
+
+    <select id="findCrowd" parameterType="java.lang.Object"
+            resultType="com.shop.cereshop.commons.domain.tool.CereShopCrowd">
+        SELECT *
+        FROM cere_shop_crowd
+        where shop_crowd_id = #{shopCrowdId}
+    </select>
+
+    <select id="findUserByCondition" parameterType="com.shop.cereshop.business.param.tool.CrowdCondition"
+            resultType="java.lang.String">
+        SELECT a.buyer_user_id from cere_buyer_user a
+        LEFT JOIN cere_shop_order b ON a.buyer_user_id=b.buyer_user_id
+        LEFT JOIN (SELECT buyer_user_id from cere_shop_cart where shop_id=#{shopId} GROUP BY buyer_user_id) c ON
+        a.buyer_user_id=c.buyer_user_id
+        LEFT JOIN cere_shop_visit d ON a.buyer_user_id=d.buyer_user_id
+        LEFT JOIN (SELECT COUNT(*) frequency,SUM(price) price,buyer_user_id from cere_shop_order where state in (2,3,4)
+        GROUP BY buyer_user_id) e
+        ON a.buyer_user_id=e.buyer_user_id
+        LEFT JOIN (SELECT GROUP_CONCAT(label_id) label_id,buyer_user_id from cere_buyer_shop_label GROUP BY
+        buyer_user_id) f ON a.buyer_user_id=f.buyer_user_id
+        where 1=1
+        <if test='type=="1"'>
+            and b.shop_id=#{shopId} and DATE_SUB(CURDATE(), INTERVAL #{number} DAY) &lt;= date(b.payment_time)
+        </if>
+        <if test='type=="3"'>
+            and b.shop_id=#{shopId} and DATE_SUB(CURDATE(), INTERVAL #{number} DAY) &lt;= date(b.create_time)
+        </if>
+        <if test='type=="5"'>
+            and b.shop_id=#{shopId} and c.buyer_user_id IS NOT NULL
+        </if>
+        <if test='type=="6"'>
+            and b.shop_id=#{shopId} and c.buyer_user_id IS NULL
+        </if>
+        <if test='type=="7"'>
+            and DATE_SUB(CURDATE(), INTERVAL #{number} DAY) &lt;= date(d.visit_time)
+        </if>
+        <if test='type=="9"'>
+            and b.shop_id=#{shopId}
+            <if test='calculation=="1"'>
+                and e.frequency&gt;#{number}
+            </if>
+            <if test='calculation=="2"'>
+                and e.frequency=#{number}
+            </if>
+            <if test='calculation=="3"'>
+                and e.frequency&lt;#{number}
+            </if>
+        </if>
+        <if test='type=="10"'>
+            and b.shop_id=#{shopId}
+            <if test='calculation=="1"'>
+                and e.price&gt;#{number}
+            </if>
+            <if test='calculation=="2"'>
+                and e.price=#{number}
+            </if>
+            <if test='calculation=="3"'>
+                and e.price&lt;#{number}
+            </if>
+        </if>
+        <if test='type=="11"'>
+            <if test="labelIds!=null">
+                and (
+                <foreach collection="labelIds" item="id" index="index" separator="OR ">
+                    FIND_IN_SET(#{id}, f.label_id)
+                </foreach>
+                )
+            </if>
+        </if>
+        <if test="ids!=null and ids.size()>0">
+            and a.buyer_user_id in (
+            <foreach collection="ids" item="id" index="index" separator=",">
+                #{id}
+            </foreach>
+            )
+        </if>
+        GROUP BY a.buyer_user_id
+    </select>
+
+    <select id="findNoBuy" parameterType="com.shop.cereshop.business.param.tool.CrowdCondition"
+            resultType="java.lang.Long">
+        SELECT a.buyer_user_id from cere_buyer_user a
+        LEFT JOIN (SELECT COUNT(*) count,buyer_user_id,shop_id from cere_shop_order where DATE_SUB(CURDATE(), INTERVAL
+        #{number} DAY) &lt;= date(payment_time)
+        GROUP BY buyer_user_id) b ON a.buyer_user_id=b.buyer_user_id
+        where b.shop_id=#{shopId} and b.count=0
+        <if test="ids!=null and ids.size()>0">
+            and a.buyer_user_id in (
+            <foreach collection="ids" item="id" index="index" separator=",">
+                #{id}
+            </foreach>
+            )
+        </if>
+    </select>
+
+    <select id="findNoOrder" parameterType="com.shop.cereshop.business.param.tool.CrowdCondition"
+            resultType="java.lang.Long">
+        SELECT a.buyer_user_id from cere_buyer_user a
+        LEFT JOIN (SELECT COUNT(*) count,buyer_user_id,shop_id from cere_shop_order where DATE_SUB(CURDATE(), INTERVAL
+        #{number} DAY) &lt;= date(create_time)
+        GROUP BY buyer_user_id) b ON a.buyer_user_id=b.buyer_user_id
+        where b.shop_id=#{shopId} and b.count=0
+        <if test="ids!=null and ids.size()>0">
+            and a.buyer_user_id in (
+            <foreach collection="ids" item="id" index="index" separator=",">
+                #{id}
+            </foreach>
+            )
+        </if>
+    </select>
+
+    <select id="findNoVisit" parameterType="com.shop.cereshop.business.param.tool.CrowdCondition"
+            resultType="java.lang.Long">
+        SELECT a.buyer_user_id from cere_buyer_user a
+        LEFT JOIN (SELECT COUNT(*) count,buyer_user_id from cere_shop_visit where DATE_SUB(CURDATE(), INTERVAL #{number}
+        DAY) &lt;= date(visit_time)
+        GROUP BY buyer_user_id) b ON a.buyer_user_id=b.buyer_user_id
+        where b.count=0
+        <if test="ids!=null and ids.size()>0">
+            and a.buyer_user_id in (
+            <foreach collection="ids" item="id" index="index" separator=",">
+                #{id}
+            </foreach>
+            )
+        </if>
+    </select>
+
+    <select id="findCouponsById" parameterType="java.lang.Object"
+            resultType="com.shop.cereshop.business.page.operate.OperateCoupon">
+        SELECT a.shop_coupon_id,
+               b.coupon_name,
+               b.coupon_type,
+               b.threshold,
+               b.coupon_content,
+               a.number,
+               b.effective_start,
+               b.effective_end,
+               a.number
+        from cere_shop_operate_detail a
+                 LEFT JOIN cere_shop_coupon b ON a.shop_coupon_id = b.shop_coupon_id
+        where a.shop_operate_id = #{shopOperateId}
+    </select>
+
+    <insert id="insertBatchNotice" parameterType="java.util.List">
+        insert into cere_notice (notice_type,buyer_user_id, shop_id, notice_title,
+        notice_content, create_time) values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (
+            #{item.noticeType},
+            #{item.buyerUserId},
+            #{item.shopId},
+            #{item.noticeTitle},
+            #{item.noticeContent},
+            #{item.createTime}
+            )
+        </foreach>
+    </insert>
+
+    <insert id="insertBatchBuyerCoupon" parameterType="java.util.List">
+        insert into cere_buyer_shop_coupon (shop_coupon_id, buyer_user_id, coupon_name,
+        start_time, end_time, coupon_type,
+        `state`, full_money, reduce_money,
+        create_time) values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (
+            #{item.shopCouponId},
+            #{item.buyerUserId},
+            #{item.couponName},
+            #{item.startTime},
+            #{item.endTime},
+            #{item.couponType},
+            #{item.state},
+            #{item.fullMoney},
+            #{item.reduceMoney},
+            #{item.createTime}
+            )
+        </foreach>
+    </insert>
+
+    <select id="getById" parameterType="java.lang.Object"
+            resultType="com.shop.cereshop.business.page.tool.ShopOperateDetail">
+        SELECT shop_operate_id,
+               shop_id,
+               operate_name,
+               shop_crowd_id,
+               plan_mode,
+               state,
+               plan_start,
+               plan_end,
+               manual_time,
+               create_time
+        FROM cere_shop_operate
+        where shop_operate_id = #{shopOperateId}
+    </select>
+
+    <select id="getAll" parameterType="com.shop.cereshop.business.param.tool.ShopOperateGetAllParam"
+            resultType="com.shop.cereshop.business.page.operate.ShopOperate">
+        SELECT a.shop_operate_id,a.operate_name,b.crowd_name,a.plan_mode,a.plan_start,
+        a.plan_end,a.manual_time,a.state,b.crowd_name FROM cere_shop_operate a
+        LEFT JOIN cere_shop_crowd b ON a.shop_crowd_id=b.shop_crowd_id
+        where a.shop_id=#{shopId}
+        <if test="operateName!=null and operateName!=''">
+            and a.operate_name like concat('%',#{operateName},'%')
+        </if>
+        <if test="crowdName!=null and crowdName!=''">
+            and b.crowd_name like concat('%',#{crowdName},'%')
+        </if>
+        <if test="planMode!=null">
+            and a.plan_mode=#{planMode}
+        </if>
+        <if test="startTime!=null and startTime!=''">
+            and ((a.plan_start&lt;=#{startTime} and a.plan_end&gt;=#{startTime}) OR a.manual_time&lt;=#{startTime}})
+        </if>
+        <if test="endTime!=null and endTime!=''">
+            and (a.plan_end&lt;=#{endTime} OR a.manual_time&lt;=#{endTime}})
+        </if>
+        ORDER BY a.update_time DESC,a.create_time DESC
+    </select>
+
+    <select id="findCouponUsers" parameterType="java.lang.Object" resultType="java.lang.Integer">
+        SELECT COUNT(*)
+        FROM (SELECT * FROM cere_buyer_shop_coupon GROUP BY buyer_user_id, shop_operate_id) a
+        where a.shop_operate_id = #{shopOperateId}
+          and a.create_time LIKE CONCAT('%', #{time}, '%')
+    </select>
+
+    <select id="findUsers" parameterType="java.lang.Object" resultType="java.lang.Integer">
+        SELECT COUNT(*)
+        FROM (SELECT * FROM cere_shop_order GROUP BY buyer_user_id, shop_operate_id) a
+        where a.shop_operate_id = #{shopOperateId}
+          and a.create_time LIKE CONCAT('%', #{time}, '%')
+    </select>
+
+    <select id="findOrders" parameterType="java.lang.Object" resultType="java.lang.Integer">
+        SELECT COUNT(*)
+        FROM (SELECT * FROM cere_shop_order GROUP BY buyer_user_id, shop_operate_id) a
+        where a.shop_operate_id = #{shopOperateId}
+          and a.create_time LIKE CONCAT('%', #{time}, '%')
+    </select>
+
+    <select id="findTotal" parameterType="java.lang.Object" resultType="java.math.BigDecimal">
+        SELECT SUM(price)
+        FROM cere_shop_order
+        where shop_operate_id = #{shopOperateId}
+          and create_time LIKE CONCAT('%', #{time}, '%')
+    </select>
+
+    <select id="findPays" parameterType="java.lang.Object" resultType="java.lang.Integer">
+        SELECT COUNT(*)
+        FROM (SELECT * FROM cere_shop_order GROUP BY buyer_user_id, shop_operate_id) a
+        where a.shop_operate_id = #{shopOperateId}
+          and a.create_time LIKE CONCAT('%', #{time}, '%')
+          and a.payment_state = 1
+    </select>
+
+    <select id="findPayOrders" parameterType="java.lang.Object" resultType="java.lang.Integer">
+        SELECT COUNT(*)
+        FROM (SELECT * FROM cere_shop_order GROUP BY buyer_user_id, shop_operate_id) a
+        where a.shop_operate_id = #{shopOperateId}
+          and a.create_time LIKE CONCAT('%', #{time}, '%')
+          and a.payment_state = 1
+    </select>
+
+    <select id="checkState" parameterType="java.lang.Object"
+            resultType="com.shop.cereshop.commons.domain.tool.CereShopOperate">
+        SELECT shop_operate_id FROM cere_shop_operate where state=1 and shop_operate_id in (
+        <foreach collection="ids" item="id" index="index" separator=",">
+            #{id}
+        </foreach>
+        )
+    </select>
+
+    <select id="findAlreadyCoupon" parameterType="java.lang.Object" resultType="java.lang.Long">
+        SELECT buyer_user_id FROM cere_buyer_shop_coupon where shop_operate_id=#{shopOperateId}
+        and buyer_user_id in (
+        <foreach collection="ids" item="id" index="index" separator=",">
+            #{id}
+        </foreach>
+        )
+    </select>
+
+    <select id="findShopOperate" resultType="com.shop.cereshop.commons.domain.tool.CereShopOperate">
+        SELECT *
+        FROM cere_shop_operate
+        where (plan_mode = 1 and plan_end &lt; NOW() and state<![CDATA[!= ]]>2)
+           OR (plan_mode = 2 and manual_time &lt; NOW() and state<![CDATA[!= ]]>2)
+    </select>
+
+    <update id="updateOperateEndState" parameterType="java.lang.Object">
+        update cere_shop_operate SET state=2,update_time=#{time} where shop_operate_id in (
+        <foreach collection="list" item="item" index="index" separator=",">
+            #{item.shopOperateId}
+        </foreach>
+        )
+    </update>
+</mapper>

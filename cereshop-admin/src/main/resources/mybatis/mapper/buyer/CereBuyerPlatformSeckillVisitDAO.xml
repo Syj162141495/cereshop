@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.cereshop.admin.dao.buyer.CereBuyerPlatformSeckillVisitDAO">
+  <resultMap id="BaseResultMap" type="com.shop.cereshop.commons.domain.buyer.CereBuyerPlatformSeckillVisit">
+    <result column="seckill_id" jdbcType="BIGINT" property="seckillId" />
+    <result column="buyer_user_id" jdbcType="BIGINT" property="buyerUserId" />
+    <result column="visit_time" jdbcType="VARCHAR" property="visitTime" />
+    <result column="shop_id" jdbcType="BIGINT" property="shop_id" />
+  </resultMap>
+  <insert id="insert" parameterType="com.shop.cereshop.commons.domain.buyer.CereBuyerPlatformSeckillVisit">
+    insert into cere_buyer_platform_seckill_visit (seckill_id, buyer_user_id, visit_time,shop_id
+      )
+    values (#{seckillId,jdbcType=BIGINT}, #{buyerUserId,jdbcType=BIGINT}, #{visitTime,jdbcType=VARCHAR},#{shopId,jdbcType=BIGINT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.shop.cereshop.commons.domain.buyer.CereBuyerPlatformSeckillVisit">
+    insert into cere_buyer_platform_seckill_visit
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="seckillId != null">
+        seckill_id,
+      </if>
+      <if test="buyerUserId != null">
+        buyer_user_id,
+      </if>
+      <if test="visitTime != null">
+        visit_time,
+      </if>
+      <if test="shopId != null">
+        shop_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="seckillId != null">
+        #{seckillId,jdbcType=BIGINT},
+      </if>
+      <if test="buyerUserId != null">
+        #{buyerUserId,jdbcType=BIGINT},
+      </if>
+      <if test="visitTime != null">
+        #{visitTime,jdbcType=VARCHAR},
+      </if>
+      <if test="shopId != null">
+        #{shopId,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+</mapper>

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.cereshop.business.dao.scene.CereShopSceneMemberDAO">
+  <resultMap id="BaseResultMap" type="com.shop.cereshop.commons.domain.scene.CereShopSceneMember">
+    <result column="scene_id" jdbcType="BIGINT" property="sceneId" />
+    <result column="member_level_id" jdbcType="BIGINT" property="memberLevelId" />
+    <result column="if_free_shipping" jdbcType="BIT" property="ifFreeShipping" />
+    <result column="discount" jdbcType="DECIMAL" property="discount" />
+  </resultMap>
+  <insert id="insert" parameterType="com.shop.cereshop.commons.domain.scene.CereShopSceneMember">
+    insert into cere_shop_scene_member (scene_id, member_level_id, if_free_shipping, 
+      discount)
+    values (#{sceneId,jdbcType=BIGINT}, #{memberLevelId,jdbcType=BIGINT}, #{ifFreeShipping,jdbcType=BIT}, 
+      #{discount,jdbcType=DECIMAL})
+  </insert>
+  <insert id="insertSelective" parameterType="com.shop.cereshop.commons.domain.scene.CereShopSceneMember">
+    insert into cere_shop_scene_member
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="sceneId != null">
+        scene_id,
+      </if>
+      <if test="memberLevelId != null">
+        member_level_id,
+      </if>
+      <if test="ifFreeShipping != null">
+        if_free_shipping,
+      </if>
+      <if test="discount != null">
+        discount,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="sceneId != null">
+        #{sceneId,jdbcType=BIGINT},
+      </if>
+      <if test="memberLevelId != null">
+        #{memberLevelId,jdbcType=BIGINT},
+      </if>
+      <if test="ifFreeShipping != null">
+        #{ifFreeShipping,jdbcType=BIT},
+      </if>
+      <if test="discount != null">
+        #{discount,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+
+  <insert id="insertBatch" parameterType="java.util.List">
+    insert into cere_shop_scene_member (scene_id, member_level_id, if_free_shipping,
+    discount) values
+    <foreach collection="list" item="item" index="index" separator=",">
+      (
+      #{item.sceneId},
+      #{item.memberLevelId},
+      #{item.ifFreeShipping},
+      #{item.discount}
+      )
+    </foreach>
+  </insert>
+
+  <delete id="deleteBySceneId" parameterType="java.lang.Object">
+    DELETE FROM cere_shop_scene_member where scene_id=#{sceneId}
+  </delete>
+
+  <select id="findBySceneId" parameterType="java.lang.Object" resultType="com.shop.cereshop.business.page.scene.SceneMember">
+    SELECT a.member_level_id,a.member_level_name,b.discount,b.if_free_shipping FROM cere_platform_member_level a
+    LEFT JOIN cere_shop_scene_member b ON a.member_level_id=b.member_level_id
+    where b.scene_id=#{sceneId}
+  </select>
+</mapper>

@@ -1,0 +1,27 @@
+15:46:28.043 [main] INFO  com.shop.cereshop.business.ShopComposeTest - [logStarting,50] - Starting ShopComposeTest on DESKTOP-P5K08BE with PID 20420 (started by shelly_90 in E:\workplace-git\yshop-multimer\cereshop\cereshop-business)
+15:46:28.045 [main] INFO  com.shop.cereshop.business.ShopComposeTest - [logStartupProfileInfo,651] - The following profiles are active: business-prod
+15:46:30.653 [main] INFO  com.alibaba.druid.pool.DruidDataSource - [init,930] - {dataSource-1,dataSource} inited
+15:46:30.879 [main] INFO  org.hibernate.jpa.internal.util.LogHelper - [logPersistenceUnitInformation,31] - HHH000204: Processing PersistenceUnitInfo [
+	name: default
+	...]
+15:46:30.946 [main] INFO  org.hibernate.Version - [logVersion,46] - HHH000412: Hibernate Core {5.3.10.Final}
+15:46:30.948 [main] INFO  org.hibernate.cfg.Environment - [<clinit>,213] - HHH000206: hibernate.properties not found
+15:46:31.077 [main] INFO  org.hibernate.annotations.common.Version - [<clinit>,49] - HCANN000001: Hibernate Commons Annotations {5.0.4.Final}
+15:46:31.334 [main] INFO  org.hibernate.dialect.Dialect - [<init>,157] - HHH000400: Using dialect: org.hibernate.dialect.MySQL5Dialect
+15:46:35.751 [main] INFO  com.alibaba.druid.pool.DruidDataSource - [close,1825] - {dataSource-1} closed
+15:46:35.822 [main] INFO  com.shop.cereshop.business.ShopPriceTest - [logStarting,50] - Starting ShopPriceTest on DESKTOP-P5K08BE with PID 20420 (started by shelly_90 in E:\workplace-git\yshop-multimer\cereshop\cereshop-business)
+15:46:35.823 [main] INFO  com.shop.cereshop.business.ShopPriceTest - [logStartupProfileInfo,651] - The following profiles are active: business-prod
+15:46:36.740 [main] INFO  com.alibaba.druid.pool.DruidDataSource - [init,930] - {dataSource-2,dataSource} inited
+15:46:36.847 [main] INFO  org.hibernate.jpa.internal.util.LogHelper - [logPersistenceUnitInformation,31] - HHH000204: Processing PersistenceUnitInfo [
+	name: default
+	...]
+15:46:36.852 [main] INFO  org.hibernate.dialect.Dialect - [<init>,157] - HHH000400: Using dialect: org.hibernate.dialect.MySQL5Dialect
+15:46:39.846 [main] INFO  com.alibaba.druid.pool.DruidDataSource - [close,1825] - {dataSource-2} closed
+15:46:39.886 [main] INFO  com.shop.cereshop.business.ShopSceneTest - [logStarting,50] - Starting ShopSceneTest on DESKTOP-P5K08BE with PID 20420 (started by shelly_90 in E:\workplace-git\yshop-multimer\cereshop\cereshop-business)
+15:46:39.886 [main] INFO  com.shop.cereshop.business.ShopSceneTest - [logStartupProfileInfo,651] - The following profiles are active: business-prod
+15:46:40.680 [main] INFO  com.alibaba.druid.pool.DruidDataSource - [init,930] - {dataSource-3,dataSource} inited
+15:46:40.777 [main] INFO  org.hibernate.jpa.internal.util.LogHelper - [logPersistenceUnitInformation,31] - HHH000204: Processing PersistenceUnitInfo [
+	name: default
+	...]
+15:46:40.782 [main] INFO  org.hibernate.dialect.Dialect - [<init>,157] - HHH000400: Using dialect: org.hibernate.dialect.MySQL5Dialect
+15:46:43.702 [main] INFO  com.alibaba.druid.pool.DruidDataSource - [close,1825] - {dataSource-3} closed

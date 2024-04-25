@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.cereshop.business.dao.label.CereLabelSourceDAO">
+  <resultMap id="BaseResultMap" type="com.shop.cereshop.commons.domain.label.CereLabelSource">
+    <result column="label_id" jdbcType="BIGINT" property="labelId" />
+    <result column="label_type" jdbcType="INTEGER" property="labelType" />
+    <result column="image" jdbcType="VARCHAR" property="image" />
+    <result column="link" jdbcType="VARCHAR" property="link" />
+  </resultMap>
+  <insert id="insert" parameterType="com.shop.cereshop.commons.domain.label.CereLabelSource">
+    insert into cere_label_source (label_id,label_type, image, link
+      )
+    values (#{labelId,jdbcType=BIGINT},#{labelType,jdbcType=INTEGER}, #{image,jdbcType=VARCHAR}, #{link,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.shop.cereshop.commons.domain.label.CereLabelSource">
+    insert into cere_label_source
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="labelId != null">
+        label_id,
+      </if>
+      <if test="labelType != null">
+        label_type,
+      </if>
+      <if test="image != null and image!=''">
+        image,
+      </if>
+      <if test="link != null and link!=''">
+        link,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="labelId != null">
+        #{labelId,jdbcType=BIGINT},
+      </if>
+      <if test="labelType != null">
+        #{labelType,jdbcType=INTEGER},
+      </if>
+      <if test="image != null and image!=''">
+        #{image,jdbcType=VARCHAR},
+      </if>
+      <if test="link != null and link!=''">
+        #{link,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+  <select id="findByLabelId" parameterType="java.lang.Object" resultType="com.shop.cereshop.commons.domain.label.CereLabelSource">
+    SELECT image,link FROM cere_label_source where label_id=#{labelId}
+  </select>
+
+  <delete id="deleteByLabelId" parameterType="java.lang.Object">
+    DELETE FROM cere_label_source where label_id=#{labelId}
+  </delete>
+
+  <insert id="insertBatch" parameterType="java.util.List">
+    insert into cere_label_source (label_id,label_type, image, link) values
+    <foreach collection="list" item="item" index="index" separator=",">
+      (
+      #{item.labelId},
+      #{item.labelType},
+      #{item.image},
+      #{item.link}
+      )
+    </foreach>
+  </insert>
+
+  <select id="getAllByLabel" parameterType="com.shop.cereshop.business.param.label.LabelGetSourceParam" resultType="com.shop.cereshop.business.page.shop.LabelSource">
+    SELECT a.label_id,a.image,a.link,b.label_name,b.shop_id FROM cere_label_source a
+    LEFT JOIN cere_shop_label b ON a.label_id=b.label_id
+    where a.label_id=#{labelId}
+    <if test="labelType!=null">
+      and label_type=#{labelType}
+    </if>
+  </select>
+
+  <delete id="deleteByImageAndLabelId" parameterType="java.lang.Object">
+    DELETE FROM cere_label_source where label_id=#{labelId}
+    and image=#{image}
+  </delete>
+
+  <select id="findByLabelIdAndType" parameterType="java.lang.Object" resultType="com.shop.cereshop.commons.domain.label.CereLabelSource">
+    SELECT label_id,image,link FROM cere_label_source where label_id=#{labelId} and label_type=#{labelType}
+  </select>
+
+  <update id="update" parameterType="com.shop.cereshop.commons.domain.label.CereLabelSource">
+    UPDATE cere_label_source set label_id=#{labelId}
+    where image=#{image}
+  </update>
+</mapper>

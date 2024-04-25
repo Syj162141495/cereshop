@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.cereshop.admin.dao.distributor.CereDistributorBuyerDAO">
+  <resultMap id="BaseResultMap" type="com.shop.cereshop.commons.domain.distributor.CereDistributorBuyer">
+    <result column="shop_id" jdbcType="BIGINT" property="shopId" />
+    <result column="distributor_id" jdbcType="BIGINT" property="distributorId" />
+    <result column="buyer_user_id" jdbcType="BIGINT" property="buyerUserId" />
+    <result column="if_bind" jdbcType="BIT" property="ifBind" />
+  </resultMap>
+  <insert id="insert" parameterType="com.shop.cereshop.commons.domain.distributor.CereDistributorBuyer">
+    insert into cere_distributor_buyer (shop_id, distributor_id, buyer_user_id, 
+      if_bind)
+    values (#{shopId,jdbcType=BIGINT}, #{distributorId,jdbcType=BIGINT}, #{buyerUserId,jdbcType=BIGINT}, 
+      #{ifBind,jdbcType=BIT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.shop.cereshop.commons.domain.distributor.CereDistributorBuyer">
+    insert into cere_distributor_buyer
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="shopId != null">
+        shop_id,
+      </if>
+      <if test="distributorId != null">
+        distributor_id,
+      </if>
+      <if test="buyerUserId != null">
+        buyer_user_id,
+      </if>
+      <if test="ifBind != null">
+        if_bind,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="shopId != null">
+        #{shopId,jdbcType=BIGINT},
+      </if>
+      <if test="distributorId != null">
+        #{distributorId,jdbcType=BIGINT},
+      </if>
+      <if test="buyerUserId != null">
+        #{buyerUserId,jdbcType=BIGINT},
+      </if>
+      <if test="ifBind != null">
+        #{ifBind,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+</mapper>

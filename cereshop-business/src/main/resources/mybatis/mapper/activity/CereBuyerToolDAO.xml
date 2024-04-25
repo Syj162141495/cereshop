@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.cereshop.business.dao.activity.CereBuyerToolDAO">
+  <resultMap id="BaseResultMap" type="com.shop.cereshop.commons.domain.activity.CereBuyerCoupon">
+    <result column="buyer_user_id" jdbcType="BIGINT" property="buyerUserId" />
+    <result column="tool_id" jdbcType="BIGINT" property="toolId" />
+    <result column="shop_id" jdbcType="BIGINT" property="shopId" />
+    <result column="tool_name" jdbcType="VARCHAR" property="toolName" />
+    <result column="tool_type" jdbcType="BIT" property="toolType" />
+    <result column="threshold" jdbcType="DECIMAL" property="threshold" />
+    <result column="content" jdbcType="VARCHAR" property="content" />
+    <result column="trial_product" jdbcType="VARCHAR" property="trialProduct" />
+    <result column="discount_mode" jdbcType="BIT" property="discountMode" />
+    <result column="discount_programme" jdbcType="BIT" property="discountProgramme" />
+    <result column="state" jdbcType="BIT" property="state" />
+    <result column="create_time" jdbcType="VARCHAR" property="createTime" />
+    <result column="update_time" jdbcType="VARCHAR" property="updateTime" />
+  </resultMap>
+  <insert id="insert" parameterType="com.shop.cereshop.commons.domain.activity.CereBuyerCoupon">
+    insert into cere_buyer_coupon (buyer_user_id, tool_id, shop_id,
+    tool_name, tool_type, threshold,
+    content, trial_product, discount_mode,
+    discount_programme, `state`, create_time,
+    update_time)
+    values (#{buyerUserId,jdbcType=BIGINT}, #{toolId,jdbcType=BIGINT}, #{shopId,jdbcType=BIGINT},
+    #{toolName,jdbcType=VARCHAR}, #{toolType,jdbcType=BIT}, #{threshold,jdbcType=DECIMAL},
+    #{content,jdbcType=VARCHAR}, #{trialProduct,jdbcType=VARCHAR}, #{discountMode,jdbcType=BIT},
+    #{discountProgramme,jdbcType=BIT}, #{state,jdbcType=BIT}, #{createTime,jdbcType=VARCHAR},
+    #{updateTime,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.shop.cereshop.commons.domain.activity.CereBuyerCoupon">
+    insert into cere_buyer_coupon
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="buyerUserId != null">
+        buyer_user_id,
+      </if>
+      <if test="toolId != null">
+        tool_id,
+      </if>
+      <if test="shopId != null">
+        shop_id,
+      </if>
+      <if test="toolName != null">
+        tool_name,
+      </if>
+      <if test="toolType != null">
+        tool_type,
+      </if>
+      <if test="threshold != null">
+        threshold,
+      </if>
+      <if test="content != null">
+        content,
+      </if>
+      <if test="trialProduct != null">
+        trial_product,
+      </if>
+      <if test="discountMode != null">
+        discount_mode,
+      </if>
+      <if test="discountProgramme != null">
+        discount_programme,
+      </if>
+      <if test="state != null">
+        `state`,
+      </if>
+      <if test="createTime != null and createTime!=''">
+        create_time,
+      </if>
+      <if test="updateTime != null and updateTime!=''">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="buyerUserId != null">
+        #{buyerUserId,jdbcType=BIGINT},
+      </if>
+      <if test="toolId != null">
+        #{toolId,jdbcType=BIGINT},
+      </if>
+      <if test="shopId != null">
+        #{shopId,jdbcType=BIGINT},
+      </if>
+      <if test="toolName != null">
+        #{toolName,jdbcType=VARCHAR},
+      </if>
+      <if test="toolType != null">
+        #{toolType,jdbcType=BIT},
+      </if>
+      <if test="threshold != null">
+        #{threshold,jdbcType=DECIMAL},
+      </if>
+      <if test="content != null">
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="trialProduct != null">
+        #{trialProduct,jdbcType=VARCHAR},
+      </if>
+      <if test="discountMode != null">
+        #{discountMode,jdbcType=BIT},
+      </if>
+      <if test="discountProgramme != null">
+        #{discountProgramme,jdbcType=BIT},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=BIT},
+      </if>
+      <if test="createTime != null and createTime!=''">
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null and updateTime!=''">
+        #{updateTime,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+  <select id="findUse" parameterType="java.lang.Object" resultType="java.lang.Integer">
+    SELECT COUNT(*) FROM cere_buyer_coupon where tool_id=#{toolId} and state=2
+  </select>
+
+  <select id="findReceive" parameterType="java.lang.Object" resultType="java.lang.Integer">
+    SELECT COUNT(*) FROM cere_buyer_coupon where tool_id=#{toolId} and state=1
+  </select>
+</mapper>

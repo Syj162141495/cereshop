@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.cereshop.business.dao.platformtool.CerePlatformDiscountDAO">
+  <resultMap id="BaseResultMap" type="com.shop.cereshop.commons.domain.platformtool.CerePlatformDiscount">
+    <id column="discount_id" jdbcType="BIGINT" property="discountId" />
+    <result column="discount_name" jdbcType="VARCHAR" property="discountName" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="sign_start_time" jdbcType="VARCHAR" property="signStartTime" />
+    <result column="sign_end_time" jdbcType="VARCHAR" property="signEndTime" />
+    <result column="start_time" jdbcType="VARCHAR" property="startTime" />
+    <result column="end_time" jdbcType="VARCHAR" property="endTime" />
+    <result column="if_limit" jdbcType="BIT" property="ifLimit" />
+    <result column="limit_number" jdbcType="INTEGER" property="limitNumber" />
+    <result column="if_add" jdbcType="BIT" property="ifAdd" />
+    <result column="state" jdbcType="BIT" property="state" />
+    <result column="if_bond" jdbcType="BIT" property="ifBond" />
+    <result column="bond_money" jdbcType="DECIMAL" property="bondMoney" />
+    <result column="discount" jdbcType="DECIMAL" property="discount" />
+    <result column="create_time" jdbcType="VARCHAR" property="createTime" />
+    <result column="update_time" jdbcType="VARCHAR" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    discount_id, discount_name, remark, sign_start_time, sign_end_time, start_time, end_time,
+    if_limit, limit_number, if_add, `state`, if_bond, bond_money,discount, create_time, update_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from cere_platform_discount
+    where discount_id = #{discountId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from cere_platform_discount
+    where discount_id = #{discountId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" keyColumn="discount_id" keyProperty="discountId" parameterType="com.shop.cereshop.commons.domain.platformtool.CerePlatformDiscount" useGeneratedKeys="true">
+    insert into cere_platform_discount (discount_name, remark, sign_start_time,
+                                        sign_end_time, start_time, end_time,
+                                        if_limit, limit_number, if_add,
+                                        `state`, if_bond, bond_money,discount, create_time,
+                                        update_time)
+    values (#{discountName,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{signStartTime,jdbcType=VARCHAR},
+            #{signEndTime,jdbcType=VARCHAR}, #{startTime,jdbcType=VARCHAR}, #{endTime,jdbcType=VARCHAR},
+            #{ifLimit,jdbcType=BIT}, #{limitNumber,jdbcType=INTEGER}, #{ifAdd,jdbcType=BIT},
+            #{state,jdbcType=BIT}, #{ifBond,jdbcType=BIT}, #{bondMoney,jdbcType=DECIMAL},#{discount,jdbcType=DECIMAL}, #{createTime,jdbcType=VARCHAR},
+            #{updateTime,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" keyColumn="discount_id" keyProperty="discountId" parameterType="com.shop.cereshop.commons.domain.platformtool.CerePlatformDiscount" useGeneratedKeys="true">
+    insert into cere_platform_discount
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="discountName != null">
+        discount_name,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+      <if test="signStartTime != null">
+        sign_start_time,
+      </if>
+      <if test="signEndTime != null">
+        sign_end_time,
+      </if>
+      <if test="startTime != null">
+        start_time,
+      </if>
+      <if test="endTime != null">
+        end_time,
+      </if>
+      <if test="ifLimit != null">
+        if_limit,
+      </if>
+      <if test="limitNumber != null">
+        limit_number,
+      </if>
+      <if test="ifAdd != null">
+        if_add,
+      </if>
+      <if test="state != null">
+        `state`,
+      </if>
+      <if test="ifBond != null">
+        if_bond,
+      </if>
+      <if test="bondMoney != null">
+        bond_money,
+      </if>
+      <if test="discount != null">
+        discount,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="discountName != null">
+        #{discountName,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="signStartTime != null">
+        #{signStartTime,jdbcType=VARCHAR},
+      </if>
+      <if test="signEndTime != null">
+        #{signEndTime,jdbcType=VARCHAR},
+      </if>
+      <if test="startTime != null">
+        #{startTime,jdbcType=VARCHAR},
+      </if>
+      <if test="endTime != null">
+        #{endTime,jdbcType=VARCHAR},
+      </if>
+      <if test="ifLimit != null">
+        #{ifLimit,jdbcType=BIT},
+      </if>
+      <if test="limitNumber != null">
+        #{limitNumber,jdbcType=INTEGER},
+      </if>
+      <if test="ifAdd != null">
+        #{ifAdd,jdbcType=BIT},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=BIT},
+      </if>
+      <if test="ifBond != null">
+        #{ifBond,jdbcType=BIT},
+      </if>
+      <if test="bondMoney != null">
+        #{bondMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="discount != null">
+        #{discount,jdbcType=DECIMAL},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.shop.cereshop.commons.domain.platformtool.CerePlatformDiscount">
+    update cere_platform_discount
+    <set>
+      <if test="discountName != null">
+        discount_name = #{discountName,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="signStartTime != null">
+        sign_start_time = #{signStartTime,jdbcType=VARCHAR},
+      </if>
+      <if test="signEndTime != null">
+        sign_end_time = #{signEndTime,jdbcType=VARCHAR},
+      </if>
+      <if test="startTime != null">
+        start_time = #{startTime,jdbcType=VARCHAR},
+      </if>
+      <if test="endTime != null">
+        end_time = #{endTime,jdbcType=VARCHAR},
+      </if>
+      <if test="ifLimit != null">
+        if_limit = #{ifLimit,jdbcType=BIT},
+      </if>
+      <if test="limitNumber != null">
+        limit_number = #{limitNumber,jdbcType=INTEGER},
+      </if>
+      <if test="ifAdd != null">
+        if_add = #{ifAdd,jdbcType=BIT},
+      </if>
+      <if test="state != null">
+        `state` = #{state,jdbcType=BIT},
+      </if>
+      <if test="ifBond != null">
+        if_bond = #{ifBond,jdbcType=BIT},
+      </if>
+      <if test="bondMoney != null">
+        bond_money = #{bondMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="discount != null">
+        discount = #{discount,jdbcType=DECIMAL},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where discount_id = #{discountId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.shop.cereshop.commons.domain.platformtool.CerePlatformDiscount">
+    update cere_platform_discount
+    set discount_name = #{discountName,jdbcType=VARCHAR},
+        remark = #{remark,jdbcType=VARCHAR},
+        sign_start_time = #{signStartTime,jdbcType=VARCHAR},
+        sign_end_time = #{signEndTime,jdbcType=VARCHAR},
+        start_time = #{startTime,jdbcType=VARCHAR},
+        end_time = #{endTime,jdbcType=VARCHAR},
+        if_limit = #{ifLimit,jdbcType=BIT},
+        limit_number = #{limitNumber,jdbcType=INTEGER},
+        if_add = #{ifAdd,jdbcType=BIT},
+        `state` = #{state,jdbcType=BIT},
+        if_bond = #{ifBond,jdbcType=BIT},
+        bond_money = #{bondMoney,jdbcType=DECIMAL},
+        discount = #{discount,jdbcType=DECIMAL},
+        create_time = #{createTime,jdbcType=VARCHAR},
+        update_time = #{updateTime,jdbcType=VARCHAR}
+    where discount_id = #{discountId,jdbcType=BIGINT}
+  </update>
+
+  <select id="getMinDiscount" resultType="com.shop.cereshop.business.page.canvas.CanvasPlatformDiscount">
+    SELECT discount_id, discount_name, remark, sign_start_time, sign_end_time, start_time, end_time,
+           if_limit, limit_number, if_add, `state`, if_bond, bond_money,discount FROM cere_platform_discount where state in (2,3)
+  </select>
+
+  <select id="checkPlatformDiscount" parameterType="java.util.List" resultType="java.lang.Long">
+    SELECT a.product_id FROM cere_sign_product a
+    LEFT JOIN cere_activity_sign b ON a.sign_id=b.sign_id
+    LEFT JOIN cere_platform_discount c ON b.activity_id=c.discount_id and b.sign_type=3
+    where b.shop_id=#{shopId} and ((c.start_time&lt;=#{startTime} and c.end_time&gt;=#{startTime}) OR (c.start_time&lt;=#{endTime} and c.end_time&gt;=#{endTime}))
+    and a.product_id in (
+    <foreach collection="ids" item="id" index="index" separator=",">
+      #{id}
+    </foreach>
+    )
+  </select>
+
+  <select id="findPlatformDiscount" resultType="com.shop.cereshop.commons.domain.platformtool.CerePlatformDiscount">
+    SELECT * FROM cere_shop_discount where end_time&lt;NOW() and state<![CDATA[!= ]]>2
+  </select>
+
+  <update id="updatePlatformDiscountEndState" parameterType="java.lang.Object">
+    update cere_shop_discount SET state=4,update_time=#{time} where discount_id in (
+    <foreach collection="list" item="item" index="index" separator=",">
+      #{item.discountId}
+    </foreach>
+    )
+  </update>
+</mapper>

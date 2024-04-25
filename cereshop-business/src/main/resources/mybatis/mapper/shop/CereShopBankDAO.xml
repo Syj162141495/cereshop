@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.cereshop.business.dao.shop.CereShopBankDAO">
+  <resultMap id="BaseResultMap" type="com.shop.cereshop.commons.domain.shop.CereShopBank">
+    <result column="shop_id" jdbcType="BIGINT" property="shopId" />
+    <result column="card_name" jdbcType="VARCHAR" property="cardName" />
+    <result column="card_number" jdbcType="VARCHAR" property="cardNumber" />
+    <result column="bank" jdbcType="BIGINT" property="bank" />
+  </resultMap>
+  <insert id="insert" parameterType="com.shop.cereshop.commons.domain.shop.CereShopBank">
+    insert into cere_shop_bank (shop_id, card_name, card_number, 
+      bank)
+    values (#{shopId,jdbcType=BIGINT}, #{cardName,jdbcType=VARCHAR}, #{cardNumber,jdbcType=VARCHAR}, 
+      #{bank,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.shop.cereshop.commons.domain.shop.CereShopBank">
+    insert into cere_shop_bank
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="shopId != null">
+        shop_id,
+      </if>
+      <if test="cardName != null and cardName!=''">
+        card_name,
+      </if>
+      <if test="cardNumber != null and cardNumber!=''">
+        card_number,
+      </if>
+      <if test="bank != null">
+        bank,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="shopId != null">
+        #{shopId,jdbcType=BIGINT},
+      </if>
+      <if test="cardName != null and cardName!=''">
+        #{cardName,jdbcType=VARCHAR},
+      </if>
+      <if test="cardNumber != null and cardNumber!=''">
+        #{cardNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="bank != null">
+        #{bank,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+
+  <update id="update" parameterType="com.shop.cereshop.commons.domain.shop.CereShopBank">
+    UPDATE cere_shop_bank set card_name=#{cardName},card_number=#{cardNumber},bank=#{bank}
+    where shop_id=#{shopId}
+  </update>
+
+  <delete id="delete" parameterType="com.shop.cereshop.commons.domain.shop.CereShopBank">
+    DELETE FROM cere_shop_bank where shop_id=#{shopId}
+  </delete>
+
+  <select id="getById" parameterType="java.lang.Object" resultType="com.shop.cereshop.business.page.shop.ShopBankDetail">
+    SELECT a.shop_id, a.card_name, a.card_number,a.bank,b.shop_phone phone FROM cere_shop_bank a
+LEFT JOIN cere_platform_shop b ON a.shop_id=b.shop_id where a.shop_id=#{shopId}
+  </select>
+
+  <select id="getBank" parameterType="java.lang.Object" resultType="com.shop.cereshop.business.page.finance.Bank">
+    SELECT a.shop_id,b.shop_name,b.shop_code,c.dict_name bankName,
+    a.card_number bankCard,a.card_name collectionNme from cere_shop_bank a
+    LEFT JOIN cere_platform_shop b ON a.shop_id=b.shop_id
+    LEFT JOIN cere_platform_dict c ON a.bank=c.dict_id
+    where a.shop_id=#{shopId}
+  </select>
+
+  <select id="findByPhone" parameterType="java.lang.Object" resultType="com.shop.cereshop.commons.domain.shop.CerePlatformShop">
+    SELECT shop_id FROM cere_platform_shop where shop_id=#{shopId} and shop_phone=#{phone}
+  </select>
+</mapper>

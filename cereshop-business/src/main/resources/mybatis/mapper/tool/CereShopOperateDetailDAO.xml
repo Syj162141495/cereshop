@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.cereshop.business.dao.tool.CereShopOperateDetailDAO">
+  <resultMap id="BaseResultMap" type="com.shop.cereshop.commons.domain.tool.CereShopOperateDetail">
+    <result column="shop_operate_id" jdbcType="BIGINT" property="shopOperateId" />
+    <result column="shop_coupon_id" jdbcType="BIGINT" property="shopCouponId" />
+    <result column="number" jdbcType="INTEGER" property="number" />
+  </resultMap>
+  <insert id="insert" parameterType="com.shop.cereshop.commons.domain.tool.CereShopOperateDetail">
+    insert into cere_shop_operate_detail (shop_operate_id, shop_coupon_id, `number`
+      )
+    values (#{shopOperateId,jdbcType=BIGINT}, #{shopCouponId,jdbcType=BIGINT}, #{number,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.shop.cereshop.commons.domain.tool.CereShopOperateDetail">
+    insert into cere_shop_operate_detail
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="shopOperateId != null">
+        shop_operate_id,
+      </if>
+      <if test="shopCouponId != null">
+        shop_coupon_id,
+      </if>
+      <if test="number != null">
+        `number`,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="shopOperateId != null">
+        #{shopOperateId,jdbcType=BIGINT},
+      </if>
+      <if test="shopCouponId != null">
+        #{shopCouponId,jdbcType=BIGINT},
+      </if>
+      <if test="number != null">
+        #{number,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+
+  <insert id="insertBatch" parameterType="java.util.List">
+    insert into cere_shop_operate_detail (shop_operate_id, shop_coupon_id, `number`) values
+    <foreach collection="list" item="item" index="index" separator=",">
+      (
+      #{item.shopOperateId},
+      #{item.shopCouponId},
+      #{item.number}
+      )
+    </foreach>
+  </insert>
+
+  <select id="findCoupons" parameterType="java.lang.Object" resultType="com.shop.cereshop.business.page.operate.OperateCoupon">
+    SELECT b.shop_coupon_id,b.coupon_name,b.coupon_type,a.number,b.stock_number,b.threshold,
+    b.coupon_content,b.effective_start,b.effective_end FROM cere_shop_operate_detail a
+    LEFT JOIN cere_shop_coupon b ON a.shop_coupon_id=b.shop_coupon_id
+    where a.shop_operate_id=#{shopOperateId}
+  </select>
+
+</mapper>

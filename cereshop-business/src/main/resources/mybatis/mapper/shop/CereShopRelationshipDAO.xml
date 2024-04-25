@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.cereshop.business.dao.shop.CereShopRelationshipDAO">
+  <resultMap id="BaseResultMap" type="com.shop.cereshop.commons.domain.shop.CereShopRelationship">
+    <result column="shop_id" jdbcType="BIGINT" property="shopId" />
+    <result column="if_invitation" jdbcType="BIT" property="ifInvitation" />
+    <result column="bind_validity" jdbcType="BIT" property="bindValidity" />
+    <result column="validity_day" jdbcType="INTEGER" property="validityDay" />
+    <result column="if_robbing" jdbcType="BIT" property="ifRobbing" />
+    <result column="robbing_day" jdbcType="INTEGER" property="robbingDay" />
+    <result column="if_distribution_relationship" jdbcType="BIT" property="ifDistributionRelationship" />
+  </resultMap>
+  <insert id="insert" parameterType="com.shop.cereshop.commons.domain.shop.CereShopRelationship">
+    insert into cere_shop_relationship (shop_id, if_invitation, bind_validity, 
+      validity_day, if_robbing, robbing_day, 
+      if_distribution_relationship)
+    values (#{shopId,jdbcType=BIGINT}, #{ifInvitation,jdbcType=BIT}, #{bindValidity,jdbcType=BIT}, 
+      #{validityDay,jdbcType=INTEGER}, #{ifRobbing,jdbcType=BIT}, #{robbingDay,jdbcType=INTEGER}, 
+      #{ifDistributionRelationship,jdbcType=BIT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.shop.cereshop.commons.domain.shop.CereShopRelationship">
+    insert into cere_shop_relationship
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="shopId != null">
+        shop_id,
+      </if>
+      <if test="ifInvitation != null">
+        if_invitation,
+      </if>
+      <if test="bindValidity != null">
+        bind_validity,
+      </if>
+      <if test="validityDay != null">
+        validity_day,
+      </if>
+      <if test="ifRobbing != null">
+        if_robbing,
+      </if>
+      <if test="robbingDay != null">
+        robbing_day,
+      </if>
+      <if test="ifDistributionRelationship != null">
+        if_distribution_relationship,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="shopId != null">
+        #{shopId,jdbcType=BIGINT},
+      </if>
+      <if test="ifInvitation != null">
+        #{ifInvitation,jdbcType=BIT},
+      </if>
+      <if test="bindValidity != null">
+        #{bindValidity,jdbcType=BIT},
+      </if>
+      <if test="validityDay != null">
+        #{validityDay,jdbcType=INTEGER},
+      </if>
+      <if test="ifRobbing != null">
+        #{ifRobbing,jdbcType=BIT},
+      </if>
+      <if test="robbingDay != null">
+        #{robbingDay,jdbcType=INTEGER},
+      </if>
+      <if test="ifDistributionRelationship != null">
+        #{ifDistributionRelationship,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+
+  <update id="update" parameterType="com.shop.cereshop.commons.domain.shop.CereShopRelationship">
+    UPDATE cere_shop_relationship
+    <set>
+      <if test="ifInvitation != null">
+        if_invitation = #{ifInvitation,jdbcType=BIT},
+      </if>
+      <if test="bindValidity != null">
+        bind_validity = #{bindValidity,jdbcType=BIT},
+      </if>
+      <if test="validityDay != null">
+        validity_day = #{validityDay,jdbcType=INTEGER},
+      </if>
+      <if test="ifRobbing != null">
+        if_robbing = #{ifRobbing,jdbcType=BIT},
+      </if>
+      <if test="robbingDay != null">
+        robbing_day = #{robbingDay,jdbcType=INTEGER},
+      </if>
+      <if test="ifDistributionRelationship != null">
+        if_distribution_relationship = #{ifDistributionRelationship,jdbcType=BIT},
+      </if>
+    </set>
+    where shop_id=#{shopId}
+  </update>
+
+  <select id="getAll" parameterType="com.shop.cereshop.business.param.ship.ShipGetAllParam" resultType="com.shop.cereshop.business.page.shop.ShopRelationship">
+    SELECT IF(a.wechat_name IS NULL,a.`name`,a.wechat_name) `name`,
+    a.phone,a.buyer_user_id,c.distributor_name,c.distributor_phone,
+    b.if_bind,b.update_time,b.distributor_id FROM cere_buyer_user a
+    LEFT JOIN cere_distributor_buyer b ON a.buyer_user_id=b.buyer_user_id and b.shop_id=#{shopId}
+    LEFT JOIN cere_shop_distributor c ON b.distributor_id=c.distributor_id
+    where 1=1
+    <if test="name!=null and name!=''">
+      and (a.wechat_name like concat('%',#{name},'%') OR
+      a.`name` like concat('%',#{name},'%'))
+    </if>
+    <if test="phone!=null and phone!=''">
+      and a.phone like concat('%',#{phone},'%')
+    </if>
+    <if test="distributorName!=null and distributorName!=''">
+      and c.distributor_name like concat('%',#{distributorName},'%')
+    </if>
+    <if test='ifBind=="1"'>
+      and b.if_bind=#{ifBind}
+    </if>
+    <if test='ifBind=="0"'>
+      and (b.if_bind=#{ifBind} OR b.if_bind IS NULL)
+    </if>
+    ORDER BY a.update_time DESC,a.create_time DESC
+  </select>
+
+  <select id="getById" parameterType="java.lang.Object" resultType="com.shop.cereshop.commons.domain.shop.CereShopRelationship">
+    SELECT shop_id, if_invitation, bind_validity,
+    validity_day, if_robbing, robbing_day,
+    if_distribution_relationship from cere_shop_relationship
+    where shop_id=#{shopId}
+  </select>
+</mapper>

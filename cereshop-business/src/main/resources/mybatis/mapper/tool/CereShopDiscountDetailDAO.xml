@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.cereshop.business.dao.tool.CereShopDiscountDetailDAO">
+    <resultMap id="BaseResultMap" type="com.shop.cereshop.commons.domain.tool.CereShopDiscountDetail">
+        <result column="shop_discount_id" jdbcType="BIGINT" property="shopDiscountId"/>
+        <result column="product_id" jdbcType="BIGINT" property="productId"/>
+        <result column="sku_id" jdbcType="BIGINT" property="skuId"/>
+        <result column="discount" jdbcType="DECIMAL" property="discount"/>
+        <result column="price" jdbcType="DECIMAL" property="price"/>
+        <result column="number" jdbcType="INTEGER" property="number"/>
+        <result column="total" jdbcType="INTEGER" property="total"/>
+    </resultMap>
+    <insert id="insert" parameterType="com.shop.cereshop.commons.domain.tool.CereShopDiscountDetail">
+        insert into cere_shop_discount_detail (shop_discount_id, product_id, sku_id, discount,
+                                               price, number, total)
+        values (#{shopDiscountId,jdbcType=BIGINT}, #{productId,jdbcType=BIGINT}, #{skuId,jdbcType=BIGINT},
+                #{discount,jdbcType=DECIMAL},
+                #{price,jdbcType=DECIMAL}, #{number,jdbcType=INTEGER}, #{total,jdbcType=INTEGER})
+    </insert>
+    <insert id="insertSelective" parameterType="com.shop.cereshop.commons.domain.tool.CereShopDiscountDetail">
+        insert into cere_shop_discount_detail
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="shopDiscountId != null">
+                shop_discount_id,
+            </if>
+            <if test="productId != null">
+                product_id,
+            </if>
+            <if test="skuId != null">
+                sku_id,
+            </if>
+            <if test="discount != null">
+                discount,
+            </if>
+            <if test="price != null">
+                price,
+            </if>
+            <if test="number != null">
+                number,
+            </if>
+            <if test="total != null">
+                total,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="shopDiscountId != null">
+                #{shopDiscountId,jdbcType=BIGINT},
+            </if>
+            <if test="productId != null">
+                #{productId,jdbcType=BIGINT},
+            </if>
+            <if test="skuId != null">
+                #{skuId,jdbcType=BIGINT},
+            </if>
+            <if test="discount != null">
+                #{discount,jdbcType=DECIMAL},
+            </if>
+            <if test="price != null">
+                #{price,jdbcType=DECIMAL},
+            </if>
+            <if test="number != null">
+                #{number,jdbcType=INTEGER},
+            </if>
+            <if test="total != null">
+                #{total,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+
+    <insert id="insertBatch" parameterType="java.util.List">
+        insert into cere_shop_discount_detail (shop_discount_id, product_id,sku_id, discount,
+        price,number,total) values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (
+            #{item.shopDiscountId},
+            #{item.productId},
+            #{item.skuId},
+            #{item.discount},
+            #{item.price},
+            #{item.number},
+            #{item.total}
+            )
+        </foreach>
+    </insert>
+
+    <delete id="deleteById" parameterType="java.lang.Object">
+        DELETE
+        FROM cere_shop_discount_detail
+        where shop_discount_id = #{shopDiscountId}
+    </delete>
+
+    <select id="findProducts" parameterType="java.lang.Object"
+            resultType="com.shop.cereshop.business.page.tool.ToolProduct">
+        SELECT b.product_id,
+               b.product_name,
+               c.original_price,
+               e.product_image image,
+               c.stock_number,
+               a.price         discountPrice,
+               a.sku_id,
+               a.discount
+        from cere_shop_discount_detail a
+                 LEFT JOIN cere_shop_product b ON a.product_id = b.product_id
+                 LEFT JOIN cere_product_sku c ON a.sku_id = c.sku_id
+                 LEFT JOIN (SELECT a.product_id, a.product_image
+                            from cere_product_image a,
+                                 cere_shop_product b
+                            where a.product_id = b.product_id
+                            GROUP BY a.product_id) e
+                           ON b.product_id = e.product_id
+        where a.shop_discount_id = #{shopDiscountId}
+    </select>
+
+    <select id="findDistinctProducts" parameterType="java.lang.Object"
+            resultType="com.shop.cereshop.business.page.tool.ToolProduct">
+        SELECT b.product_id,
+               b.product_name,
+               c.original_price,
+               e.product_image image,
+               c.stock_number,
+               a.price,
+               a.sku_id,
+               a.discount,
+               c.total
+        from cere_shop_discount_detail a
+                 LEFT JOIN cere_shop_product b ON a.product_id = b.product_id
+                 LEFT JOIN cere_product_sku c ON a.sku_id = c.sku_id
+                 LEFT JOIN (SELECT a.product_id, a.product_image
+                            from cere_product_image a,
+                                 cere_shop_product b
+                            where a.product_id = b.product_id
+                            GROUP BY a.product_id) e
+                           ON b.product_id = e.product_id
+        where a.shop_discount_id = #{shopDiscountId}
+        GROUP BY a.product_id
+    </select>
+
+    <select id="findBySkuId" parameterType="java.lang.Object"
+            resultType="com.shop.cereshop.commons.domain.tool.CereShopDiscountDetail">
+        SELECT a.*
+        FROM cere_shop_discount_detail a
+                 LEFT JOIN cere_shop_discount b ON a.shop_discount_id = b.shop_discount_id
+        where b.shop_id = #{shopId}
+          and b.state in (0, 1)
+          and a.sku_id = #{skuId}
+    </select>
+
+    <update id="updateBatchSeckillPrice" parameterType="java.util.List">
+        update cere_shop_discount_detail
+        <trim prefix="set" suffixOverrides=",">
+            <trim prefix="price =case" suffix="end,">
+                <foreach collection="list" item="i" index="index">
+                    <if test="i.price!=null">
+                        when sku_id=#{i.skuId} and shop_discount_id=#{i.shopDiscountId} then #{i.price}
+                    </if>
+                </foreach>
+            </trim>
+        </trim>
+        where
+        <foreach collection="list" separator="or" item="i" index="index">
+            sku_id=#{i.skuId} and shop_discount_id=#{i.shopDiscountId}
+        </foreach>
+    </update>
+
+    <update id="updateBatch" parameterType="java.util.List">
+        update cere_shop_discount_detail
+        <trim prefix="set" suffixOverrides=",">
+            <trim prefix="number =case" suffix="end,">
+                <foreach collection="list" item="i" index="index">
+                    <if test="i.number!=null">
+                        when sku_id=#{i.skuId} and shop_discount_id=#{i.shopDiscountId} then #{i.number}
+                    </if>
+                </foreach>
+            </trim>
+        </trim>
+        where
+        <foreach collection="list" separator="or" item="i" index="index">
+            (sku_id=#{i.skuId} and shop_discount_id=#{i.shopDiscountId})
+        </foreach>
+    </update>
+
+    <select id="findNumberDetails" parameterType="java.lang.Object"
+            resultType="com.shop.cereshop.commons.domain.tool.CereShopDiscountDetail">
+        SELECT c.shop_discount_id, (c.number + a.number) number, c.sku_id
+        FROM cere_order_product a
+                 LEFT JOIN cere_shop_order b ON a.order_id = b.order_id
+                 LEFT JOIN cere_shop_discount_detail c
+                           ON b.shop_discount_id = c.shop_discount_id and a.sku_id = c.sku_id
+        where a.order_id = #{orderId}
+          and c.shop_discount_id = #{shopDiscountId}
+    </select>
+    <select id="findProductIdList" resultType="java.lang.Long">
+        select product_id
+        from cere_shop_discount_detail
+        where shop_discount_id = #{shopDiscountId}
+    </select>
+
+    <select id="findDetailList" resultMap="BaseResultMap">
+        select shop_discount_id, product_id, sku_id, discount, price, number, total
+        from cere_shop_discount_detail
+        where shop_discount_id = #{shopDiscountId}
+    </select>
+</mapper>

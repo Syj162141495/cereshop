@@ -1,0 +1,308 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.cereshop.business.dao.distributor.CereShopDistributorDAO">
+  <resultMap id="BaseResultMap" type="com.shop.cereshop.commons.domain.distributor.CereShopDistributor">
+    <id column="distributor_id" jdbcType="BIGINT" property="distributorId" />
+    <result column="shop_id" jdbcType="BIGINT" property="shopId" />
+    <result column="distributor_name" jdbcType="VARCHAR" property="distributorName" />
+    <result column="distributor_phone" jdbcType="VARCHAR" property="distributorPhone" />
+    <result column="distributor_level_id" jdbcType="BIGINT" property="distributorLevelId" />
+    <result column="invitees" jdbcType="BIGINT" property="invitees" />
+    <result column="state" jdbcType="BIT" property="state" />
+    <result column="if_Liquidation" jdbcType="BIT" property="ifLiquidation" />
+    <result column="join_time" jdbcType="VARCHAR" property="joinTime" />
+    <result column="invitation_code" jdbcType="VARCHAR" property="InvitationCode" />
+    <result column="create_time" jdbcType="VARCHAR" property="createTime" />
+    <result column="update_time" jdbcType="VARCHAR" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    distributor_id, shop_id, distributor_name, distributor_phone, distributor_level_id,
+    invitees, `state`, if_Liquidation, join_time,invitation_code, create_time, update_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from cere_shop_distributor
+    where distributor_id = #{distributorId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from cere_shop_distributor
+    where distributor_id = #{distributorId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" keyColumn="distributor_id" keyProperty="distributorId" parameterType="com.shop.cereshop.commons.domain.distributor.CereShopDistributor" useGeneratedKeys="true">
+    insert into cere_shop_distributor (shop_id, distributor_name, distributor_phone,
+    distributor_level_id, invitees, `state`,
+    if_Liquidation, join_time,invitation_code, create_time,
+    update_time)
+    values (#{shopId,jdbcType=BIGINT}, #{distributorName,jdbcType=VARCHAR}, #{distributorPhone,jdbcType=VARCHAR},
+    #{distributorLevelId,jdbcType=BIGINT}, #{invitees,jdbcType=BIGINT}, #{state,jdbcType=BIT},
+    #{ifLiquidation,jdbcType=BIT}, #{joinTime,jdbcType=VARCHAR},#{InvitationCode,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR},
+    #{updateTime,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" keyColumn="distributor_id" keyProperty="distributorId" parameterType="com.shop.cereshop.commons.domain.distributor.CereShopDistributor" useGeneratedKeys="true">
+    insert into cere_shop_distributor
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="shopId != null">
+        shop_id,
+      </if>
+      <if test="distributorName != null">
+        distributor_name,
+      </if>
+      <if test="distributorPhone != null">
+        distributor_phone,
+      </if>
+      <if test="distributorLevelId != null">
+        distributor_level_id,
+      </if>
+      <if test="invitees != null">
+        invitees,
+      </if>
+      <if test="state != null">
+        `state`,
+      </if>
+      <if test="ifLiquidation != null">
+        if_Liquidation,
+      </if>
+      <if test="joinTime != null and joinTime!=''">
+        join_time,
+      </if>
+      <if test="InvitationCode != null and InvitationCode!=''">
+        invitation_code,
+      </if>
+      <if test="createTime != null and createTime!=''">
+        create_time,
+      </if>
+      <if test="updateTime != null and updateTime!=''">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="shopId != null">
+        #{shopId,jdbcType=BIGINT},
+      </if>
+      <if test="distributorName != null">
+        #{distributorName,jdbcType=VARCHAR},
+      </if>
+      <if test="distributorPhone != null">
+        #{distributorPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="distributorLevelId != null">
+        #{distributorLevelId,jdbcType=BIGINT},
+      </if>
+      <if test="invitees != null">
+        #{invitees,jdbcType=BIGINT},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=BIT},
+      </if>
+      <if test="ifLiquidation != null">
+        #{ifLiquidation,jdbcType=BIT},
+      </if>
+      <if test="joinTime != null and joinTime!=''">
+        #{joinTime,jdbcType=VARCHAR},
+      </if>
+      <if test="InvitationCode != null and InvitationCode!=''">
+        #{InvitationCode,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null and createTime!=''">
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null and updateTime!=''">
+        #{updateTime,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.shop.cereshop.commons.domain.distributor.CereShopDistributor">
+    update cere_shop_distributor
+    <set>
+      <if test="shopId != null">
+        shop_id = #{shopId,jdbcType=BIGINT},
+      </if>
+      <if test="distributorName != null">
+        distributor_name = #{distributorName,jdbcType=VARCHAR},
+      </if>
+      <if test="distributorPhone != null">
+        distributor_phone = #{distributorPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="distributorLevelId != null">
+        distributor_level_id = #{distributorLevelId,jdbcType=BIGINT},
+      </if>
+        invitees = #{invitees,jdbcType=BIGINT},
+      <if test="state != null">
+        `state` = #{state,jdbcType=BIT},
+      </if>
+      <if test="ifLiquidation != null">
+        if_Liquidation = #{ifLiquidation,jdbcType=BIT},
+      </if>
+      <if test="joinTime != null and joinTime!=''">
+        join_time = #{joinTime,jdbcType=VARCHAR},
+      </if>
+      <if test="InvitationCode != null and InvitationCode!=''">
+        invitation_code = #{InvitationCode,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null and createTime!=''">
+        create_time = #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null and updateTime!=''">
+        update_time = #{updateTime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where distributor_id = #{distributorId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.shop.cereshop.commons.domain.distributor.CereShopDistributor">
+    update cere_shop_distributor
+    set shop_id = #{shopId,jdbcType=BIGINT},
+    distributor_name = #{distributorName,jdbcType=VARCHAR},
+    distributor_phone = #{distributorPhone,jdbcType=VARCHAR},
+    distributor_level_id = #{distributorLevelId,jdbcType=BIGINT},
+    invitees = #{invitees,jdbcType=BIGINT},
+    `state` = #{state,jdbcType=BIT},
+    if_Liquidation = #{ifLiquidation,jdbcType=BIT},
+    join_time = #{joinTime,jdbcType=VARCHAR},
+    invitation_code = #{InvitationCode,jdbcType=VARCHAR},
+    create_time = #{createTime,jdbcType=VARCHAR},
+    update_time = #{updateTime,jdbcType=VARCHAR}
+    where distributor_id = #{distributorId,jdbcType=BIGINT}
+  </update>
+
+  <select id="findSubordinate" parameterType="java.lang.Object" resultType="com.shop.cereshop.commons.domain.distributor.CereShopDistributor">
+    SELECT distributor_id FROM cere_shop_distributor where Invitees=#{distributorId}
+  </select>
+
+  <select id="getAll" parameterType="com.shop.cereshop.business.param.shopDistributor.ShopDistributorGetAllParam" resultType="com.shop.cereshop.business.page.distribution.ShopDistributor">
+    SELECT a.distributor_id,a.distributor_name,a.distributor_phone,
+    b.distributor_name inviteesName,c.level_name from cere_shop_distributor a
+    LEFT JOIN cere_shop_distributor b ON a.Invitees=b.distributor_id
+    LEFT JOIN cere_shop_distribution_level c ON a.distributor_level_id=c.distributor_level_id and c.shop_id=#{shopId}
+    where a.shop_id=#{shopId} and a.if_Liquidation=0 and a.state=1
+    <if test="distributorName!=null and distributorName!=''">
+      and a.distributor_name like concat('%',#{distributorName},'%')
+    </if>
+    <if test="distributorPhone!=null and distributorPhone!=''">
+      and a.distributor_phone like concat('%',#{distributorPhone},'%')
+    </if>
+    <if test="startTime!=null and startTime!=''">
+      and a.create_time&gt;=#{startTime} and a.create_time&lt;=#{endTime}
+    </if>
+    <if test="distributorLevelId!=null">
+      and a.distributor_level_id=#{distributorLevelId}
+    </if>
+    ORDER BY a.update_time DESC,a.create_time DESC
+  </select>
+
+  <select id="getStayExamineAll" parameterType="com.shop.cereshop.business.param.shopDistributor.ShopDistributorGetStayParam" resultType="com.shop.cereshop.business.page.distribution.ShopDistributor">
+    SELECT a.distributor_id,a.distributor_name,a.distributor_phone,
+    b.distributor_name inviteesName,a.state,a.create_time from cere_shop_distributor a
+    LEFT JOIN cere_shop_distributor b ON a.Invitees=b.distributor_id
+    LEFT JOIN cere_shop_distribution_level c ON a.distributor_level_id=c.distributor_level_id
+    where a.shop_id=#{shopId}
+    <if test="distributorName!=null and distributorName!=''">
+      and a.distributor_name like concat('%',#{distributorName},'%')
+    </if>
+    <if test="distributorPhone!=null and distributorPhone!=''">
+      and a.distributor_phone like concat('%',#{distributorPhone},'%')
+    </if>
+    <if test="startTime!=null and startTime!=''">
+      and a.create_time&gt;=#{startTime} and a.create_time&lt;=#{endTime}
+    </if>
+    <if test="state!=null">
+      and a.state=#{state}
+    </if>
+    ORDER BY a.update_time DESC,a.create_time DESC
+  </select>
+
+  <select id="findTotal" parameterType="java.lang.Object" resultType="java.lang.Integer">
+    SELECT COUNT(*) from (SELECT * FROM cere_shop_order GROUP BY buyer_user_id) a
+    LEFT JOIN cere_distribution_order b ON a.order_id=b.order_id
+    where b.distributor_id=#{distributorId}
+  </select>
+
+  <select id="findSubordinateTotal" parameterType="java.lang.Object" resultType="java.lang.Integer">
+    SELECT COUNT(*) from cere_shop_distributor
+    where Invitees=#{distributorId} and state=1 and if_Liquidation=0
+  </select>
+
+  <select id="findMoney" parameterType="java.lang.Object" resultType="java.math.BigDecimal">
+    SELECT IF(SUM(price) IS NULL,0,SUM(price)) from cere_distribution_order
+    where distributor_id=#{distributorId}
+  </select>
+
+  <select id="getAllInvitees" parameterType="com.shop.cereshop.business.param.shop.ShopParam" resultType="com.shop.cereshop.commons.domain.distributor.CereShopDistributor">
+    SELECT distributor_id,distributor_name FROM cere_shop_distributor
+    where shop_id=#{shopId} and state=1 and if_Liquidation=0
+    <if test="search!=null and search!=''">
+      and (distributor_name like concat('%',#{search},'%') OR
+      distributor_phone like concat('%',#{search},'%'))
+    </if>
+  </select>
+
+  <select id="findOrderTotal" parameterType="java.lang.Object" resultType="java.lang.Integer">
+    SELECT COUNT(*) from cere_shop_order a
+    LEFT JOIN cere_distribution_order b ON a.order_id=b.order_id
+    where b.distributor_id=#{distributorId}
+  </select>
+
+  <select id="findOrderMoney" parameterType="java.lang.Object" resultType="java.math.BigDecimal">
+    SELECT SUM(a.price) from cere_shop_order a
+    LEFT JOIN cere_distribution_order b ON a.order_id=b.order_id
+    where b.distributor_id=#{distributorId}
+  </select>
+
+  <select id="getById" parameterType="java.lang.Object" resultType="com.shop.cereshop.business.page.distribution.ShopDistributor">
+    SELECT a.Invitees,a.distributor_id,a.distributor_name,a.distributor_phone,a.distributor_level_id,b.distributor_name inviteesName
+    FROM cere_shop_distributor a
+    LEFT JOIN cere_shop_distributor b ON a.Invitees=b.distributor_id  where a.distributor_id=#{distributorId}
+  </select>
+
+  <select id="findByShopIdAndUserId" parameterType="java.lang.Object" resultType="com.shop.cereshop.commons.domain.distributor.CereShopDistributor">
+    SELECT a.distributor_id FROM cere_shop_distributor a
+    LEFT JOIN cere_buyer_user b ON a.distributor_phone=b.phone
+    where a.shop_id=#{shopId} and b.buyer_user_id=#{buyerUserId} and a.state=1 and a.if_Liquidation=0
+  </select>
+
+  <select id="checkPhone" parameterType="java.lang.Object" resultType="com.shop.cereshop.commons.domain.distributor.CereShopDistributor">
+    SELECT * FROM cere_shop_distributor where distributor_phone=#{distributorPhone} and shop_id=#{shopId}
+    <if test="distributorId!=null">
+      and distributor_id<![CDATA[!= ]]>#{distributorId}
+    </if>
+  </select>
+
+  <select id="checkBuyerUser" parameterType="java.lang.Object" resultType="com.shop.cereshop.commons.domain.buyer.CereBuyerUser">
+    SELECT buyer_user_id,state,if_black FROM cere_buyer_user where phone=#{distributorPhone}
+  </select>
+
+  <update id="updateReliveBindByShopId" parameterType="java.lang.Object">
+    UPDATE cere_distributor_buyer set if_bind=0 where shop_id=#{shopId}
+  </update>
+
+  <update id="updateBatch" parameterType="java.util.List" >
+    update cere_shop_distributor
+    <trim prefix="set" suffixOverrides=",">
+      <trim prefix="state =case" suffix="end,">
+        <foreach collection="list" item="i" index="index">
+          <if test="i.state!=null">
+            when distributor_id=#{i.distributorId} then #{i.state}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="join_time =case" suffix="end,">
+        <foreach collection="list" item="i" index="index">
+          <if test="i.joinTime!=null">
+            when distributor_id=#{i.distributorId} then #{i.joinTime}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="update_time =case" suffix="end,">
+        <foreach collection="list" item="i" index="index">
+          <if test="i.updateTime!=null">
+            when distributor_id=#{i.distributorId} then #{i.updateTime}
+          </if>
+        </foreach>
+      </trim>
+    </trim>
+    where
+    <foreach collection="list" separator="or" item="i" index="index" >
+      distributor_id=#{i.distributorId}
+    </foreach>
+  </update>
+</mapper>

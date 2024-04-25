@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.cereshop.business.dao.shop.CereShopCheckDAO">
+  <resultMap id="BaseResultMap" type="com.shop.cereshop.commons.domain.shop.CereShopCheck">
+    <id column="check_id" jdbcType="BIGINT" property="checkId" />
+    <result column="shop_id" jdbcType="BIGINT" property="shopId" />
+    <result column="check_handle" jdbcType="BIT" property="checkHandle" />
+    <result column="reason" jdbcType="VARCHAR" property="reason" />
+    <result column="create_time" jdbcType="VARCHAR" property="createTime" />
+    <result column="update_time" jdbcType="VARCHAR" property="updateTime" />
+  </resultMap>
+  <insert id="insert" parameterType="com.shop.cereshop.commons.domain.shop.CereShopCheck">
+    insert into cere_shop_check (shop_id, check_handle, reason, create_time,
+    update_time)
+    values (#{shopId,jdbcType=BIGINT}, #{checkHandle,jdbcType=BIT},#{reason,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR},
+    #{updateTime,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" keyColumn="check_id" keyProperty="checkId" parameterType="com.shop.cereshop.commons.domain.shop.CereShopCheck" useGeneratedKeys="true">
+    insert into cere_shop_check
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="shopId != null">
+        shop_id,
+      </if>
+      <if test="checkHandle != null">
+        check_handle,
+      </if>
+      <if test="reason != null and reason!=''">
+        reason,
+      </if>
+      <if test="createTime != null and createTime!=''">
+        create_time,
+      </if>
+      <if test="updateTime != null and updateTime!=''">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="shopId != null">
+        #{shopId,jdbcType=BIGINT},
+      </if>
+      <if test="checkHandle != null">
+        #{checkHandle,jdbcType=BIT},
+      </if>
+      <if test="reason != null and reason!=''">
+        #{reason,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null and createTime!=''">
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null and updateTime!=''">
+        #{updateTime,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+</mapper>

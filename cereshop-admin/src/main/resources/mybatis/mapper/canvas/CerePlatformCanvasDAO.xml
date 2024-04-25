@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.cereshop.admin.dao.canvas.CerePlatformCanvasDAO">
+  <resultMap id="BaseResultMap" type="com.shop.cereshop.commons.domain.canvas.CerePlatformCanvas">
+    <id column="canvas_id" jdbcType="BIGINT" property="canvasId" />
+    <result column="terminal" jdbcType="BIT" property="terminal" />
+    <result column="json" jdbcType="VARCHAR" property="json" />
+    <result column="type" jdbcType="BIT" property="type" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="shop_id" jdbcType="BIGINT" property="shopId" />
+    <result column="custom_id" jdbcType="BIGINT" property="customId" />
+    <result column="create_time" jdbcType="VARCHAR" property="createTime" />
+    <result column="update_time" jdbcType="VARCHAR" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    canvas_id, terminal, json, type, name, shop_id, custom_id, create_time, update_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from cere_platform_canvas
+    where canvas_id = #{canvasId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from cere_platform_canvas
+    where canvas_id = #{canvasId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByCustomId">
+    delete from cere_platform_canvas
+    where custom_id = #{customId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insertSelective" keyColumn="canvas_id" keyProperty="canvasId" parameterType="com.shop.cereshop.commons.domain.canvas.CerePlatformCanvas" useGeneratedKeys="true">
+    insert into cere_platform_canvas
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="terminal != null">
+        terminal,
+      </if>
+      <if test="json != null">
+        json,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="shopId != null">
+        shop_id,
+      </if>
+      <if test="customId != null">
+        custom_id,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="terminal != null">
+        #{terminal,jdbcType=BIT},
+      </if>
+      <if test="json != null">
+        #{json,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=BIT},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="shopId != null">
+        #{shopId,jdbcType=BIGINT},
+      </if>
+      <if test="customId != null">
+        #{customId,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.shop.cereshop.commons.domain.canvas.CerePlatformCanvas">
+    update cere_platform_canvas
+    <set>
+      <if test="terminal != null">
+        terminal = #{terminal,jdbcType=BIT},
+      </if>
+      <if test="json != null">
+        json = #{json,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=BIT},
+      </if>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="shopId != null">
+        shop_id = #{shopId,jdbcType=BIGINT},
+      </if>
+      <if test="customId != null">
+        custom_id = #{customId,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where canvas_id = #{canvasId,jdbcType=BIGINT}
+  </update>
+  <select id="getCanvas" parameterType="com.shop.cereshop.commons.domain.canvas.CerePlatformCanvas" resultType="com.shop.cereshop.commons.domain.canvas.CerePlatformCanvas">
+    SELECT * FROM cere_platform_canvas
+    <where>
+      <if test="terminal != null">
+        and terminal = #{terminal,jdbcType=BIT}
+      </if>
+      <if test="json != null">
+        and json = #{json,jdbcType=VARCHAR}
+      </if>
+      <if test="type != null">
+        and type = #{type,jdbcType=BIT}
+      </if>
+      <if test="name != null">
+        and name = #{name,jdbcType=VARCHAR}
+      </if>
+      <if test="shopId != null">
+        and shop_id = #{shopId,jdbcType=BIGINT}
+      </if>
+      <if test="customId != null">
+        and custom_id = #{customId,jdbcType=BIGINT}
+      </if>
+      <if test="createTime != null">
+        and create_time = #{createTime,jdbcType=VARCHAR}
+      </if>
+      <if test="updateTime != null">
+        and update_time = #{updateTime,jdbcType=VARCHAR}
+      </if>
+    </where>
+  </select>
+  <select id="selectCanvasList" resultType="com.shop.cereshop.commons.domain.canvas.CerePlatformCanvas">
+    SELECT * FROM cere_platform_canvas
+    <where>
+      type = 2
+      <if test="canvasId != null">
+        and canvas_id = #{canvasId}
+      </if>
+      <if test="search != null">
+        and name like concat('%',#{search},'%')
+      </if>
+    </where>
+  </select>
+
+  <select id="checkCanvas" parameterType="com.shop.cereshop.commons.domain.canvas.CerePlatformCanvas" resultType="com.shop.cereshop.commons.domain.canvas.CerePlatformCanvas">
+    SELECT * FROM cere_platform_canvas where type=#{type} and terminal=#{terminal}
+  </select>
+</mapper>

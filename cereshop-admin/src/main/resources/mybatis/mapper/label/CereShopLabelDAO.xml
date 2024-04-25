@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.cereshop.admin.dao.label.CereShopLabelDAO">
+  <resultMap id="BaseResultMap" type="com.shop.cereshop.commons.domain.label.CereShopLabel">
+    <id column="label_id" jdbcType="BIGINT" property="labelId" />
+    <result column="shop_id" jdbcType="BIGINT" property="shopId" />
+    <result column="label_name" jdbcType="VARCHAR" property="labelName" />
+    <result column="create_time" jdbcType="VARCHAR" property="createTime" />
+    <result column="update_time" jdbcType="VARCHAR" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    label_id, shop_id, label_name, create_time, update_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from cere_shop_label
+    where label_id = #{labelId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from cere_shop_label
+    where label_id = #{labelId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" keyColumn="label_id" keyProperty="labelId" parameterType="com.shop.cereshop.commons.domain.label.CereShopLabel" useGeneratedKeys="true">
+    insert into cere_shop_label (shop_id, label_name,
+      create_time, update_time)
+    values (#{shopId,jdbcType=BIGINT}, #{labelName,jdbcType=VARCHAR},
+      #{createTime,jdbcType=VARCHAR}, #{updateTime,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" keyColumn="label_id" keyProperty="labelId" parameterType="com.shop.cereshop.commons.domain.label.CereShopLabel" useGeneratedKeys="true">
+    insert into cere_shop_label
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="shopId != null">
+        shop_id,
+      </if>
+      <if test="labelName != null and labelName!=''">
+        label_name,
+      </if>
+      <if test="createTime != null and createTime!=''">
+        create_time,
+      </if>
+      <if test="updateTime != null and updateTime!=''">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="shopId != null">
+        #{shopId,jdbcType=BIGINT},
+      </if>
+      <if test="labelName != null and labelName!=''">
+        #{labelName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null and createTime!=''">
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null and updateTime!=''">
+        #{updateTime,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.shop.cereshop.commons.domain.label.CereShopLabel">
+    update cere_shop_label
+    <set>
+      <if test="shopId != null">
+        shop_id = #{shopId,jdbcType=BIGINT},
+      </if>
+      <if test="labelName != null and labelName!=''">
+        label_name = #{labelName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null and createTime!=''">
+        create_time = #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null and updateTime!=''">
+        update_time = #{updateTime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where label_id = #{labelId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.shop.cereshop.commons.domain.label.CereShopLabel">
+    update cere_shop_label
+    set shop_id = #{shopId,jdbcType=BIGINT},
+      label_name = #{labelName,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=VARCHAR}
+    where label_id = #{labelId,jdbcType=BIGINT}
+  </update>
+</mapper>

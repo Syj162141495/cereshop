@@ -1,0 +1,102 @@
+15:35:35.469 [main] INFO  com.shop.cereshop.admin.PlatformActivityTest - [logStarting,50] - Starting PlatformActivityTest on DESKTOP-P5K08BE with PID 12884 (started by shelly_90 in E:\workplace-git\yshop-multimer\cereshop\cereshop-admin)
+15:35:35.471 [main] INFO  com.shop.cereshop.admin.PlatformActivityTest - [logStartupProfileInfo,651] - The following profiles are active: admin-prod
+15:35:38.304 [main] INFO  com.alibaba.druid.pool.DruidDataSource - [init,930] - {dataSource-1,dataSource} inited
+15:35:38.527 [main] INFO  org.hibernate.jpa.internal.util.LogHelper - [logPersistenceUnitInformation,31] - HHH000204: Processing PersistenceUnitInfo [
+	name: default
+	...]
+15:35:38.596 [main] INFO  org.hibernate.Version - [logVersion,46] - HHH000412: Hibernate Core {5.3.10.Final}
+15:35:38.598 [main] INFO  org.hibernate.cfg.Environment - [<clinit>,213] - HHH000206: hibernate.properties not found
+15:35:38.747 [main] INFO  org.hibernate.annotations.common.Version - [<clinit>,49] - HCANN000001: Hibernate Commons Annotations {5.0.4.Final}
+15:35:39.041 [main] INFO  org.hibernate.dialect.Dialect - [<init>,157] - HHH000400: Using dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+15:35:43.066 [main] INFO  com.alibaba.druid.pool.DruidDataSource - [close,1825] - {dataSource-1} closed
+15:35:43.134 [main] INFO  com.shop.cereshop.admin.PlatformDiscountTest - [logStarting,50] - Starting PlatformDiscountTest on DESKTOP-P5K08BE with PID 12884 (started by shelly_90 in E:\workplace-git\yshop-multimer\cereshop\cereshop-admin)
+15:35:43.135 [main] INFO  com.shop.cereshop.admin.PlatformDiscountTest - [logStartupProfileInfo,651] - The following profiles are active: admin-prod
+15:35:45.398 [main] INFO  com.alibaba.druid.pool.DruidDataSource - [init,930] - {dataSource-2,dataSource} inited
+15:35:45.504 [main] INFO  org.hibernate.jpa.internal.util.LogHelper - [logPersistenceUnitInformation,31] - HHH000204: Processing PersistenceUnitInfo [
+	name: default
+	...]
+15:35:45.509 [main] INFO  org.hibernate.dialect.Dialect - [<init>,157] - HHH000400: Using dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+15:35:48.267 [main] INFO  com.alibaba.druid.pool.DruidDataSource - [close,1825] - {dataSource-2} closed
+15:35:48.306 [main] INFO  com.shop.cereshop.admin.PlatformMemberLevelTest - [logStarting,50] - Starting PlatformMemberLevelTest on DESKTOP-P5K08BE with PID 12884 (started by shelly_90 in E:\workplace-git\yshop-multimer\cereshop\cereshop-admin)
+15:35:48.307 [main] INFO  com.shop.cereshop.admin.PlatformMemberLevelTest - [logStartupProfileInfo,651] - The following profiles are active: admin-prod
+15:35:49.174 [main] INFO  com.alibaba.druid.pool.DruidDataSource - [init,930] - {dataSource-3,dataSource} inited
+15:35:49.261 [main] INFO  org.hibernate.jpa.internal.util.LogHelper - [logPersistenceUnitInformation,31] - HHH000204: Processing PersistenceUnitInfo [
+	name: default
+	...]
+15:35:49.266 [main] INFO  org.hibernate.dialect.Dialect - [<init>,157] - HHH000400: Using dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+15:35:51.985 [main] INFO  com.alibaba.druid.pool.DruidDataSource - [close,1825] - {dataSource-3} closed
+15:35:52.020 [main] INFO  com.shop.cereshop.admin.PlatformMemberShipTest - [logStarting,50] - Starting PlatformMemberShipTest on DESKTOP-P5K08BE with PID 12884 (started by shelly_90 in E:\workplace-git\yshop-multimer\cereshop\cereshop-admin)
+15:35:52.020 [main] INFO  com.shop.cereshop.admin.PlatformMemberShipTest - [logStartupProfileInfo,651] - The following profiles are active: admin-prod
+15:35:52.872 [main] INFO  com.alibaba.druid.pool.DruidDataSource - [init,930] - {dataSource-4,dataSource} inited
+15:35:52.973 [main] INFO  org.hibernate.jpa.internal.util.LogHelper - [logPersistenceUnitInformation,31] - HHH000204: Processing PersistenceUnitInfo [
+	name: default
+	...]
+15:35:52.978 [main] INFO  org.hibernate.dialect.Dialect - [<init>,157] - HHH000400: Using dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+15:35:55.754 [main] INFO  com.alibaba.druid.pool.DruidDataSource - [close,1825] - {dataSource-4} closed
+15:35:55.790 [main] INFO  com.shop.cereshop.admin.PlatformPoliteTest - [logStarting,50] - Starting PlatformPoliteTest on DESKTOP-P5K08BE with PID 12884 (started by shelly_90 in E:\workplace-git\yshop-multimer\cereshop\cereshop-admin)
+15:35:55.791 [main] INFO  com.shop.cereshop.admin.PlatformPoliteTest - [logStartupProfileInfo,651] - The following profiles are active: admin-prod
+15:35:56.583 [main] INFO  com.alibaba.druid.pool.DruidDataSource - [init,930] - {dataSource-5,dataSource} inited
+15:35:56.667 [main] INFO  org.hibernate.jpa.internal.util.LogHelper - [logPersistenceUnitInformation,31] - HHH000204: Processing PersistenceUnitInfo [
+	name: default
+	...]
+15:35:56.673 [main] INFO  org.hibernate.dialect.Dialect - [<init>,157] - HHH000400: Using dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+15:35:59.337 [main] INFO  com.alibaba.druid.pool.DruidDataSource - [close,1825] - {dataSource-5} closed
+15:35:59.369 [main] INFO  com.shop.cereshop.admin.PlatformSeckillTest - [logStarting,50] - Starting PlatformSeckillTest on DESKTOP-P5K08BE with PID 12884 (started by shelly_90 in E:\workplace-git\yshop-multimer\cereshop\cereshop-admin)
+15:35:59.369 [main] INFO  com.shop.cereshop.admin.PlatformSeckillTest - [logStartupProfileInfo,651] - The following profiles are active: admin-prod
+15:36:00.160 [main] INFO  com.alibaba.druid.pool.DruidDataSource - [init,930] - {dataSource-6,dataSource} inited
+15:36:00.250 [main] INFO  org.hibernate.jpa.internal.util.LogHelper - [logPersistenceUnitInformation,31] - HHH000204: Processing PersistenceUnitInfo [
+	name: default
+	...]
+15:36:00.255 [main] INFO  org.hibernate.dialect.Dialect - [<init>,157] - HHH000400: Using dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+15:36:02.929 [main] INFO  com.alibaba.druid.pool.DruidDataSource - [close,1825] - {dataSource-6} closed
+15:37:31.613 [main] INFO  com.shop.cereshop.admin.PlatformActivityTest - [logStarting,50] - Starting PlatformActivityTest on DESKTOP-P5K08BE with PID 19428 (started by shelly_90 in E:\workplace-git\yshop-multimer\cereshop\cereshop-admin)
+15:37:31.616 [main] INFO  com.shop.cereshop.admin.PlatformActivityTest - [logStartupProfileInfo,651] - The following profiles are active: admin-prod
+15:37:34.221 [main] INFO  com.alibaba.druid.pool.DruidDataSource - [init,930] - {dataSource-1,dataSource} inited
+15:37:34.444 [main] INFO  org.hibernate.jpa.internal.util.LogHelper - [logPersistenceUnitInformation,31] - HHH000204: Processing PersistenceUnitInfo [
+	name: default
+	...]
+15:37:34.505 [main] INFO  org.hibernate.Version - [logVersion,46] - HHH000412: Hibernate Core {5.3.10.Final}
+15:37:34.507 [main] INFO  org.hibernate.cfg.Environment - [<clinit>,213] - HHH000206: hibernate.properties not found
+15:37:34.629 [main] INFO  org.hibernate.annotations.common.Version - [<clinit>,49] - HCANN000001: Hibernate Commons Annotations {5.0.4.Final}
+15:37:34.904 [main] INFO  org.hibernate.dialect.Dialect - [<init>,157] - HHH000400: Using dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+15:37:38.960 [main] INFO  com.alibaba.druid.pool.DruidDataSource - [close,1825] - {dataSource-1} closed
+15:37:39.019 [main] INFO  com.shop.cereshop.admin.PlatformDiscountTest - [logStarting,50] - Starting PlatformDiscountTest on DESKTOP-P5K08BE with PID 19428 (started by shelly_90 in E:\workplace-git\yshop-multimer\cereshop\cereshop-admin)
+15:37:39.019 [main] INFO  com.shop.cereshop.admin.PlatformDiscountTest - [logStartupProfileInfo,651] - The following profiles are active: admin-prod
+15:37:39.920 [main] INFO  com.alibaba.druid.pool.DruidDataSource - [init,930] - {dataSource-2,dataSource} inited
+15:37:40.024 [main] INFO  org.hibernate.jpa.internal.util.LogHelper - [logPersistenceUnitInformation,31] - HHH000204: Processing PersistenceUnitInfo [
+	name: default
+	...]
+15:37:40.030 [main] INFO  org.hibernate.dialect.Dialect - [<init>,157] - HHH000400: Using dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+15:37:42.893 [main] INFO  com.alibaba.druid.pool.DruidDataSource - [close,1825] - {dataSource-2} closed
+15:37:42.933 [main] INFO  com.shop.cereshop.admin.PlatformMemberLevelTest - [logStarting,50] - Starting PlatformMemberLevelTest on DESKTOP-P5K08BE with PID 19428 (started by shelly_90 in E:\workplace-git\yshop-multimer\cereshop\cereshop-admin)
+15:37:42.933 [main] INFO  com.shop.cereshop.admin.PlatformMemberLevelTest - [logStartupProfileInfo,651] - The following profiles are active: admin-prod
+15:37:43.724 [main] INFO  com.alibaba.druid.pool.DruidDataSource - [init,930] - {dataSource-3,dataSource} inited
+15:37:43.818 [main] INFO  org.hibernate.jpa.internal.util.LogHelper - [logPersistenceUnitInformation,31] - HHH000204: Processing PersistenceUnitInfo [
+	name: default
+	...]
+15:37:43.823 [main] INFO  org.hibernate.dialect.Dialect - [<init>,157] - HHH000400: Using dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+15:37:46.614 [main] INFO  com.alibaba.druid.pool.DruidDataSource - [close,1825] - {dataSource-3} closed
+15:37:46.648 [main] INFO  com.shop.cereshop.admin.PlatformMemberShipTest - [logStarting,50] - Starting PlatformMemberShipTest on DESKTOP-P5K08BE with PID 19428 (started by shelly_90 in E:\workplace-git\yshop-multimer\cereshop\cereshop-admin)
+15:37:46.648 [main] INFO  com.shop.cereshop.admin.PlatformMemberShipTest - [logStartupProfileInfo,651] - The following profiles are active: admin-prod
+15:37:47.433 [main] INFO  com.alibaba.druid.pool.DruidDataSource - [init,930] - {dataSource-4,dataSource} inited
+15:37:47.534 [main] INFO  org.hibernate.jpa.internal.util.LogHelper - [logPersistenceUnitInformation,31] - HHH000204: Processing PersistenceUnitInfo [
+	name: default
+	...]
+15:37:47.539 [main] INFO  org.hibernate.dialect.Dialect - [<init>,157] - HHH000400: Using dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+15:37:50.254 [main] INFO  com.alibaba.druid.pool.DruidDataSource - [close,1825] - {dataSource-4} closed
+15:37:50.286 [main] INFO  com.shop.cereshop.admin.PlatformPoliteTest - [logStarting,50] - Starting PlatformPoliteTest on DESKTOP-P5K08BE with PID 19428 (started by shelly_90 in E:\workplace-git\yshop-multimer\cereshop\cereshop-admin)
+15:37:50.286 [main] INFO  com.shop.cereshop.admin.PlatformPoliteTest - [logStartupProfileInfo,651] - The following profiles are active: admin-prod
+15:37:50.984 [main] INFO  com.alibaba.druid.pool.DruidDataSource - [init,930] - {dataSource-5,dataSource} inited
+15:37:51.076 [main] INFO  org.hibernate.jpa.internal.util.LogHelper - [logPersistenceUnitInformation,31] - HHH000204: Processing PersistenceUnitInfo [
+	name: default
+	...]
+15:37:51.080 [main] INFO  org.hibernate.dialect.Dialect - [<init>,157] - HHH000400: Using dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+15:37:53.746 [main] INFO  com.alibaba.druid.pool.DruidDataSource - [close,1825] - {dataSource-5} closed
+15:37:53.787 [main] INFO  com.shop.cereshop.admin.PlatformSeckillTest - [logStarting,50] - Starting PlatformSeckillTest on DESKTOP-P5K08BE with PID 19428 (started by shelly_90 in E:\workplace-git\yshop-multimer\cereshop\cereshop-admin)
+15:37:53.787 [main] INFO  com.shop.cereshop.admin.PlatformSeckillTest - [logStartupProfileInfo,651] - The following profiles are active: admin-prod
+15:38:09.513 [main] INFO  com.alibaba.druid.pool.DruidDataSource - [init,930] - {dataSource-6,dataSource} inited
+15:38:09.603 [main] INFO  org.hibernate.jpa.internal.util.LogHelper - [logPersistenceUnitInformation,31] - HHH000204: Processing PersistenceUnitInfo [
+	name: default
+	...]
+15:38:09.607 [main] INFO  org.hibernate.dialect.Dialect - [<init>,157] - HHH000400: Using dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+15:38:12.270 [main] INFO  com.alibaba.druid.pool.DruidDataSource - [close,1825] - {dataSource-6} closed

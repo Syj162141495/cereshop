@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.cereshop.business.dao.product.CereProductMemberDAO">
+    <resultMap id="BaseResultMap" type="com.shop.cereshop.commons.domain.product.CereProductMember">
+        <result column="product_id" jdbcType="BIGINT" property="productId"/>
+        <result column="sku_id" jdbcType="BIGINT" property="skuId"/>
+        <result column="member_level_id" jdbcType="BIGINT" property="memberLevelId"/>
+        <result column="mode" jdbcType="BIT" property="mode"/>
+        <result column="price" jdbcType="DECIMAL" property="price"/>
+        <result column="total" jdbcType="DECIMAL" property="total"/>
+    </resultMap>
+    <insert id="insert" parameterType="com.shop.cereshop.commons.domain.product.CereProductMember">
+        insert into cere_product_member (product_id, sku_id, member_level_id,
+                                         `mode`, price,total)
+        values (#{productId,jdbcType=BIGINT}, #{skuId,jdbcType=BIGINT}, #{memberLevelId,jdbcType=BIGINT},
+                #{mode,jdbcType=BIT}, #{price,jdbcType=DECIMAL},#{total,jdbcType=DECIMAL})
+    </insert>
+    <insert id="insertSelective" parameterType="com.shop.cereshop.commons.domain.product.CereProductMember">
+        insert into cere_product_member
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="productId != null">
+                product_id,
+            </if>
+            <if test="skuId != null">
+                sku_id,
+            </if>
+            <if test="memberLevelId != null">
+                member_level_id,
+            </if>
+            <if test="mode != null">
+                `mode`,
+            </if>
+            <if test="price != null">
+                price,
+            </if>
+            <if test="total != null">
+                total,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="productId != null">
+                #{productId,jdbcType=BIGINT},
+            </if>
+            <if test="skuId != null">
+                #{skuId,jdbcType=BIGINT},
+            </if>
+            <if test="memberLevelId != null">
+                #{memberLevelId,jdbcType=BIGINT},
+            </if>
+            <if test="mode != null">
+                #{mode,jdbcType=BIT},
+            </if>
+            <if test="price != null">
+                #{price,jdbcType=DECIMAL},
+            </if>
+            <if test="total != null">
+                #{total,jdbcType=DECIMAL},
+            </if>
+        </trim>
+    </insert>
+
+    <select id="findAllMin" resultType="com.shop.cereshop.commons.domain.product.CereProductMember">
+        SELECT MIN(a.price) price, a.product_id
+        FROM cere_product_member a
+                 LEFT JOIN (SELECT sku_id, MIN(price) price FROM cere_product_sku GROUP BY product_id) b
+                           ON a.sku_id = b.sku_id
+        GROUP BY a.product_id
+    </select>
+
+    <select id="findAllMax" resultType="com.shop.cereshop.commons.domain.product.CereProductMember">
+        SELECT MAX(a.price) price, a.product_id
+        FROM cere_product_member a
+                 LEFT JOIN (SELECT sku_id, MAX(price) price FROM cere_product_sku GROUP BY product_id) b
+                           ON a.sku_id = b.sku_id
+        GROUP BY a.product_id
+    </select>
+
+    <select id="getProductMembers" parameterType="java.lang.Object"
+            resultType="com.shop.cereshop.business.page.member.MemberPrice">
+        SELECT a.member_level_id, a.member_level_name, b.`mode`, b.price
+        FROM cere_platform_member_level a
+                 LEFT JOIN cere_product_member b ON a.member_level_id = b.member_level_id and b.sku_id = #{skuId}
+        ORDER BY a.growth asc
+    </select>
+
+    <delete id="deleteByProductId" parameterType="java.lang.Object">
+        DELETE FROM cere_product_member where product_id=#{productId}
+    </delete>
+
+    <insert id="insertBatch" parameterType="java.util.List">
+        insert into cere_product_member (product_id, sku_id, member_level_id,
+        `mode`, price) values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (
+            #{item.productId},
+            #{item.skuId},
+            #{item.memberLevelId},
+            #{item.mode},
+            #{item.price}
+            )
+        </foreach>
+    </insert>
+</mapper>

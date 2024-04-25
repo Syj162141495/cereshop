@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.cereshop.admin.dao.product.CereProductMemberDAO">
+  <resultMap id="BaseResultMap" type="com.shop.cereshop.commons.domain.product.CereProductMember">
+    <result column="product_id" jdbcType="BIGINT" property="productId"/>
+    <result column="sku_id" jdbcType="BIGINT" property="skuId"/>
+    <result column="member_level_id" jdbcType="BIGINT" property="memberLevelId"/>
+    <result column="mode" jdbcType="BIT" property="mode"/>
+    <result column="price" jdbcType="DECIMAL" property="price"/>
+    <result column="total" jdbcType="DECIMAL" property="total"/>
+  </resultMap>
+  <insert id="insert" parameterType="com.shop.cereshop.commons.domain.product.CereProductMember">
+    insert into cere_product_member (product_id, sku_id, member_level_id,
+    `mode`, price,total)
+    values (#{productId,jdbcType=BIGINT}, #{skuId,jdbcType=BIGINT}, #{memberLevelId,jdbcType=BIGINT},
+    #{mode,jdbcType=BIT}, #{price,jdbcType=DECIMAL},#{total,jdbcType=DECIMAL})
+  </insert>
+  <insert id="insertSelective" parameterType="com.shop.cereshop.commons.domain.product.CereProductMember">
+    insert into cere_product_member
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="productId != null">
+        product_id,
+      </if>
+      <if test="skuId != null">
+        sku_id,
+      </if>
+      <if test="memberLevelId != null">
+        member_level_id,
+      </if>
+      <if test="mode != null">
+        `mode`,
+      </if>
+      <if test="price != null">
+        price,
+      </if>
+      <if test="total != null">
+        total,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="productId != null">
+        #{productId,jdbcType=BIGINT},
+      </if>
+      <if test="skuId != null">
+        #{skuId,jdbcType=BIGINT},
+      </if>
+      <if test="memberLevelId != null">
+        #{memberLevelId,jdbcType=BIGINT},
+      </if>
+      <if test="mode != null">
+        #{mode,jdbcType=BIT},
+      </if>
+      <if test="price != null">
+        #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="total != null">
+        #{total,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+
+  <select id="getMemberProducts" parameterType="com.shop.cereshop.admin.param.product.CanvasAdminProductParam" resultType="com.shop.cereshop.admin.page.product.MemberProduct">
+    SELECT d.shop_id,d.shop_name,a.product_id,s.product_name,a.mode,x.users,d.shop_logo,
+    IF(h.image IS NULL OR h.image='',c.product_image,h.image) image,a.member_level_id,y.member_level_name,
+    MIN(a.price) discount,b.price,b.sku_id,b.original_price,IF(f.number IS NULL,0,f.number) number,b.stock_number from cere_product_member a
+    LEFT JOIN cere_shop_product s ON a.product_id=s.product_id
+    LEFT JOIN cere_product_sku b ON a.sku_id=b.sku_id
+    LEFT JOIN (SELECT a.product_id,a.product_image from cere_product_image a,cere_shop_product b
+    where a.product_id=b.product_id GROUP BY a.product_id) c ON a.product_id=c.product_id
+    LEFT JOIN cere_platform_shop d ON s.shop_id=d.shop_id
+    LEFT JOIN cere_product_classify e ON s.classify_id=e.classify_id
+    LEFT JOIN (SELECT SUM(number) number,sku_id,order_id from cere_order_product GROUP BY sku_id) f ON a.sku_id=f.sku_id
+    LEFT JOIN cere_shop_order g ON f.order_id=g.order_id and g.state in (2,3,4)
+    LEFT JOIN (SELECT a.sku_id,a.image from cere_sku_name a,cere_product_sku b where a.sku_id=b.sku_id LIMIT 1) h ON a.sku_id=h.sku_id
+    LEFT JOIN (SELECT COUNT(a.buyer_user_id) users,a.product_id FROM (SELECT b.buyer_user_id,a.product_id FROM cere_order_product a,cere_shop_order b
+    where a.order_id=b.order_id and b.state in (2,3,4) GROUP BY a.product_id,b.buyer_user_id) a GROUP BY a.product_id) x ON a.product_id=x.product_id
+    LEFT JOIN cere_platform_member_level y ON a.member_level_id=y.member_level_id
+    where s.shelve_state=1
+    <if test="shopId!=null">
+      and s.shop_id=#{shopId}
+    </if>
+    <if test="search!=null and search!=''">
+      and (d.shop_name like concat('%',#{search},'%') OR
+      a.product_id like concat('%',#{search},'%') OR
+      s.product_name like concat('%',#{search},'%'))
+    </if>
+    <if test="shelveState!=null">
+      and s.shelve_state=#{shelveState}
+    </if>
+    <if test="classifyId!=null">
+      and (s.classify_id=#{classifyId} OR e.classify_level_hierarchy like concat('%/',#{classifyId},'%'))
+    </if>
+    <if test="ids!=null and ids.size()>0">
+      and a.product_id in (
+      <foreach collection="ids" item="id" index="index" separator=",">
+        #{id}
+      </foreach>
+      )
+    </if>
+    GROUP BY a.product_id
+    ORDER BY number DESC
+  </select>
+</mapper>

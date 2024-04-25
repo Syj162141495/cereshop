@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.cereshop.admin.dao.mark.MarkDataDao">
+    <select id="findUsers" resultType="com.shop.cereshop.commons.domain.buyer.CereBuyerUser">
+        SELECT * FROM cere_buyer_user where buyer_user_id in (876,877)
+    </select>
+
+    <select id="findReceive" parameterType="java.lang.Object" resultType="com.shop.cereshop.commons.domain.buyer.CereBuyerReceive">
+        SELECT * FROM cere_buyer_receive where buyer_user_id=#{buyerUserId} LIMIT 1
+    </select>
+
+    <select id="findProducts" resultType="com.shop.cereshop.commons.domain.product.CereProductSku">
+        SELECT a.product_id,a.sku_id,a.original_price,a.price,a.weight,b.product_image sku_image,c.product_name create_time,a.SKU FROM cere_product_sku a
+        LEFT JOIN cere_product_image b ON a.product_id=b.product_id
+        LEFT JOIN cere_shop_product c ON a.product_id=c.product_id
+        GROUP BY a.product_id
+        LIMIT 2
+    </select>
+
+    <select id="findBySkuId" parameterType="java.lang.Object" resultType="com.shop.cereshop.commons.domain.order.CereOrderProductAttribute">
+        SELECT sku_name,sku_value,name_code,value_code from cere_sku_name where sku_id=#{skuId} limit 1
+    </select>
+
+    <select id="findOrders" resultType="com.shop.cereshop.commons.domain.order.CereShopOrder">
+        SELECT * from cere_shop_order where state=2 ORDER BY create_time DESC LIMIT 2
+    </select>
+
+    <select id="findAfterProducts" parameterType="java.lang.Object" resultType="com.shop.cereshop.commons.domain.order.CereOrderProduct">
+        SELECT * from cere_order_product where order_id=#{orderId}
+    </select>
+
+    <select id="findAfterAttribute" parameterType="java.lang.Object" resultType="com.shop.cereshop.commons.domain.after.CereAfterProductAttribute">
+        SELECT sku_name,sku_value,name_code,value_code from cere_order_product_attribute where order_product_id=#{orderProductId}
+    </select>
+
+    <select id="findDistributors" resultType="com.shop.cereshop.commons.domain.distributor.CereShopDistributor">
+        SELECT * FROM cere_shop_distributor where state=1 and if_Liquidation=0 and shop_id=1 LIMIT 2
+    </select>
+
+    <select id="findByUserIdAndDis" parameterType="java.lang.Object" resultType="com.shop.cereshop.commons.domain.distributor.CereDistributorBuyer">
+        SELECT * FROM cere_distributor_buyer where distributor_id=#{distributorId} and buyer_user_id=#{buyerUserId}
+    </select>
+</mapper>
