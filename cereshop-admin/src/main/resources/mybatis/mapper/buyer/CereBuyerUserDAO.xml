@@ -5,6 +5,9 @@
     <id column="buyer_user_id" jdbcType="BIGINT" property="buyerUserId" />
     <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="sex" jdbcType="VARCHAR" property="sex" />
+    <result column="age" jdbcType="INTEGER" property="age" />
+    <result column="cid" jdbcType="VARCHAR" property="cid" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
     <result column="birthday" jdbcType="VARCHAR" property="birthday" />
     <result column="wechat_open_id" jdbcType="VARCHAR" property="wechatOpenId" />
     <result column="wechat_union_id" jdbcType="VARCHAR" property="wechatUnionId" />
@@ -21,7 +24,7 @@
     <result column="update_time" jdbcType="VARCHAR" property="updateTime" />
   </resultMap>
   <sql id="Base_Column_List">
-    buyer_user_id, `name`, sex, birthday, wechat_open_id, wechat_union_id, wechat_name, 
+    buyer_user_id, `name`, sex, age, cid, address, birthday, wechat_open_id, wechat_union_id, wechat_name,
     wechat_number, phone, `password`, head_image, `state`,if_black, remark, token, create_time,
     update_time
   </sql>

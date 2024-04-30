@@ -37,6 +37,24 @@ public class CereBuyerUser implements Serializable {
     private String sex;
 
     /**
+     * 年龄
+     */
+    @ApiModelProperty(value = "年龄")
+    private Integer age;
+
+    /**
+     * 身份证
+     */
+    @ApiModelProperty(value = "身份证")
+    private String cid;
+
+    /**
+     * 地址
+     */
+    @ApiModelProperty(value = "地址")
+    private String address;
+
+    /**
      * 生日
      */
     @ApiModelProperty(value = "生日")
