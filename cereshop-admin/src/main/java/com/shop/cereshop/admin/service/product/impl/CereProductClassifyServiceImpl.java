@@ -8,6 +8,7 @@ package com.shop.cereshop.admin.service.product.impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.shop.cereshop.admin.dao.product.CereProductClassifyDAO;
+import com.shop.cereshop.admin.param.product.ProductGetClassifyParam;
 import com.shop.cereshop.commons.constant.IntegerEnum;
 import com.shop.cereshop.commons.constant.LongEnum;
 import com.shop.cereshop.commons.domain.common.Page;
@@ -259,6 +260,11 @@ public class CereProductClassifyServiceImpl implements CereProductClassifyServic
             }));
         }
         return list;
+    }
+
+    @Override
+    public List<CereProductClassify> getClassifySelect(ProductGetClassifyParam param) throws CoBusinessException {
+        return null;
     }
 
     private Classify setChildsIndex(Classify parent, List<Classify> all, Map<String,Integer> map) throws ArrayIndexOutOfBoundsException{

@@ -7,7 +7,10 @@ package com.shop.cereshop.admin.controller;
 
 import com.shop.cereshop.admin.annotation.NoRepeatSubmit;
 import com.shop.cereshop.admin.annotation.NoRepeatWebLog;
-import com.shop.cereshop.admin.page.canvas.*;
+import com.shop.cereshop.admin.page.canvas.CanvasCoupon;
+import com.shop.cereshop.admin.page.canvas.CanvasPlatformDiscount;
+import com.shop.cereshop.admin.page.canvas.CanvasPlatformSeckill;
+import com.shop.cereshop.admin.page.canvas.ToolProduct;
 import com.shop.cereshop.admin.page.product.*;
 import com.shop.cereshop.admin.param.canvas.CanvasCouponParam;
 import com.shop.cereshop.admin.param.canvas.CanvasPageParam;
@@ -15,6 +18,7 @@ import com.shop.cereshop.admin.param.canvas.RenovationParam;
 import com.shop.cereshop.admin.param.product.CanvasAdminProductParam;
 import com.shop.cereshop.admin.param.product.ProductGetAllParam;
 import com.shop.cereshop.admin.param.product.ProductGetByIdParam;
+import com.shop.cereshop.admin.param.product.ProductGetClassifyParam;
 import com.shop.cereshop.admin.service.activity.CerePlatformActivityService;
 import com.shop.cereshop.admin.service.canvas.CerePlatformCanvasCustomService;
 import com.shop.cereshop.admin.service.canvas.CerePlatformCanvasService;
@@ -24,15 +28,11 @@ import com.shop.cereshop.admin.service.platformtool.CerePlatformSeckillService;
 import com.shop.cereshop.admin.service.product.CereProductClassifyService;
 import com.shop.cereshop.admin.service.product.CereProductMemberService;
 import com.shop.cereshop.admin.service.product.CereShopProductService;
-import com.shop.cereshop.commons.domain.business.CerePlatformBusiness;
 import com.shop.cereshop.commons.domain.canvas.CerePlatformCanvas;
 import com.shop.cereshop.commons.domain.canvas.CerePlatformCanvasCustom;
 import com.shop.cereshop.commons.domain.common.Page;
-import com.shop.cereshop.commons.domain.common.PageParam;
 import com.shop.cereshop.commons.domain.notice.CereNotice;
-import com.shop.cereshop.commons.domain.platformtool.CerePlatformDiscount;
-import com.shop.cereshop.commons.domain.platformtool.CerePlatformSeckill;
-import com.shop.cereshop.commons.domain.product.CereProductMember;
+import com.shop.cereshop.commons.domain.product.CereProductClassify;
 import com.shop.cereshop.commons.domain.product.Classify;
 import com.shop.cereshop.commons.domain.user.CerePlatformUser;
 import com.shop.cereshop.commons.exception.CoBusinessException;
@@ -112,7 +112,6 @@ public class ProductController {
 
     /**
      * 获取公告数据
-     * @param param
      * @return
      */
     @GetMapping("getNotices")
@@ -171,10 +170,21 @@ public class ProductController {
      * 查询分类层级
      * @return
      */
-    @GetMapping("getClassify")
+    @RequestMapping(value ="getClassify", method = RequestMethod.POST)
     @ApiOperation(value = "查询分类层级")
     public Result<Classify> getClassify() throws CoBusinessException{
         List<Classify> list=cereProductClassifyService.getClassify();
+        return new Result(list);
+    }
+
+    /**
+     * 选择类别查询(根据上级节点查询下级)
+     * @return
+     */
+    @RequestMapping(value = "getClassifySelect",method = RequestMethod.POST)
+    @ApiOperation(value = "选择类别查询(根据上级节点查询下级)")
+    public Result<List<CereProductClassify>> getClassifySelect(@RequestBody ProductGetClassifyParam param) throws CoBusinessException{
+        List<CereProductClassify> list=cereProductClassifyService.getClassifySelect(param);
         return new Result(list);
     }
 

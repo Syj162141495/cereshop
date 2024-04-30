@@ -35,6 +35,8 @@ public interface CereProductClassifyDAO extends BaseMapper<CereProductClassify> 
 
     List<CereShopProduct> checkProduct(@Param("classifyId") Long classifyId);
 
+    List<CereProductClassify> getClassifySelect(@Param("classifyId") Long classifyPid);
+
     List<ProductClassify> findByPid(@Param("classifyId") Long classifyId);
 
     void updateBatchLevelHierarchy(@Param("list") List<CereProductClassify> list);

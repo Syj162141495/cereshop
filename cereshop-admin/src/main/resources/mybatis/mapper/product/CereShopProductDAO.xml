@@ -242,7 +242,9 @@
     set shelve_state = 0, update_time = NOW()
     where shop_id = #{shopId}
   </update>
-
+  <select id="getClassifySelect" parameterType="java.lang.Object" resultType="com.shop.cereshop.commons.domain.product.CereProductClassify">
+    SELECT classify_id,classify_pid,classify_name from cere_product_classify where classify_pid=#{classifyPid} ORDER BY sort
+  </select>
   <select id="getProducts" parameterType="com.shop.cereshop.admin.param.product.CanvasAdminProductParam" resultType="com.shop.cereshop.admin.page.product.CanvasProduct">
     SELECT a.shop_id,d.shop_name,a.product_id,a.product_name,x.users,d.shop_logo,
     IF(h.image IS NULL OR h.image='',c.product_image,h.image) image,

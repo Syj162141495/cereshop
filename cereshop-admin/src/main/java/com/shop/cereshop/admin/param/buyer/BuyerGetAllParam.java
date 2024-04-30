@@ -28,10 +28,34 @@ public class BuyerGetAllParam extends PageParam {
     private String name;
 
     /**
+     * 性别
+     */
+    @ApiModelProperty(value = "性别")
+    private String sex;
+
+    /**
      * 手机号
      */
     @ApiModelProperty(value = "手机号")
     private String phone;
+
+    /**
+     * 年龄
+     */
+    @ApiModelProperty(value = "年龄")
+    private Integer age;
+
+    /**
+     * 身份证
+     */
+    @ApiModelProperty(value = "身份证")
+    private String cid;
+
+    /**
+     * 地址
+     */
+    @ApiModelProperty(value = "地址")
+    private String address;
 
     /**
      * 标签id
