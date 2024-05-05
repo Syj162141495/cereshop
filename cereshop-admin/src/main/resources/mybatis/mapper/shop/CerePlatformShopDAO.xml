@@ -11,6 +11,16 @@
     <result column="charge_person_name" jdbcType="VARCHAR" property="chargePersonName" />
     <result column="charge_person_phone" jdbcType="VARCHAR" property="chargePersonPhone" />
     <result column="shop_adress" jdbcType="VARCHAR" property="shopAdress" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="city" jdbcType="VARCHAR" property="city" />
+    <result column="area" jdbcType="VARCHAR" property="area" />
+    <result column="service_classify" jdbcType="VARCHAR" property="serviceClassify" />
+    <result column="coordinate_x" jdbcType="VARCHAR" property="coordinateX" />
+    <result column="coordinate_y" jdbcType="VARCHAR" property="coordinateY" />
+    <result column="institutional_classify" jdbcType="VARCHAR" property="institutionalClassify" />
+    <result column="institutional_grade" jdbcType="VARCHAR" property="institutionalGrade" />
+    <result column="redit_code" jdbcType="VARCHAR" property="reditCode" />
+    <result column="introduction" jdbcType="VARCHAR" property="introduction" />
     <result column="effective_date" jdbcType="VARCHAR" property="effectiveDate" />
     <result column="effective_year" jdbcType="INTEGER" property="effectiveYear" />
     <result column="contract_state" jdbcType="BIT" property="contractState" />
@@ -24,7 +34,8 @@
   <sql id="Base_Column_List">
     shop_id, shop_code, shop_name, shop_brief, shop_phone, shop_password, charge_person_name,
     charge_person_phone, shop_adress, effective_date, effective_year, contract_state,
-    authentication_state, check_state, `state`,authen_type, create_time, update_time
+    authentication_state, check_state, `state`,authen_type, create_time, update_time, redit_code, introduction,
+    address, city, area, service_classify, coordinate_x, coordinate_y, institutional_classify, institutional_grade
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select
@@ -41,14 +52,16 @@
       shop_phone, shop_password, charge_person_name,
       charge_person_phone, shop_adress, effective_date,
       effective_year, contract_state, authentication_state,
-      check_state, `state`,authen_type, create_time,
-      update_time)
+      check_state, `state`,authen_type, create_time, update_time, redit_code, introduction,
+      address, city, area, service_classify, coordinate_x, coordinate_y, institutional_classify, institutional_grade)
     values (#{shopCode,jdbcType=VARCHAR}, #{shopName,jdbcType=VARCHAR}, #{shopBrief,jdbcType=VARCHAR},
       #{shopPhone,jdbcType=VARCHAR}, #{shopPassword,jdbcType=VARCHAR}, #{chargePersonName,jdbcType=VARCHAR},
       #{chargePersonPhone,jdbcType=VARCHAR}, #{shopAdress,jdbcType=VARCHAR}, #{effectiveDate,jdbcType=VARCHAR},
       #{effectiveYear,jdbcType=INTEGER}, #{contractState,jdbcType=BIT}, #{authenticationState,jdbcType=BIT},
       #{checkState,jdbcType=BIT}, #{state,jdbcType=BIT},#{authenType,jdbcType=BIT}, #{createTime,jdbcType=VARCHAR},
-      #{updateTime,jdbcType=VARCHAR})
+      #{updateTime,jdbcType=VARCHAR}, #{reditCode, jdbcType=VARCHAR}, #{introduction, jdbcType=VARCHAR}, #{address, jdbcType=VARCHAR},
+      #{city, jdbcType=VARCHAR}, #{area, jdbcType=VARCHAR}, #{serviceClassify, jdbcType=VARCHAR}, #{coordinateX, jdbcType=DOUBLE},
+      #{coordinateY, jdbcType=DOUBLE}, #{institutionalClassify, jdbcType=VARCHAR}, #{institutionalGrade, jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" keyColumn="shop_id" keyProperty="shopId" parameterType="com.shop.cereshop.commons.domain.shop.CerePlatformShop" useGeneratedKeys="true">
     insert into cere_platform_shop
@@ -213,6 +226,36 @@
       <if test="updateTime != null and updateTime!=''">
         update_time = #{updateTime,jdbcType=VARCHAR},
       </if>
+      <if test="reditCode != null and reditCode!=''">
+        redit_code = #{reditCode, jdbcType=VARCHAR},
+      </if>
+      <if test="introduction != null and introduction!=''">
+        introduction = #{introduction, jdbcType=VARCHAR},
+      </if>
+      <if test="address != null and address!=''">
+        address = #{address, jdbcType=VARCHAR},
+      </if>
+      <if test="city != null and city!=''">
+        city = #{city, jdbcType=VARCHAR},
+      </if>
+      <if test="area != null and area!=''">
+        area = #{area, jdbcType=VARCHAR},
+      </if>
+      <if test="serviceClassify != null and serviceClassify!=''">
+        service_classify = #{serviceClassify, jdbcType=VARCHAR},
+      </if>
+      <if test="coordinateX != null and coordinateX!=''">
+        coordinate_x = #{coordinateX, jdbcType=DOUBLE},
+      </if>
+      <if test="coordinateY != null and coordinateY!=''">
+        coordinate_y = #{coordinateY, jdbcType=DOUBLE},
+      </if>
+      <if test="institutionalClassify != null and institutionalClassify!=''">
+        institutional_classify = #{institutionalClassify, jdbcType=VARCHAR},
+      </if>
+      <if test="institutionalGrade != null and institutionalGrade!=''">
+        institutional_grade = #{institutionalGrade, jdbcType=VARCHAR}
+      </if>
     </set>
     where shop_id = #{shopId,jdbcType=BIGINT}
   </update>
@@ -234,7 +277,17 @@
       `state` = #{state,jdbcType=BIT},
       authen_type = #{authenType,jdbcType=BIT},
       create_time = #{createTime,jdbcType=VARCHAR},
-      update_time = #{updateTime,jdbcType=VARCHAR}
+      update_time = #{updateTime,jdbcType=VARCHAR},
+      redit_code = #{reditCode, jdbcType=VARCHAR},
+      introduction = #{introduction, jdbcType=VARCHAR},
+      address = #{address, jdbcType=VARCHAR},
+      city = #{city, jdbcType=VARCHAR},
+      area = #{area, jdbcType=VARCHAR},
+      service_classify = #{serviceClassify, jdbcType=VARCHAR},
+      coordinate_x = #{coordinateX, jdbcType=DOUBLE},
+      coordinate_y = #{coordinateY, jdbcType=DOUBLE},
+      institutional_classify = #{institutionalClassify, jdbcType=VARCHAR},
+      institutional_grade = #{institutionalGrade, jdbcType=VARCHAR}
     where shop_id = #{shopId,jdbcType=BIGINT}
   </update>
 
@@ -265,7 +318,8 @@
     SELECT a.shop_id, a.shop_code, a.shop_name, a.shop_brief, a.shop_phone, a.shop_password, a.charge_person_name,
       a.charge_person_phone, a.shop_adress, a.effective_date, a.effective_year, a.contract_state,
       a.authentication_state, a.check_state, a.`state`, a.authen_type, a.create_time, a.update_time,
-      b.business_user_id
+      b.business_user_id, a.redit_code, a.introduction, a.address, a.city, a.area, a.service_classify,
+      a.coordinate_x, a.coordinate_y, a.institutional_classify, a.institutional_grade
     FROM cere_platform_shop a,
          cere_platform_business b
     where a.shop_phone = b.username
@@ -274,7 +328,8 @@
 
   <select id="getAll" parameterType="com.shop.cereshop.admin.param.shop.ShopGetAllParam" resultType="com.shop.cereshop.admin.page.shop.ShopGetAll">
     SELECT a.shop_id,a.shop_name,a.shop_code,a.charge_person_name,a.charge_person_phone,
-    a.state,a.create_time,a.contract_state,b.business_user_id
+    a.state,a.create_time,a.contract_state,b.business_user_id, a.redit_code, a.introduction,
+    a.address, a.city, a.area, a.service_classify, a.coordinate_x, a.coordinate_y, a.institutional_classify, a.institutional_grade
     FROM cere_platform_shop a,cere_platform_business b
     where a.shop_phone=b.username
     <if test="shopName!=null and shopName!=''">
