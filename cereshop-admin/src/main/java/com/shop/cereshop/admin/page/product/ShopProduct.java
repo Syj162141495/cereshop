@@ -25,6 +25,18 @@ public class ShopProduct {
     private Long productId;
 
     /**
+     * 商品类型
+     */
+    @ApiModelProperty(value = "商品类型")
+    private String productType;
+
+    /**
+     * 分类id
+     */
+    @ApiModelProperty(value = "商品类型")
+    private String classifyId;
+
+    /**
      * 商品图片
      */
     @ApiModelProperty(value = "商品图片")
@@ -90,4 +102,27 @@ public class ShopProduct {
     @ApiModelProperty(value = "商品状态 0-已下架 1-已上架 2-待审核 3-审核失败")
     private Integer shelveState;
 
+    /**
+     * 是否推荐
+     */
+    @ApiModelProperty(value = "是否推荐")
+    private Integer isRecommended;
+
+    /**
+     * 供应商区域
+     */
+    @ApiModelProperty(value = "供应商区域")
+    private String shopLocation;
+
+    /**
+     * 星级
+     */
+    @ApiModelProperty(value = "星级")
+    private String starRating;
+
+    /**
+     * 面积
+     */
+    @ApiModelProperty(value = "面积")
+    private String area;
 }

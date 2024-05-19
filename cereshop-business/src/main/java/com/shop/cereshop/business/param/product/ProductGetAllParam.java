@@ -46,4 +46,10 @@ public class ProductGetAllParam extends PageParam {
      */
     @ApiModelProperty(value = "关联分类id")
     private Long classifyId;
+
+    /**
+     * 商品类型
+     */
+    @ApiModelProperty(value = "商品类型")
+    private String type;
 }

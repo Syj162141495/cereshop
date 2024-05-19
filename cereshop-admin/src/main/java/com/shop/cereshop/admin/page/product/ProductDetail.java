@@ -45,6 +45,12 @@ public class ProductDetail {
     private String productName;
 
     /**
+     * 商品类型
+     */
+    @ApiModelProperty(value = "商品类型")
+    private String productType;
+
+    /**
      * 卖点简介
      */
     @ApiModelProperty(value = "卖点简介")
@@ -169,4 +175,22 @@ public class ProductDetail {
      */
     @ApiModelProperty(value = "规格名和值数据")
     private List<SkuNameParam> names;
+
+    /**
+     * 是否推荐
+     */
+    @ApiModelProperty(value = "是否推荐")
+    private Integer isRecommended;
+
+    /**
+     * 星级
+     */
+    @ApiModelProperty(value = "星级")
+    private String starRating;
+
+    /**
+     * 面积
+     */
+    @ApiModelProperty(value = "面积")
+    private String area;
 }

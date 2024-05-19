@@ -415,9 +415,10 @@
   </select>
 
   <select id="getAll" parameterType="com.shop.cereshop.admin.param.product.ProductGetAllParam" resultType="com.shop.cereshop.admin.page.product.ShopProduct">
-    SELECT a.product_id,a.product_name,c.price,concat('￥',c.price,'~￥',d.price) sectionPrice,
+    SELECT a.product_id,a.product_name,c.price,concat('￥',c.price,'~￥',d.price) sectionPrice,a.classify_id,
     IF(f.image IS NULL OR f.image='',b.product_image,f.image) image,e.shop_name,
-    c.stock_number,a.shelve_state,a.fictitious_number,a.create_time,g.volume from cere_shop_product a
+    c.stock_number,a.shelve_state,a.fictitious_number,a.create_time,g.volume,a.product_type,is_recommended,CONCAT(e.city, '-', e.area) as shop_location,a.star_rating,a.area
+    from cere_shop_product a
     LEFT JOIN (SELECT a.product_id,a.product_image from cere_product_image a,
     cere_shop_product b where a.product_id=b.product_id GROUP BY a.product_id) b ON a.product_id=b.product_id
     LEFT JOIN (SELECT a.product_id,a.sku_id,MIN(a.price) price,
@@ -449,12 +450,13 @@
       and a.shelve_state=#{shelveState}
     </if>
     GROUP BY a.product_id
-    ORDER by a.update_time DESC,a.create_time DESC
+    ORDER by a.product_id ASC,a.update_time DESC,a.create_time DESC
   </select>
 
   <select id="getById" parameterType="java.lang.Object" resultType="com.shop.cereshop.admin.page.product.ProductDetail">
     SELECT a.shop_id,s.shop_name,product_name,product_brief,c.shop_group_id,a.classify_id,b.classify_name,c.group_name shopGroupName,
-    supplier_id,supplier_name,if_logistics,shelve_state,if_oversold,if_huabei,product_text FROM cere_shop_product a
+    supplier_id,supplier_name,if_logistics,shelve_state,if_oversold,if_huabei,product_text,is_recommended,product_type,a.star_rating,a.area
+    FROM cere_shop_product a
     LEFT JOIN cere_product_classify b ON a.classify_id=b.classify_id
     LEFT JOIN cere_shop_group c ON a.shop_group_id=c.shop_group_id
     LEFT JOIN cere_platform_shop s ON s.shop_id = a.shop_id

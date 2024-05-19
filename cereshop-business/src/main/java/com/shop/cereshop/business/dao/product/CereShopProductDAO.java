@@ -36,7 +36,7 @@ public interface CereShopProductDAO extends BaseMapper<CereShopProduct> {
 
     ShopProduct getById(@Param("productId") Long productId);
 
-    List<ShopProduct> getAll(ProductGetAllParam param);
+    List<CereShopProduct> getAllProducts(ProductGetAllParam param);
 
     CereShopProduct checkName(@Param("shopId") Long shopId,@Param("classifyId") Long classifyId,@Param("productName") String productName);
 

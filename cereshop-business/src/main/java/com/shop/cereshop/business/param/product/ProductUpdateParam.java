@@ -120,4 +120,22 @@ public class ProductUpdateParam {
      */
     @ApiModelProperty(value = "删除规格数据")
     private List<DeleteSkuParam> deletes;
+
+    /**
+     * 是否推荐
+     */
+    @ApiModelProperty(value = "是否推荐")
+    private Integer isRecommended;
+
+    /**
+     * 星级
+     */
+    @ApiModelProperty(value = "星级")
+    private String starRating;
+
+    /**
+     * 面积
+     */
+    @ApiModelProperty(value = "面积")
+    private String area;
 }

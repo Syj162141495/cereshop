@@ -30,6 +30,25 @@
     <sql id="Blob_Column_List">
         product_text
     </sql>
+    <select id="getAllProducts" parameterType="com.shop.cereshop.business.param.product.ProductGetAllParam" resultType="com.shop.cereshop.commons.domain.product.CereShopProduct" >
+        SELECT p.*, s.shop_name, CONCAT(s.city, '-', s.area) as shop_location
+        FROM cere_shop_product p
+        INNER JOIN cere_platform_shop s ON p.shop_id=s.shop_id
+
+        WHERE p.shop_id=#{shopId}
+            <if test="search != null and search != ''">
+                and p.product_name=#{search}
+            </if>
+            <if test="classifyId != null and classifyId != ''">
+                and p.classify_id=#{classifyId}
+            </if>
+            <if test="classifyId != null and classifyId != ''">
+                and p.shelve_state=#{shelveState}
+            </if>
+            <if test="type != null and type != ''">
+                and p.product_type=#{type}
+            </if>
+    </select>
     <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
         select
         <include refid="Base_Column_List"/>
@@ -45,17 +64,17 @@
     </delete>
     <insert id="insert" keyColumn="product_id" keyProperty="productId"
             parameterType="com.shop.cereshop.commons.domain.product.CereShopProduct" useGeneratedKeys="true">
-        insert into cere_shop_product (shop_id, product_name, product_brief,
+        insert into cere_shop_product (shop_id, product_name, product_brief, product_type, is_recommended,
                                        shop_group_id, classify_id, supplier_id,
                                        supplier_name, if_logistics, shelve_state,
                                        if_oversold, fictitious_number, create_time, update_time,
-                                       product_text, reject)
-        values (#{shopId,jdbcType=BIGINT}, #{productName,jdbcType=VARCHAR}, #{productBrief,jdbcType=VARCHAR},
+                                       product_text, star_rating, area,reject)
+        values (#{shopId,jdbcType=BIGINT}, #{productName,jdbcType=VARCHAR}, #{productBrief,jdbcType=VARCHAR}, #{productType,jdbcType=VARCHAR}, #{isRecommended,jdbcType=BIGINT},
                 #{shopGroupId,jdbcType=BIGINT}, #{classifyId,jdbcType=BIGINT}, #{supplierId,jdbcType=BIGINT},
                 #{supplierName,jdbcType=VARCHAR}, #{ifLogistics,jdbcType=BIT}, #{shelveState,jdbcType=BIT},
                 #{ifOversold,jdbcType=BIT}, #{fictitiousNumber,jdbcType=INTEGER}, #{createTime,jdbcType=VARCHAR},
                 #{updateTime,jdbcType=VARCHAR},
-                #{productText,jdbcType=LONGVARCHAR}, #{reject,jdbcType=VARCHAR})
+                #{productText,jdbcType=LONGVARCHAR}, #{starRating,jdbcType=LONGVARCHAR}, #{area,jdbcType=LONGVARCHAR}, #{reject,jdbcType=VARCHAR})
     </insert>
     <insert id="insertSelective" keyColumn="product_id" keyProperty="productId"
             parameterType="com.shop.cereshop.commons.domain.product.CereShopProduct" useGeneratedKeys="true">
@@ -203,6 +222,15 @@
             <if test="productText != null">
                 product_text = #{productText,jdbcType=LONGVARCHAR},
             </if>
+            <if test="isRecommended != null">
+                is_recommended = #{isRecommended,jdbcType=BIGINT},
+            </if>
+            <if test="starRating != null">
+                star_rating = #{starRating,jdbcType=VARCHAR},
+            </if>
+            <if test="area != null">
+                area = #{area,jdbcType=VARCHAR},
+            </if>
         </set>
         where product_id = #{productId,jdbcType=BIGINT}
     </update>
@@ -256,7 +284,10 @@
                shelve_state,
                if_oversold,
                if_huabei,
-               product_text
+               product_text,
+               is_recommended,
+               star_rating,
+               area
         FROM cere_shop_product
         where product_id = #{productId}
     </select>
@@ -264,7 +295,8 @@
     <select id="getAll" parameterType="com.shop.cereshop.business.param.product.ProductGetAllParam"
             resultType="com.shop.cereshop.business.page.product.ShopProduct">
         SELECT a.product_id,b.product_image,a.product_name,c.price,c.original_price,c.image sku_image,
-        c.stock_number,a.shelve_state,concat('￥',c.price,'~￥',g.price) section,a.create_time from cere_shop_product a
+        c.stock_number,a.shelve_state,concat('￥',c.price,'~￥',g.price) sectionPrice,a.create_time,a.product_type,a.is_recommended,CONCAT(d.city, '-', d.area) as shop_location
+        from cere_shop_product a
         LEFT JOIN (SELECT a.product_id,a.product_image from cere_product_image a,
         cere_shop_product b where a.product_id=b.product_id GROUP BY a.product_id) b ON a.product_id=b.product_id
         LEFT JOIN (SELECT a.product_id,a.sku_id,MIN(a.price) price,MIN(a.original_price) original_price,
@@ -295,7 +327,7 @@
             and (a.classify_id=#{classifyId} or e.classify_level_hierarchy like concat('%/',#{classifyId},'%'))
         </if>
         GROUP BY a.product_id
-        ORDER by a.update_time desc
+        ORDER by a.product_id ASC, a.update_time desc
     </select>
 
     <select id="checkName" parameterType="java.lang.Object"
