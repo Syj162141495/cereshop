@@ -16,6 +16,7 @@ import com.shop.cereshop.admin.param.product.ClassifyLevelParam;
 import com.shop.cereshop.admin.service.product.CereProductClassifyService;
 import com.shop.cereshop.commons.domain.common.Page;
 import com.shop.cereshop.commons.domain.product.CereProductClassify;
+import com.shop.cereshop.commons.domain.product.Classify;
 import com.shop.cereshop.commons.domain.user.CerePlatformUser;
 import com.shop.cereshop.commons.exception.CoBusinessException;
 import com.shop.cereshop.commons.result.Result;
@@ -25,12 +26,10 @@ import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * 商品类别
@@ -116,5 +115,16 @@ public class ClassifyController {
     public Result<Page<CereProductClassify>> getAll(@RequestBody ClassifyGetAllParam param) throws CoBusinessException{
         Page page=cereProductClassifyService.getAll(param);
         return new Result(page);
+    }
+
+    /**
+     * 查询分类层级
+     * @return
+     */
+    @RequestMapping(value = "getClassify",method = RequestMethod.POST)
+    @ApiOperation(value = "查询分类层级")
+    public Result<Classify> getClassify() throws CoBusinessException{
+        List<Classify> list=cereProductClassifyService.getClassify();
+        return new Result(list);
     }
 }

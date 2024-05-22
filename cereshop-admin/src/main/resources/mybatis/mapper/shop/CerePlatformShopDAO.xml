@@ -21,6 +21,10 @@
     <result column="institutional_grade" jdbcType="VARCHAR" property="institutionalGrade" />
     <result column="redit_code" jdbcType="VARCHAR" property="reditCode" />
     <result column="introduction" jdbcType="VARCHAR" property="introduction" />
+    <result column="providers_major" jdbcType="VARCHAR" property="providersMajor" />
+    <result column="providers_subclass" jdbcType="VARCHAR" property="providersSubclass" />
+    <result column="medical_collaboration" jdbcType="VARCHAR" property="medicalcollaboration" />
+    <result column="classify_id" jdbcType="BIGINT" property="classifyId"/>
     <result column="effective_date" jdbcType="VARCHAR" property="effectiveDate" />
     <result column="effective_year" jdbcType="INTEGER" property="effectiveYear" />
     <result column="contract_state" jdbcType="BIT" property="contractState" />
@@ -35,7 +39,8 @@
     shop_id, shop_code, shop_name, shop_brief, shop_phone, shop_password, charge_person_name,
     charge_person_phone, shop_adress, effective_date, effective_year, contract_state,
     authentication_state, check_state, `state`,authen_type, create_time, update_time, redit_code, introduction,
-    address, city, area, service_classify, coordinate_x, coordinate_y, institutional_classify, institutional_grade
+    address, city, area, service_classify, coordinate_x, coordinate_y, institutional_classify, institutional_grade,
+    classify_id, providers_major, providers_subclass, medical_collaboration
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select
@@ -49,19 +54,19 @@
   </delete>
   <insert id="insert" keyColumn="shop_id" keyProperty="shopId" parameterType="com.shop.cereshop.commons.domain.shop.CerePlatformShop" useGeneratedKeys="true">
     insert into cere_platform_shop (shop_code, shop_name, shop_brief,
-      shop_phone, shop_password, charge_person_name,
-      charge_person_phone, shop_adress, effective_date,
-      effective_year, contract_state, authentication_state,
-      check_state, `state`,authen_type, create_time, update_time, redit_code, introduction,
-      address, city, area, service_classify, coordinate_x, coordinate_y, institutional_classify, institutional_grade)
+                                    shop_phone, shop_password, charge_person_name,
+                                    charge_person_phone, shop_adress, effective_date,
+                                    effective_year, contract_state, authentication_state,
+                                    check_state, `state`,authen_type, create_time, update_time, redit_code, introduction,
+                                    address, city, area, coordinate_x, coordinate_y, institutional_classify, institutional_grade, classify_id)
     values (#{shopCode,jdbcType=VARCHAR}, #{shopName,jdbcType=VARCHAR}, #{shopBrief,jdbcType=VARCHAR},
-      #{shopPhone,jdbcType=VARCHAR}, #{shopPassword,jdbcType=VARCHAR}, #{chargePersonName,jdbcType=VARCHAR},
-      #{chargePersonPhone,jdbcType=VARCHAR}, #{shopAdress,jdbcType=VARCHAR}, #{effectiveDate,jdbcType=VARCHAR},
-      #{effectiveYear,jdbcType=INTEGER}, #{contractState,jdbcType=BIT}, #{authenticationState,jdbcType=BIT},
-      #{checkState,jdbcType=BIT}, #{state,jdbcType=BIT},#{authenType,jdbcType=BIT}, #{createTime,jdbcType=VARCHAR},
-      #{updateTime,jdbcType=VARCHAR}, #{reditCode, jdbcType=VARCHAR}, #{introduction, jdbcType=VARCHAR}, #{address, jdbcType=VARCHAR},
-      #{city, jdbcType=VARCHAR}, #{area, jdbcType=VARCHAR}, #{serviceClassify, jdbcType=VARCHAR}, #{coordinateX, jdbcType=DOUBLE},
-      #{coordinateY, jdbcType=DOUBLE}, #{institutionalClassify, jdbcType=VARCHAR}, #{institutionalGrade, jdbcType=VARCHAR})
+            #{shopPhone,jdbcType=VARCHAR}, #{shopPassword,jdbcType=VARCHAR}, #{chargePersonName,jdbcType=VARCHAR},
+            #{chargePersonPhone,jdbcType=VARCHAR}, #{shopAdress,jdbcType=VARCHAR}, #{effectiveDate,jdbcType=VARCHAR},
+            #{effectiveYear,jdbcType=INTEGER}, #{contractState,jdbcType=BIT}, #{authenticationState,jdbcType=BIT},
+            #{checkState,jdbcType=BIT}, #{state,jdbcType=BIT},#{authenType,jdbcType=BIT}, #{createTime,jdbcType=VARCHAR},
+            #{updateTime,jdbcType=VARCHAR}, #{reditCode, jdbcType=VARCHAR}, #{introduction, jdbcType=VARCHAR}, #{address, jdbcType=VARCHAR},
+            #{city, jdbcType=VARCHAR}, #{area, jdbcType=VARCHAR}, #{coordinateX, jdbcType=DOUBLE},
+            #{coordinateY, jdbcType=DOUBLE}, #{institutionalClassify, jdbcType=VARCHAR}, #{institutionalGrade, jdbcType=VARCHAR}, #{classifyId, jdbcType=BIGINT})
   </insert>
   <insert id="insertSelective" keyColumn="shop_id" keyProperty="shopId" parameterType="com.shop.cereshop.commons.domain.shop.CerePlatformShop" useGeneratedKeys="true">
     insert into cere_platform_shop
@@ -262,32 +267,32 @@
   <update id="updateByPrimaryKey" parameterType="com.shop.cereshop.commons.domain.shop.CerePlatformShop">
     update cere_platform_shop
     set shop_code = #{shopCode,jdbcType=VARCHAR},
-      shop_name = #{shopName,jdbcType=VARCHAR},
-      shop_brief = #{shopBrief,jdbcType=VARCHAR},
-      shop_phone = #{shopPhone,jdbcType=VARCHAR},
-      shop_password = #{shopPassword,jdbcType=VARCHAR},
-      charge_person_name = #{chargePersonName,jdbcType=VARCHAR},
-      charge_person_phone = #{chargePersonPhone,jdbcType=VARCHAR},
-      shop_adress = #{shopAdress,jdbcType=VARCHAR},
-      effective_date = #{effectiveDate,jdbcType=VARCHAR},
-      effective_year = #{effectiveYear,jdbcType=INTEGER},
-      contract_state = #{contractState,jdbcType=BIT},
-      authentication_state = #{authenticationState,jdbcType=BIT},
-      check_state = #{checkState,jdbcType=BIT},
-      `state` = #{state,jdbcType=BIT},
-      authen_type = #{authenType,jdbcType=BIT},
-      create_time = #{createTime,jdbcType=VARCHAR},
-      update_time = #{updateTime,jdbcType=VARCHAR},
-      redit_code = #{reditCode, jdbcType=VARCHAR},
-      introduction = #{introduction, jdbcType=VARCHAR},
-      address = #{address, jdbcType=VARCHAR},
-      city = #{city, jdbcType=VARCHAR},
-      area = #{area, jdbcType=VARCHAR},
-      service_classify = #{serviceClassify, jdbcType=VARCHAR},
-      coordinate_x = #{coordinateX, jdbcType=DOUBLE},
-      coordinate_y = #{coordinateY, jdbcType=DOUBLE},
-      institutional_classify = #{institutionalClassify, jdbcType=VARCHAR},
-      institutional_grade = #{institutionalGrade, jdbcType=VARCHAR}
+        shop_name = #{shopName,jdbcType=VARCHAR},
+        shop_brief = #{shopBrief,jdbcType=VARCHAR},
+        shop_phone = #{shopPhone,jdbcType=VARCHAR},
+        shop_password = #{shopPassword,jdbcType=VARCHAR},
+        charge_person_name = #{chargePersonName,jdbcType=VARCHAR},
+        charge_person_phone = #{chargePersonPhone,jdbcType=VARCHAR},
+        shop_adress = #{shopAdress,jdbcType=VARCHAR},
+        effective_date = #{effectiveDate,jdbcType=VARCHAR},
+        effective_year = #{effectiveYear,jdbcType=INTEGER},
+        contract_state = #{contractState,jdbcType=BIT},
+        authentication_state = #{authenticationState,jdbcType=BIT},
+        check_state = #{checkState,jdbcType=BIT},
+        `state` = #{state,jdbcType=BIT},
+        authen_type = #{authenType,jdbcType=BIT},
+        create_time = #{createTime,jdbcType=VARCHAR},
+        update_time = #{updateTime,jdbcType=VARCHAR},
+        redit_code = #{reditCode, jdbcType=VARCHAR},
+        introduction = #{introduction, jdbcType=VARCHAR},
+        address = #{address, jdbcType=VARCHAR},
+        city = #{city, jdbcType=VARCHAR},
+        area = #{area, jdbcType=VARCHAR},
+        service_classify = #{serviceClassify, jdbcType=VARCHAR},
+        coordinate_x = #{coordinateX, jdbcType=DOUBLE},
+        coordinate_y = #{coordinateY, jdbcType=DOUBLE},
+        institutional_classify = #{institutionalClassify, jdbcType=VARCHAR},
+        institutional_grade = #{institutionalGrade, jdbcType=VARCHAR}
     where shop_id = #{shopId,jdbcType=BIGINT}
   </update>
 
@@ -309,17 +314,17 @@
 
   <select id="findBusinessByShopId" parameterType="java.lang.Object" resultType="com.shop.cereshop.commons.domain.business.CerePlatformBusiness">
     SELECT a.business_user_id from cere_platform_business a
-    LEFT JOIN cere_business_shop b ON a.business_user_id=b.business_user_id
-    LEFT JOIN cere_platform_shop c ON b.shop_id=c.shop_id
+                                     LEFT JOIN cere_business_shop b ON a.business_user_id=b.business_user_id
+                                     LEFT JOIN cere_platform_shop c ON b.shop_id=c.shop_id
     where c.shop_id=#{shopId}
   </select>
 
   <select id="getById" parameterType="java.lang.Object" resultType="com.shop.cereshop.admin.page.shop.ShopGetAll">
     SELECT a.shop_id, a.shop_code, a.shop_name, a.shop_brief, a.shop_phone, a.shop_password, a.charge_person_name,
-      a.charge_person_phone, a.shop_adress, a.effective_date, a.effective_year, a.contract_state,
-      a.authentication_state, a.check_state, a.`state`, a.authen_type, a.create_time, a.update_time,
-      b.business_user_id, a.redit_code, a.introduction, a.address, a.city, a.area, a.service_classify,
-      a.coordinate_x, a.coordinate_y, a.institutional_classify, a.institutional_grade
+           a.charge_person_phone, a.shop_adress, a.effective_date, a.effective_year, a.contract_state,
+           a.authentication_state, a.check_state, a.`state`, a.authen_type, a.create_time, a.update_time,
+           b.business_user_id, a.redit_code, a.introduction, a.address, a.city, a.area, a.service_classify,
+           a.coordinate_x, a.coordinate_y, a.institutional_classify, a.institutional_grade
     FROM cere_platform_shop a,
          cere_platform_business b
     where a.shop_phone = b.username
@@ -329,27 +334,40 @@
   <select id="getAll" parameterType="com.shop.cereshop.admin.param.shop.ShopGetAllParam" resultType="com.shop.cereshop.admin.page.shop.ShopGetAll">
     SELECT a.shop_id,a.shop_name,a.shop_code,a.charge_person_name,a.charge_person_phone,
     a.state,a.create_time,a.contract_state,b.business_user_id, a.redit_code, a.introduction,
-    a.address, a.city, a.area, a.service_classify, a.coordinate_x, a.coordinate_y, a.institutional_classify, a.institutional_grade
-    FROM cere_platform_shop a,cere_platform_business b
-    where a.shop_phone=b.username
+    a.address, a.city, a.area, a.service_classify, a.coordinate_x, a.coordinate_y,
+    a.institutional_classify, a.institutional_grade, a.classify_id,
+    a.providers_major, a.providers_subclass, a.medical_collaboration
+    FROM cere_platform_shop a
+    JOIN cere_platform_business b ON a.shop_phone=b.username
+    LEFT JOIN cere_product_classify c ON a.classify_id=c.classify_id
+    where a.service_classify = #{serviceClassify,jdbcType=VARCHAR}
     <if test="shopName!=null and shopName!=''">
-      and shop_name like concat('%',#{shopName},'%')
+      and a.shop_name like concat('%',#{shopName},'%')
     </if>
-    <if test="shopCode!=null and shopCode!=''">
-      and shop_code like concat('%',#{shopCode},'%')
-    </if>
+<!--    <if test="shopCode!=null and shopCode!=''">-->
+<!--      and shop_code like concat('%',#{shopCode},'%')-->
+<!--    </if>-->
     <if test="chargePersonName!=null and chargePersonName!=''">
       and charge_person_name like concat('%',#{chargePersonName},'%')
     </if>
-    <if test="contractState!=null">
-      and contract_state=#{contractState}
+    <if test="providersMajor!=null and providersMajor!=''">
+      and a.providers_major like concat('%',#{providersMajor},'%')
     </if>
-    order by create_time desc
+    <if test="providersSubclass!=null and providersSubclass!=''">
+      and a.providers_subclass like concat('%',#{providersSubclass},'%')
+    </if>
+<!--    <if test="contractState!=null">-->
+<!--      and contract_state=#{contractState}-->
+<!--    </if>-->
+<!--    <if test="classifyId!=null">-->
+<!--      and (a.classify_id=#{classifyId} or c.classify_level_hierarchy like concat('%/',#{classifyId},'%'))-->
+<!--    </if>-->
+    order by a.create_time desc
   </select>
 
   <select id="findShop" parameterType="java.lang.Object" resultType="com.shop.cereshop.admin.page.shop.Shop">
     SELECT shop_id,shop_logo,shop_name,shop_adress,shop_brief,shop_phone,authen_type,
-    authentication_state,check_state,effective_date,effective_year,charge_person_name,charge_person_phone
+           authentication_state,check_state,effective_date,effective_year,charge_person_name,charge_person_phone
     FROM cere_platform_shop where shop_id = #{shopId}
   </select>
 
@@ -439,8 +457,8 @@
 
   <select id="findBusinessId" parameterType="java.lang.Object" resultType="java.lang.Object">
     SELECT a.business_user_id FROM cere_platform_business a
-    LEFT JOIN cere_business_shop b ON a.business_user_id=b.business_user_id
-    LEFT JOIN cere_platform_shop c ON b.shop_id=c.shop_id
+                                     LEFT JOIN cere_business_shop b ON a.business_user_id=b.business_user_id
+                                     LEFT JOIN cere_platform_shop c ON b.shop_id=c.shop_id
     where c.shop_id=#{shopId}
   </select>
 
