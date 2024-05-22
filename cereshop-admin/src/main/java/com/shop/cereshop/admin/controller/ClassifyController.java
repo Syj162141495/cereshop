@@ -9,10 +9,7 @@ package com.shop.cereshop.admin.controller;
 import com.shop.cereshop.admin.annotation.NoRepeatSubmit;
 import com.shop.cereshop.admin.annotation.NoRepeatWebLog;
 import com.shop.cereshop.admin.page.product.ProductClassify;
-import com.shop.cereshop.admin.param.product.ClassifyDeleteParam;
-import com.shop.cereshop.admin.param.product.ClassifyGetAllParam;
-import com.shop.cereshop.admin.param.product.ClassifyGetByIdParam;
-import com.shop.cereshop.admin.param.product.ClassifyLevelParam;
+import com.shop.cereshop.admin.param.product.*;
 import com.shop.cereshop.admin.service.product.CereProductClassifyService;
 import com.shop.cereshop.commons.domain.common.Page;
 import com.shop.cereshop.commons.domain.product.CereProductClassify;
@@ -48,23 +45,23 @@ public class ClassifyController {
     private CereProductClassifyService cereProductClassifyService;
 
     /**
-     * 添加商品类别
+     * 添加商品类别(level=1)
      * @param param
      * @return
      */
-    @RequestMapping(value = "save",method = RequestMethod.POST)
+    @RequestMapping(value = "add",method = RequestMethod.POST)
     @NoRepeatSubmit
     @ApiOperation(value = "添加商品类别")
     @NoRepeatWebLog
-    public Result save(@RequestBody @Validated ClassifyLevelParam param, HttpServletRequest request) throws CoBusinessException{
+    public Result add(@RequestBody @Validated ClassifyLevelParam param, HttpServletRequest request) throws CoBusinessException{
         //获取当前登录账户
         CerePlatformUser user = (CerePlatformUser) request.getAttribute("user");
-        cereProductClassifyService.save(param,user);
+        cereProductClassifyService.add(param,user);
         return new Result(user.getUsername(),"添加商品类别", GsonUtil.objectToGson(param));
     }
 
     /**
-     * 修改商品类别
+     * 修改商品类别或添加商品类别(level>1)
      * @param param
      * @return
      */
@@ -115,6 +112,18 @@ public class ClassifyController {
     @ApiOperation(value = "商品类别管理查询")
     public Result<Page<CereProductClassify>> getAll(@RequestBody ClassifyGetAllParam param) throws CoBusinessException{
         Page page=cereProductClassifyService.getAll(param);
+        return new Result(page);
+    }
+
+
+    /**
+     * 商品分类层级查询
+     * @return
+     */
+    @RequestMapping(value = "getByClassifyLevel",method = RequestMethod.POST)
+    @ApiOperation(value = "商品分类层级查询")
+    public Result<Page<CereProductClassify>> getByClassifyLevel(@RequestBody ClassifyGetByClassifyLevelParam param) throws CoBusinessException{
+        Page page=cereProductClassifyService.getByClassifyLevel(param);
         return new Result(page);
     }
 }

@@ -8,14 +8,11 @@ package com.shop.cereshop.admin.service.product.impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.shop.cereshop.admin.dao.product.CereProductClassifyDAO;
-import com.shop.cereshop.admin.param.product.ProductGetClassifyParam;
+import com.shop.cereshop.admin.param.product.*;
 import com.shop.cereshop.commons.constant.IntegerEnum;
 import com.shop.cereshop.commons.constant.LongEnum;
 import com.shop.cereshop.commons.domain.common.Page;
 import com.shop.cereshop.admin.page.product.ProductClassify;
-import com.shop.cereshop.admin.param.product.ClassifyDeleteParam;
-import com.shop.cereshop.admin.param.product.ClassifyGetAllParam;
-import com.shop.cereshop.admin.param.product.ClassifyLevelParam;
 import com.shop.cereshop.admin.service.log.CerePlatformLogService;
 import com.shop.cereshop.admin.service.product.CereProductClassifyService;
 import com.shop.cereshop.commons.constant.CoReturnFormat;
@@ -49,7 +46,7 @@ public class CereProductClassifyServiceImpl implements CereProductClassifyServic
 
     @Override
     @Transactional(isolation= Isolation.DEFAULT,propagation= Propagation.REQUIRED,rollbackFor = {CoBusinessException.class, Exception.class})
-    public void save(ClassifyLevelParam param, CerePlatformUser user) throws CoBusinessException {
+    public void add(ClassifyLevelParam param, CerePlatformUser user) throws CoBusinessException {
         String time= TimeUtils.yyMMddHHmmss();
         //定义批量更新层级结构字段数组
         List<CereProductClassify> updates=new ArrayList<>();
@@ -72,6 +69,7 @@ public class CereProductClassifyServiceImpl implements CereProductClassifyServic
         if(EmptyUtils.isEmpty(classify.getCategoryName())){
             throw new CoBusinessException(CoReturnFormat.CLASSIFY_NAME_NULL);
         }
+        // 初始化数据
         CereProductClassify cereProductClassify=new CereProductClassify();
         cereProductClassify.setClassifyId(classify.getId());
         cereProductClassify.setClassifyName(classify.getCategoryName());
@@ -80,6 +78,7 @@ public class CereProductClassifyServiceImpl implements CereProductClassifyServic
         cereProductClassify.setClassifyLevel(IntegerEnum.CLASSIFY_LEVEL_ONE.getCode());
         cereProductClassify.setLink(classify.getLink());
         cereProductClassify.setClassifyHierarchy("-"+classify.getCategoryName());
+
         if(!EmptyUtils.isEmpty(classify.getId())){
             //更新一级类别
             cereProductClassify.setUpdateTime(time);
@@ -95,17 +94,19 @@ public class CereProductClassifyServiceImpl implements CereProductClassifyServic
         if(!EmptyUtils.isEmpty(classify.getChilds())){
             //新增子级类别
             for (ProductClassify productClassify:classify.getChilds()) {
-                addChildClaasify(cereProductClassify,
+                addChildClassify(cereProductClassify,
                         updates,time,productClassify,IntegerEnum.CLASSIFY_LEVEL_TWO.getCode());
             }
         }
     }
 
-    private void addChildClaasify(CereProductClassify parent, List<CereProductClassify> updates,
+
+    private void addChildClassify(CereProductClassify parent, List<CereProductClassify> updates,
                                   String time,ProductClassify child,Integer level) throws CoBusinessException{
         if(EmptyUtils.isEmpty(child.getCategoryName())){
             throw new CoBusinessException(CoReturnFormat.CLASSIFY_NAME_NULL);
         }
+        // 初始化数据
         CereProductClassify productClassify=new CereProductClassify();
         productClassify.setClassifyId(child.getId());
         productClassify.setClassifyName(child.getCategoryName());
@@ -114,6 +115,7 @@ public class CereProductClassifyServiceImpl implements CereProductClassifyServic
         productClassify.setLink(child.getLink());
         productClassify.setClassifyImage(child.getCategoryImg());
         productClassify.setClassifyHierarchy(parent.getClassifyHierarchy()+"-"+child.getCategoryName());
+
         if(!EmptyUtils.isEmpty(child.getId())){
             //更新子级类别
             productClassify.setUpdateTime(time);
@@ -126,10 +128,12 @@ public class CereProductClassifyServiceImpl implements CereProductClassifyServic
             productClassify.setClassifyLevelHierarchy(parent.getClassifyLevelHierarchy()+"/"+productClassify.getClassifyId());
             updates.add(productClassify);
         }
+
+        // 递归
         if(!EmptyUtils.isEmpty(child.getChilds())){
             //新增子级类别
             for (ProductClassify classify1:child.getChilds()) {
-                addChildClaasify(productClassify,updates,time,classify1,IntegerEnum.CLASSIFY_LEVEL_THREE.getCode());
+                addChildClassify(productClassify,updates,time,classify1,IntegerEnum.CLASSIFY_LEVEL_THREE.getCode());
             }
         }
     }
@@ -142,7 +146,26 @@ public class CereProductClassifyServiceImpl implements CereProductClassifyServic
         List<CereProductClassify> updates=new ArrayList<>();
         if(!EmptyUtils.isEmpty(param.getClassifies())){
             for (ProductClassify classify:param.getClassifies()) {
-                addOneClassify(classify,time,updates);
+                System.out.println(classify.getId());
+                CereProductClassify cereProductClassify = cereProductClassifyDAO.getById(classify.getId());
+                Long pid = cereProductClassify.getClassifyPid();
+                System.out.println(pid);
+                //如果不存在父节点，新增一级类别数据
+                if (pid == null || pid == 0) {
+                    addOneClassify(classify, time, updates);
+                }
+                //否则，找到父节点，从父节点开始启动
+                else {
+                    CereProductClassify pClassify = cereProductClassifyDAO.getById(pid);
+                    ProductClassify parentClassify = new ProductClassify();
+                    parentClassify.setId(pClassify.getClassifyId());
+                    parentClassify.setCategoryName(pClassify.getClassifyName());
+                    parentClassify.setCategoryImg(pClassify.getClassifyImage());
+                    parentClassify.setLink(pClassify.getLink());
+                    // 实际上能够进入这个代码片段的param.getClassifies()的长度为一，只有一个顶级分类
+                    parentClassify.setChilds(param.getClassifies());
+                    addOneClassify(parentClassify, time, updates);
+                }
             }
             if(!EmptyUtils.isEmpty(updates)){
                 //批量更新分类层级结构
@@ -201,50 +224,77 @@ public class CereProductClassifyServiceImpl implements CereProductClassifyServic
     }
 
     @Override
+    public Page getByClassifyLevel(ClassifyGetByClassifyLevelParam param) throws CoBusinessException{
+        PageHelper.startPage(param.getPage(),param.getPageSize());
+        List<CereProductClassify> list=cereProductClassifyDAO.getByClassifyLevel(param.getClassifyLevel());
+        PageInfo<CereProductClassify> pageInfo=new PageInfo<>(list);
+        Page page=new Page(pageInfo.getList(),pageInfo.getTotal());
+        return page;
+    }
+
+    @Override
     @Transactional(isolation= Isolation.DEFAULT,propagation= Propagation.REQUIRED,rollbackFor = {CoBusinessException.class, Exception.class})
     public void delete(ClassifyDeleteParam param, CerePlatformUser user) throws CoBusinessException {
-        //校验一级类别是否存在商品
-        List<CereShopProduct> list = cereProductClassifyDAO.checkProduct(param.getOneClassifyId());
-        if(!EmptyUtils.isEmpty(list)){
-            throw new CoBusinessException(CoReturnFormat.CLASSIFY_BOND_PRODUCT);
-        }
-        String time =TimeUtils.yyMMddHHmmss();
-        //查询一级类别层级
-        CereProductClassify classify=cereProductClassifyDAO.getById(param.getOneClassifyId());
-        if(classify!=null){
-            //删除一级类别
-            cereProductClassifyDAO.deleteByPrimaryKey(param.getOneClassifyId());
+        String time = TimeUtils.yyMMddHHmmss();
+        // 需要被删除的最顶级类型
+        CereProductClassify classify = cereProductClassifyDAO.getById(param.getOneClassifyId());
+        // 如果存在，则依次检查次级类型
+        if (classify != null) {
             String[] split = classify.getClassifyLevelHierarchy().split("/");
-            if(!EmptyUtils.isEmpty(split)){
-                if(split.length==3){
-                    //只包含二级类别
-                    list=cereProductClassifyDAO.checkProduct(Long.parseLong(split[split.length-1]));
-                    if(!EmptyUtils.isEmpty(list)){
-                        throw new CoBusinessException(CoReturnFormat.CLASSIFY_BOND_PRODUCT);
-                    }
-                    //删除二级类别
-                    cereProductClassifyDAO.deleteByPrimaryKey(Long.parseLong(split[split.length-1]));
-                }else if(split.length==4){
-                    //包含二级、三级类别
-                    //校验当前二级类别是否有绑定商品数据
-                    list=cereProductClassifyDAO.checkProduct(Long.parseLong(split[split.length-2]));
-                    if(!EmptyUtils.isEmpty(list)){
-                        throw new CoBusinessException(CoReturnFormat.CLASSIFY_BOND_PRODUCT);
-                    }
-                    //删除二级类别
-                    cereProductClassifyDAO.deleteByPrimaryKey(Long.parseLong(split[split.length-2]));
-                    //校验当前三级类别是否有绑定商品数据
-                    list=cereProductClassifyDAO.checkProduct(Long.parseLong(split[split.length-1]));
-                    if(!EmptyUtils.isEmpty(list)){
-                        throw new CoBusinessException(CoReturnFormat.CLASSIFY_BOND_PRODUCT);
-                    }
-                    //删除三级类别
-                    cereProductClassifyDAO.deleteByPrimaryKey(Long.parseLong(split[split.length-1]));
+            int level = split.length - 1;
+            if (level == 3) {
+                // 三级
+                Long third_level_id = Long.parseLong(split[3]);
+                // 校验该类别是否存在商品
+                List<CereShopProduct> list = cereProductClassifyDAO.checkProduct(third_level_id);
+                if (!EmptyUtils.isEmpty(list)) {
+                    throw new CoBusinessException(CoReturnFormat.CLASSIFY_BOND_PRODUCT);
                 }
+                cereProductClassifyDAO.deleteByPrimaryKey(third_level_id);
+            } else if (level == 2) {
+                // 二级
+                Long second_level_id = Long.parseLong(split[2]);
+                // 先检查所有三级是否被使用
+                List<ProductClassify> third_level_ids = cereProductClassifyDAO.findByPid(second_level_id);
+                for (ProductClassify third_item : third_level_ids) {
+                    Long child_id = third_item.getId();
+                    // 校验该类别是否存在商品
+                    List<CereShopProduct> list = cereProductClassifyDAO.checkProduct(child_id);
+                    if (!EmptyUtils.isEmpty(list)) {
+                        throw new CoBusinessException(CoReturnFormat.CLASSIFY_BOND_PRODUCT);
+                    }
+                }
+                // 均为使用后，依次删除二三级类别
+                for (ProductClassify third_item : third_level_ids) {
+                    cereProductClassifyDAO.deleteByPrimaryKey(third_item.getId());
+                }
+                cereProductClassifyDAO.deleteByPrimaryKey(second_level_id);
+            } else if (level == 1) {
+                // 一级
+                Long first_level_id = Long.parseLong(split[1]);
+                List<ProductClassify> second_level_ids = cereProductClassifyDAO.findByPid(first_level_id);
+                for (ProductClassify second_item : second_level_ids) {
+                    List<ProductClassify> third_level_ids = cereProductClassifyDAO.findByPid(second_item.getId());
+                    for (ProductClassify third_item : third_level_ids) {
+                        Long child_id = third_item.getId();
+                        // 校验该类别是否存在商品
+                        List<CereShopProduct> list = cereProductClassifyDAO.checkProduct(child_id);
+                        if (!EmptyUtils.isEmpty(list)) {
+                            throw new CoBusinessException(CoReturnFormat.CLASSIFY_BOND_PRODUCT);
+                        }
+                    }
+                }
+                for (ProductClassify second_item : second_level_ids) {
+                    List<ProductClassify> third_level_ids = cereProductClassifyDAO.findByPid(second_item.getId());
+                    for (ProductClassify third_item : third_level_ids) {
+                        cereProductClassifyDAO.deleteByPrimaryKey(third_item.getId());
+                    }
+                    cereProductClassifyDAO.deleteByPrimaryKey(second_item.getId());
+                }
+                cereProductClassifyDAO.deleteByPrimaryKey(first_level_id);
             }
+            cerePlatformLogService.addLog(user, "商品类别", "平台端操作", "删除商品类别", String.valueOf(param.getOneClassifyId()), time);
         }
-        //新增日志
-        cerePlatformLogService.addLog(user,"商品类别","平台端操作","删除商品类别",String.valueOf(param.getOneClassifyId()),time);
     }
 
     @Override

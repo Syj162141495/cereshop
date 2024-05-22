@@ -6,10 +6,7 @@
 package com.shop.cereshop.admin.service.product;
 
 import com.shop.cereshop.admin.page.product.ProductClassify;
-import com.shop.cereshop.admin.param.product.ClassifyDeleteParam;
-import com.shop.cereshop.admin.param.product.ClassifyGetAllParam;
-import com.shop.cereshop.admin.param.product.ClassifyLevelParam;
-import com.shop.cereshop.admin.param.product.ProductGetClassifyParam;
+import com.shop.cereshop.admin.param.product.*;
 import com.shop.cereshop.commons.domain.common.Page;
 import com.shop.cereshop.commons.domain.product.CereProductClassify;
 import com.shop.cereshop.commons.domain.product.Classify;
@@ -19,13 +16,15 @@ import com.shop.cereshop.commons.exception.CoBusinessException;
 import java.util.List;
 
 public interface CereProductClassifyService {
-    void save(ClassifyLevelParam param, CerePlatformUser user) throws CoBusinessException;
+    void add(ClassifyLevelParam param, CerePlatformUser user) throws CoBusinessException;
 
     void update(ClassifyLevelParam param, CerePlatformUser user) throws CoBusinessException;
 
     ProductClassify getById(Long classifyId) throws CoBusinessException;
 
     Page getAll(ClassifyGetAllParam param) throws CoBusinessException;
+
+    Page getByClassifyLevel(ClassifyGetByClassifyLevelParam param) throws CoBusinessException;
 
     void delete(ClassifyDeleteParam param, CerePlatformUser user) throws CoBusinessException;
 
