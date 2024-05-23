@@ -120,9 +120,9 @@ public class ClassifyController {
      */
     @RequestMapping(value = "getByClassifyLevel",method = RequestMethod.POST)
     @ApiOperation(value = "商品分类层级查询")
-    public Result<Page<CereProductClassify>> getByClassifyLevel(@RequestBody ClassifyGetByClassifyLevelParam param) throws CoBusinessException {
-        Page page = cereProductClassifyService.getByClassifyLevel(param);
-        return new Result(page);
+    public Result<List<CereProductClassify>> getByClassifyLevel(@RequestBody ClassifyGetByClassifyLevelParam param) throws CoBusinessException {
+        List<CereProductClassify> list= cereProductClassifyService.getByClassifyLevel(param);
+        return new Result(list);
     }
 
     /**

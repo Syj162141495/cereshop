@@ -232,12 +232,8 @@ public class CereProductClassifyServiceImpl implements CereProductClassifyServic
     }
 
     @Override
-    public Page getByClassifyLevel(ClassifyGetByClassifyLevelParam param) throws CoBusinessException{
-        PageHelper.startPage(param.getPage(),param.getPageSize());
-        List<CereProductClassify> list=cereProductClassifyDAO.getByClassifyLevel(param.getClassifyLevel());
-        PageInfo<CereProductClassify> pageInfo=new PageInfo<>(list);
-        Page page=new Page(pageInfo.getList(),pageInfo.getTotal());
-        return page;
+    public List<CereProductClassify>  getByClassifyLevel(ClassifyGetByClassifyLevelParam param) throws CoBusinessException{
+        return cereProductClassifyDAO.getByClassifyLevel(param.getClassifyLevel());
     }
 
     @Override
@@ -245,11 +241,14 @@ public class CereProductClassifyServiceImpl implements CereProductClassifyServic
     public void delete(ClassifyDeleteParam param, CerePlatformUser user) throws CoBusinessException {
         String time = TimeUtils.yyMMddHHmmss();
         // 需要被删除的最顶级类型
+        System.out.println(param.getOneClassifyId());
         CereProductClassify classify = cereProductClassifyDAO.getById(param.getOneClassifyId());
+        System.out.println(classify);
         // 如果存在，则依次检查次级类型
         if (classify != null) {
             String[] split = classify.getClassifyLevelHierarchy().split("/");
             int level = split.length - 1;
+            System.out.println(level);
             if (level == 3) {
                 // 三级
                 Long third_level_id = Long.parseLong(split[3]);

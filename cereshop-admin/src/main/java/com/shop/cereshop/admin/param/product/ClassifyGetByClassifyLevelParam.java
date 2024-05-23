@@ -15,7 +15,7 @@ import lombok.Data;
  */
 @Data
 @ApiModel(value = "ClassifyGetByClassifyLevelParam", description = "获取固定层级分类请求")
-public class ClassifyGetByClassifyLevelParam extends PageParam {
+public class ClassifyGetByClassifyLevelParam {
     @ApiModelProperty(value = "分类级别")
     private Integer classifyLevel;
 }

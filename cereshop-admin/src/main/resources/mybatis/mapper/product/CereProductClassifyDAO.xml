@@ -25,7 +25,7 @@
         where classify_id = #{classifyId,jdbcType=BIGINT}
     </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-        delete from cere_product_classify
+        delete from cere_product_classify_copy
         where classify_id = #{classifyId,jdbcType=BIGINT}
     </delete>
     <insert id="insert" keyColumn="classify_id" keyProperty="classifyId"
@@ -42,7 +42,7 @@
     </insert>
     <insert id="insertSelective" keyColumn="classify_id" keyProperty="classifyId"
             parameterType="com.shop.cereshop.commons.domain.product.CereProductClassify" useGeneratedKeys="true">
-        insert into cere_product_classify
+        insert into cere_product_classify_copy
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="classifyPid != null">
                 classify_pid,
@@ -164,22 +164,22 @@
     </update>
 
     <select id="getClassifySelect" parameterType="java.lang.Object" resultType="com.shop.cereshop.commons.domain.product.CereProductClassify">
-        SELECT classify_id,classify_pid,classify_name from cere_product_classify where classify_pid=#{classifyPid} ORDER BY sort
+        SELECT classify_id,classify_pid,classify_name from cere_product_classify_copy where classify_pid=#{classifyPid} ORDER BY sort
     </select>
 
     <select id="findByHierarchy" parameterType="java.lang.Object" resultType="com.shop.cereshop.commons.domain.product.CereProductClassify">
-        SELECT classify_id from cere_product_classify where classify_hierarchy=#{hierarchy}
+        SELECT classify_id from cere_product_classify_copy where classify_hierarchy=#{hierarchy}
     </select>
 
     <select id="selectAll" resultType="com.shop.cereshop.commons.domain.product.CereProductClassify">
-        SELECT classify_id,classify_hierarchy FROM cere_product_classify
+        SELECT classify_id,classify_hierarchy FROM cere_product_classify_copy
     </select>
 
 
-    <select id="getById" parameterType="java.lang.Object"
+    <select id="getById" parameterType="java.lang.Long"
             resultType="com.shop.cereshop.commons.domain.product.CereProductClassify">
         SELECT classify_id,classify_name,classify_level_hierarchy,classify_image,link,classify_level FROM
-        cere_product_classify
+            cere_product_classify_copy
         where classify_id=#{classifyId}
     </select>
 
