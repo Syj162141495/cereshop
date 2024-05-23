@@ -62,4 +62,11 @@ public class ProductClassify {
      */
     @ApiModelProperty(value = "子节点数据")
     private List<ProductClassify> childs;
+
+
+    /**
+     * 类别介绍
+     */
+    @ApiModelProperty(value = "类别介绍")
+    private String description;
 }

@@ -85,6 +85,12 @@ public class CereProductClassify implements Serializable {
     @ApiModelProperty(value = "更新时间")
     private String updateTime;
 
+    /**
+     * 类别介绍
+     */
+    @ApiModelProperty(value = "类别介绍")
+    private String description;
+
     private static final long serialVersionUID = 1L;
 
 }

@@ -30,11 +30,10 @@
   </delete>
   <insert id="insert" keyColumn="classify_id" keyProperty="classifyId" parameterType="com.shop.cereshop.commons.domain.product.CereProductClassify" useGeneratedKeys="true">
     insert into cere_product_classify_copy (classify_pid, classify_hierarchy, classify_level,
-      classify_level_hierarchy, classify_name, classify_image,
-      sort, link,create_time,
-      update_time)
+      classify_level_hierarchy, classify_name, description,classify_image,
+      sort, link,create_time, update_time)
     values (#{classifyPid,jdbcType=BIGINT}, #{classifyHierarchy,jdbcType=VARCHAR}, #{classifyLevel,jdbcType=TINYINT},
-      #{classifyLevelHierarchy,jdbcType=VARCHAR}, #{classifyName,jdbcType=VARCHAR}, #{classifyImage,jdbcType=VARCHAR},
+      #{classifyLevelHierarchy,jdbcType=VARCHAR}, #{classifyName,jdbcType=VARCHAR}, #{description,jdbcType=CHAR}, #{classifyImage,jdbcType=VARCHAR},
       #{sort,jdbcType=INTEGER}, #{link,jdbcType=BIGINT}, #{createTime,jdbcType=VARCHAR},
       #{updateTime,jdbcType=VARCHAR})
   </insert>
@@ -123,6 +122,9 @@
       <if test="classifyName != null and classifyName!=''">
         classify_name = #{classifyName,jdbcType=VARCHAR},
       </if>
+      <if test="description != null and description!=''">
+        description = #{description,jdbcType=CHAR},
+      </if>
       <if test="classifyImage != null and classifyImage!=''">
         classify_image = #{classifyImage,jdbcType=VARCHAR},
       </if>
@@ -157,7 +159,7 @@
   </update>
 
   <select id="getById" parameterType="java.lang.Object" resultType="com.shop.cereshop.commons.domain.product.CereProductClassify">
-    SELECT classify_id,classify_pid,classify_name,classify_level_hierarchy,classify_image,link,classify_level FROM cere_product_classify_copy
+    SELECT classify_id,classify_pid,classify_name,description,classify_level_hierarchy,classify_image,link,classify_level FROM cere_product_classify_copy
     where classify_id=#{classifyId}
   </select>
 
@@ -167,7 +169,7 @@
   </select>
 
   <select id="getByClassifyLevel"  parameterType="java.lang.Integer" resultType="com.shop.cereshop.commons.domain.product.CereProductClassify">
-    SELECT classify_id,classify_pid,classify_name FROM cere_product_classify_copy
+    SELECT classify_id,classify_pid,classify_name,description FROM cere_product_classify_copy
     where classify_level=#{classifyLevel} ORDER BY update_time DESC,create_time DESC
   </select>
 

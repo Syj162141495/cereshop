@@ -78,6 +78,7 @@ public class CereProductClassifyServiceImpl implements CereProductClassifyServic
         cereProductClassify.setClassifyLevel(IntegerEnum.CLASSIFY_LEVEL_ONE.getCode());
         cereProductClassify.setLink(classify.getLink());
         cereProductClassify.setClassifyHierarchy("-"+classify.getCategoryName());
+        cereProductClassify.setDescription(classify.getDescription());
 
         if(!EmptyUtils.isEmpty(classify.getId())){
             //更新一级类别
@@ -115,6 +116,7 @@ public class CereProductClassifyServiceImpl implements CereProductClassifyServic
         productClassify.setLink(child.getLink());
         productClassify.setClassifyImage(child.getCategoryImg());
         productClassify.setClassifyHierarchy(parent.getClassifyHierarchy()+"-"+child.getCategoryName());
+        productClassify.setDescription(child.getDescription());
 
         if(!EmptyUtils.isEmpty(child.getId())){
             //更新子级类别
@@ -146,10 +148,8 @@ public class CereProductClassifyServiceImpl implements CereProductClassifyServic
         List<CereProductClassify> updates=new ArrayList<>();
         if(!EmptyUtils.isEmpty(param.getClassifies())){
             for (ProductClassify classify:param.getClassifies()) {
-                System.out.println(classify.getId());
                 CereProductClassify cereProductClassify = cereProductClassifyDAO.getById(classify.getId());
                 Long pid = cereProductClassify.getClassifyPid();
-                System.out.println(pid);
                 //如果不存在父节点，新增一级类别数据
                 if (pid == null || pid == 0) {
                     addOneClassify(classify, time, updates);
@@ -162,6 +162,7 @@ public class CereProductClassifyServiceImpl implements CereProductClassifyServic
                     parentClassify.setCategoryName(pClassify.getClassifyName());
                     parentClassify.setCategoryImg(pClassify.getClassifyImage());
                     parentClassify.setLink(pClassify.getLink());
+                    parentClassify.setDescription(pClassify.getDescription());
                     // 实际上能够进入这个代码片段的param.getClassifies()的长度为一，只有一个顶级分类
                     parentClassify.setChilds(param.getClassifies());
                     addOneClassify(parentClassify, time, updates);
@@ -171,6 +172,12 @@ public class CereProductClassifyServiceImpl implements CereProductClassifyServic
                 //批量更新分类层级结构
                 cereProductClassifyDAO.updateBatchLevelHierarchy(updates);
             }
+            if(!EmptyUtils.isEmpty(param.getDeleteIds())){
+                //删除分类
+                cereProductClassifyDAO.deleteByIds(param.getDeleteIds());
+            }
+        } else {
+           // 提交了一个空的树形结构，有可能是删除一个顶级类
             if(!EmptyUtils.isEmpty(param.getDeleteIds())){
                 //删除分类
                 cereProductClassifyDAO.deleteByIds(param.getDeleteIds());
@@ -190,6 +197,7 @@ public class CereProductClassifyServiceImpl implements CereProductClassifyServic
             result.setCategoryName(classify.getClassifyName());
             result.setLink(classify.getLink());
             result.setDepth(classify.getClassifyLevel());
+            result.setDescription(classify.getDescription());
             result.setCategoryImg(classify.getClassifyImage());
             List<Image> images=new ArrayList<>();
             Image image=new Image();
