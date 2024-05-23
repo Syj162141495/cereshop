@@ -9,10 +9,14 @@ package com.shop.cereshop.admin.controller;
 import com.shop.cereshop.admin.annotation.NoRepeatSubmit;
 import com.shop.cereshop.admin.annotation.NoRepeatWebLog;
 import com.shop.cereshop.admin.page.product.ProductClassify;
-import com.shop.cereshop.admin.param.product.*;
+import com.shop.cereshop.admin.param.product.ClassifyDeleteParam;
+import com.shop.cereshop.admin.param.product.ClassifyGetAllParam;
+import com.shop.cereshop.admin.param.product.ClassifyGetByIdParam;
+import com.shop.cereshop.admin.param.product.ClassifyLevelParam;
 import com.shop.cereshop.admin.service.product.CereProductClassifyService;
 import com.shop.cereshop.commons.domain.common.Page;
 import com.shop.cereshop.commons.domain.product.CereProductClassify;
+import com.shop.cereshop.commons.domain.product.Classify;
 import com.shop.cereshop.commons.domain.user.CerePlatformUser;
 import com.shop.cereshop.commons.exception.CoBusinessException;
 import com.shop.cereshop.commons.result.Result;
@@ -43,7 +47,7 @@ public class ClassifyController {
     private CereProductClassifyService cereProductClassifyService;
 
     /**
-     * 添加商品类别(level=1)
+     * 添加商品类别
      * @param param
      * @return
      */
@@ -59,7 +63,7 @@ public class ClassifyController {
     }
 
     /**
-     * 修改商品类别或添加商品类别(level>1)
+     * 修改商品类别
      * @param param
      * @return
      */
@@ -111,29 +115,5 @@ public class ClassifyController {
     public Result<Page<CereProductClassify>> getAll(@RequestBody ClassifyGetAllParam param) throws CoBusinessException{
         Page page=cereProductClassifyService.getAll(param);
         return new Result(page);
-    }
-
-<<<<<<< HEAD
-
-    /**
-     * 商品分类层级查询
-     * @return
-     */
-    @RequestMapping(value = "getByClassifyLevel",method = RequestMethod.POST)
-    @ApiOperation(value = "商品分类层级查询")
-    public Result<Page<CereProductClassify>> getByClassifyLevel(@RequestBody ClassifyGetByClassifyLevelParam param) throws CoBusinessException{
-        Page page=cereProductClassifyService.getByClassifyLevel(param);
-        return new Result(page);
-=======
-    /**
-     * 查询分类层级
-     * @return
-     */
-    @RequestMapping(value = "getClassify",method = RequestMethod.POST)
-    @ApiOperation(value = "查询分类层级")
-    public Result<Classify> getClassify() throws CoBusinessException{
-        List<Classify> list=cereProductClassifyService.getClassify();
-        return new Result(list);
->>>>>>> 4ea1b89d8f07ae4f3cc6c09f8e776f061160f6dc
     }
 }
