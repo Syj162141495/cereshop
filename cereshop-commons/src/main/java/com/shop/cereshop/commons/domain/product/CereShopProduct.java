@@ -5,7 +5,6 @@
  */
 package com.shop.cereshop.commons.domain.product;
 
-import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -22,9 +21,24 @@ public class CereShopProduct implements Serializable {
     private Long productId;
 
     /**
+     * 商品类型
+     */
+    private String productType;
+
+    /**
      * 关联店铺id
      */
     private Long shopId;
+
+    /**
+     * 关联店铺名称
+     */
+    private String shopName;
+
+    /**
+     * 关联店铺区域
+     */
+    private String shopLocation;
 
     /**
      * 商品名称
@@ -75,6 +89,21 @@ public class CereShopProduct implements Serializable {
      * 是否支持花呗分期 1-是 0-否
      */
     private Integer ifHuabei;
+
+    /**
+     * 是否推荐
+     */
+    private Integer isRecommended;
+
+    /**
+     * 星级
+     */
+    private String starRating;
+
+    /**
+     * 面积
+     */
+    private String area;
 
     /**
      * 创建时间

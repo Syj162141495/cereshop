@@ -28,10 +28,34 @@ public class ShopProduct {
     private Long productId;
 
     /**
+     * 商品类型
+     */
+    @ApiModelProperty(value = "商品类型")
+    private String productType;
+
+    /**
      * 关联店铺id
      */
     @ApiModelProperty(value = "关联店铺id")
     private Long shopId;
+
+    /**
+     * 关联店铺名称
+     */
+    @ApiModelProperty(value = "关联店铺名称")
+    private String shopName;
+
+    /**
+     * 价格区间
+     */
+    @ApiModelProperty(value = "价格区间")
+    private String priceInterval;
+
+    /**
+     * 关联店铺区域
+     */
+        @ApiModelProperty(value = "关联店铺区域")
+    private String shopLocation;
 
     /**
      * 商品名称
@@ -170,4 +194,22 @@ public class ShopProduct {
      */
     @ApiModelProperty(value = "规格名和值数据")
     private List<SkuNameParam> names;
+
+    /**
+     * 是否推荐
+     */
+    @ApiModelProperty(value = "是否推荐")
+    private Integer isRecommended;
+
+    /**
+     * 星级
+     */
+    @ApiModelProperty(value = "星级")
+    private String starRating;
+
+    /**
+     * 面积
+     */
+    @ApiModelProperty(value = "面积")
+    private String area;
 }

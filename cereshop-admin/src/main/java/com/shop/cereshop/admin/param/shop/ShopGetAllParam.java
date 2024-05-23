@@ -10,12 +10,23 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import javax.validation.constraints.NotNull;
+
 /**
  * 获取商家列表请求
  */
 @Data
 @ApiModel(value = "ShopGetAllParam", description = "获取商家列表请求")
 public class ShopGetAllParam extends PageParam {
+
+    @ApiModelProperty(value = "服务商大类")
+    private String providersMajor;
+
+    @ApiModelProperty(value = "服务商小类")
+    private String providersSubclass;
+
+    @ApiModelProperty(value = "医疗联合")
+    private String medicalcollaboration;
 
     /**
      * 店铺名称
@@ -66,6 +77,9 @@ public class ShopGetAllParam extends PageParam {
 
     @ApiModelProperty(value = "机构简介")
     private String introduction;
+
+    @ApiModelProperty(value = "关联分类id")
+    private Long classifyId;
 
     /**
      * 合同状态 1-有效 0-无效

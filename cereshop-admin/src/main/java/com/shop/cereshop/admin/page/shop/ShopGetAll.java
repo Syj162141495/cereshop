@@ -22,4 +22,7 @@ public class ShopGetAll extends CerePlatformShop {
      */
     @ApiModelProperty(value = "商家用户id")
     private Long businessUserId;
+
+    @ApiModelProperty(value = "服务类型")
+    private String serviceClassify;
 }

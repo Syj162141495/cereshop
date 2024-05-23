@@ -40,6 +40,13 @@ public class ProductSaveParam {
     private String productName;
 
     /**
+     * 商品类型
+     */
+    @ApiModelProperty(value = "商品类型")
+    @NotBlank(message = "商品类型不能为空")
+    private String productType;
+
+    /**
      * 卖点简介
      */
     @ApiModelProperty(value = "卖点简介")
@@ -108,7 +115,7 @@ public class ProductSaveParam {
      * 商品图片数组
      */
     @ApiModelProperty(value = "商品图片数组")
-    @Valid
+//    @Valid
     private List<Image> images;
 
     public void setImages(List<Image> images) {
@@ -136,4 +143,25 @@ public class ProductSaveParam {
     @ApiModelProperty(value = "规格数据")
     @Valid
     private List<SkuParam> skus;
+
+    /**
+     * 是否推荐
+     */
+    @ApiModelProperty(value = "是否推荐")
+    @Valid
+    private Integer isRecommended;
+
+    /**
+     * 星级
+     */
+    @ApiModelProperty(value = "星级")
+    @Valid
+    private String starRating;
+
+    /**
+     * 面积
+     */
+    @ApiModelProperty(value = "面积")
+    @Valid
+    private String area;
 }

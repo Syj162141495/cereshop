@@ -30,6 +30,7 @@ import com.shop.cereshop.commons.domain.business.CerePlatformBusiness;
 import com.shop.cereshop.commons.domain.shop.CerePlatformShop;
 import com.shop.cereshop.commons.domain.shop.CereShopCheck;
 import com.shop.cereshop.commons.domain.user.CerePlatformUser;
+import com.shop.cereshop.commons.domain.product.*;
 import com.shop.cereshop.commons.exception.CoBusinessException;
 import com.shop.cereshop.commons.utils.EmptyUtils;
 import com.shop.cereshop.commons.utils.EncryptUtil;
@@ -42,6 +43,7 @@ import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.awt.print.Printable;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -79,7 +81,11 @@ public class CerePlatformShopServiceImpl implements CerePlatformShopService {
         cerePlatformShop.setAddress(param.getAddress());
         cerePlatformShop.setCity(param.getCity());
         cerePlatformShop.setArea(param.getArea());
-        cerePlatformShop.setServiceClassify(param.getServiceClassify());
+        cerePlatformShop.setClassifyId(param.getClassifyId());
+        cerePlatformShop.setProvidersMajor(param.getProvidersMajor());
+        cerePlatformShop.setProvidersSubclass(param.getProvidersSubclass());
+        cerePlatformShop.setMedicalcollaboration(param.getMedicalcollaboration());
+//        cerePlatformShop.setServiceClassify(param.getServiceClassify());
         cerePlatformShop.setCoordinateX(param.getCoordinateX());
         cerePlatformShop.setCoordinateY(param.getCoordinateY());
         cerePlatformShop.setReditCode(param.getReditCode());
@@ -158,6 +164,9 @@ public class CerePlatformShopServiceImpl implements CerePlatformShopService {
         cerePlatformShop.setCity(param.getCity());
         cerePlatformShop.setArea(param.getArea());
         cerePlatformShop.setServiceClassify(param.getServiceClassify());
+        cerePlatformShop.setProvidersMajor(param.getProvidersMajor());
+        cerePlatformShop.setProvidersSubclass(param.getProvidersSubclass());
+        cerePlatformShop.setMedicalcollaboration(param.getMedicalcollaboration());
         cerePlatformShop.setCoordinateX(param.getCoordinateX());
         cerePlatformShop.setCoordinateY(param.getCoordinateY());
         cerePlatformShop.setReditCode(param.getReditCode());

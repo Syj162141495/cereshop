@@ -22,12 +22,10 @@ import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * 商品类别
@@ -115,6 +113,7 @@ public class ClassifyController {
         return new Result(page);
     }
 
+<<<<<<< HEAD
 
     /**
      * 商品分类层级查询
@@ -125,5 +124,16 @@ public class ClassifyController {
     public Result<Page<CereProductClassify>> getByClassifyLevel(@RequestBody ClassifyGetByClassifyLevelParam param) throws CoBusinessException{
         Page page=cereProductClassifyService.getByClassifyLevel(param);
         return new Result(page);
+=======
+    /**
+     * 查询分类层级
+     * @return
+     */
+    @RequestMapping(value = "getClassify",method = RequestMethod.POST)
+    @ApiOperation(value = "查询分类层级")
+    public Result<Classify> getClassify() throws CoBusinessException{
+        List<Classify> list=cereProductClassifyService.getClassify();
+        return new Result(list);
+>>>>>>> 4ea1b89d8f07ae4f3cc6c09f8e776f061160f6dc
     }
 }

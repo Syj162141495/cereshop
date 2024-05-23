@@ -73,6 +73,15 @@ public class ShopUpdateParam {
     @ApiModelProperty(value = "地区")
     private String area;
 
+    @ApiModelProperty(value = "服务商大类")
+    private String providersMajor;
+
+    @ApiModelProperty(value = "服务商小类")
+    private String providersSubclass;
+
+    @ApiModelProperty(value = "医疗联合")
+    private String medicalcollaboration;
+
     @ApiModelProperty(value = "服务类型")
     private String serviceClassify;
 

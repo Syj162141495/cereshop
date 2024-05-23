@@ -10,6 +10,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 /**
  * 添加商家请求
@@ -17,6 +18,15 @@ import javax.validation.constraints.NotBlank;
 @Data
 @ApiModel(value = "ShopSaveParam", description = "添加服务商请求")
 public class ShopSaveParam {
+
+    @ApiModelProperty(value = "服务商大类")
+    private String providersMajor;
+
+    @ApiModelProperty(value = "服务商小类")
+    private String providersSubclass;
+
+    @ApiModelProperty(value = "医疗联合")
+    private String medicalcollaboration;
 
     /**
      * 店铺名称
@@ -43,7 +53,7 @@ public class ShopSaveParam {
      * 店铺负责人
      */
     @ApiModelProperty(value = "服务商联系人")
-    @NotBlank(message = "服务商联系人不能为空")
+//    @NotBlank(message = "服务商联系人不能为空")
     private String chargePersonName;
 
     /**
@@ -61,43 +71,50 @@ public class ShopSaveParam {
     private String shopAdress;
 
     @ApiModelProperty(value = "机构地址")
-    @NotBlank(message = "机构地址不能为空")
+//    @NotBlank(message = "机构地址不能为空")
     private String address;
 
     @ApiModelProperty(value = "城市")
-    @NotBlank(message = "城市不能为空")
+//    @NotBlank(message = "城市不能为空")
     private String city;
 
     @ApiModelProperty(value = "地区")
-    @NotBlank(message = "地区不能为空")
+//    @NotBlank(message = "地区不能为空")
     private String area;
 
+    /**
+     * 关联分类id
+     */
+    @ApiModelProperty(value = "关联分类id")
+    @NotNull(message = "服务类型不能为空")
+    private Long classifyId;
+
     @ApiModelProperty(value = "服务类型")
-    @NotBlank(message = "服务类型不能为空")
+//    @NotBlank(message = "服务类型不能为空")
     private String serviceClassify;
 
     @ApiModelProperty(value = "坐标X")
-    @NotBlank(message = "坐标X不能为空")
+//    @NotBlank(message = "坐标X不能为空")
     private String coordinateX;
 
     @ApiModelProperty(value = "坐标Y")
-    @NotBlank(message = "坐标Y不能为空")
+//    @NotBlank(message = "坐标Y不能为空")
     private String coordinateY;
 
     @ApiModelProperty(value = "机构类型")
-    @NotBlank(message = "机构类型不能为空")
+//    @NotBlank(message = "机构类型不能为空")
     private String institutionalClassify;
 
     @ApiModelProperty(value = "机构等级")
-    @NotBlank(message = "机构等级不能为空")
+//    @NotBlank(message = "机构等级不能为空")
     private String institutionalGrade;
 
     @ApiModelProperty(value = "信用代码")
-    @NotBlank(message = "信用代码不能为空")
+//    @NotBlank(message = "信用代码不能为空")
     private String reditCode;
 
     @ApiModelProperty(value = "机构简介")
-    @NotBlank(message = "机构简介不能为空")
+//    @NotBlank(message = "机构简介不能为空")
     private String introduction;
 
     /**

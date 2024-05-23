@@ -5,7 +5,6 @@
  */
 package com.shop.cereshop.business.service.product.impl;
 
-import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.shop.cereshop.business.dao.product.CereShopProductDAO;
@@ -25,7 +24,6 @@ import com.shop.cereshop.business.service.tool.CereShopCouponService;
 import com.shop.cereshop.business.service.tool.CereShopDiscountDetailService;
 import com.shop.cereshop.business.service.tool.CereShopSeckillDetailService;
 import com.shop.cereshop.commons.cache.constants.CacheKeyConstants;
-import com.shop.cereshop.commons.cache.product.ProductBo;
 import com.shop.cereshop.commons.constant.CoReturnFormat;
 import com.shop.cereshop.commons.constant.IntegerEnum;
 import com.shop.cereshop.commons.domain.business.CerePlatformBusiness;
@@ -39,8 +37,6 @@ import com.shop.cereshop.commons.exception.CoBusinessException;
 import com.shop.cereshop.commons.poi.ImportExeclUtil;
 import com.shop.cereshop.commons.utils.EmptyUtils;
 import com.shop.cereshop.commons.utils.TimeUtils;
-import org.apache.commons.collections4.CollectionUtils;
-import org.apache.commons.lang.StringUtils;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -108,6 +104,10 @@ public class CereShopProductServiceImpl implements CereShopProductService {
         cereShopProduct.setIfLogistics(Integer.parseInt(param.getIfLogistics()));
         cereShopProduct.setIfOversold(Integer.parseInt(param.getIfOversold()));
         cereShopProduct.setIfHuabei(Integer.parseInt(param.getIfHuabei()));
+        cereShopProduct.setIsRecommended(param.getIsRecommended());
+        cereShopProduct.setStarRating(param.getStarRating());
+        cereShopProduct.setArea(param.getArea());
+        cereShopProduct.setProductType(param.getProductType());
         if(IntegerEnum.PRODUCT_EXAMINE_YES.getCode().equals(Integer.parseInt(param.getShelveState()))){
             //如果是已上架,修改状态为审核中
             cereShopProduct.setShelveState(IntegerEnum.PRODUCT_EXAMINE_STAY.getCode());
@@ -183,6 +183,7 @@ public class CereShopProductServiceImpl implements CereShopProductService {
         cereShopProduct.setIfLogistics(param.getIfLogistics());
         cereShopProduct.setIfOversold(param.getIfOversold());
         cereShopProduct.setIfHuabei(param.getIfHuabei());
+        cereShopProduct.setIsRecommended(param.getIsRecommended());
         if (IntegerEnum.PRODUCT_EXAMINE_YES.getCode().equals(param.getShelveState())) {
             //如果是已上架,修改状态为审核中
             cereShopProduct.setShelveState(IntegerEnum.PRODUCT_EXAMINE_STAY.getCode());
@@ -192,6 +193,12 @@ public class CereShopProductServiceImpl implements CereShopProductService {
         }
         cereShopProduct.setUpdateTime(time);
         cereShopProduct.setShopId(param.getShopId());
+        if (param.getStarRating() != null) {
+            cereShopProduct.setStarRating(param.getStarRating());
+        }
+        if (param.getArea() != null) {
+            cereShopProduct.setArea(param.getArea());
+        }
         cereShopProductDAO.updateByPrimaryKeySelective(cereShopProduct);
         if(!EmptyUtils.isEmpty(param.getImages())){
             //清空商品图片
@@ -328,41 +335,73 @@ public class CereShopProductServiceImpl implements CereShopProductService {
 
     @Override
     public Page getAll(ProductGetAllParam param) throws CoBusinessException {
-        //定义最低会员价map
-        Map<Long, BigDecimal> minMap=new HashMap<>();
-        //定义最高会员价map
-        Map<Long,BigDecimal> maxMap=new HashMap<>();
-        //查询所有商品会员价格最低值数据
-        List<CereProductMember> minMembers=cereProductMemberService.findAllMin();
-        if(!EmptyUtils.isEmpty(minMembers)){
-            minMap=minMembers.stream().collect(Collectors.toMap(CereProductMember::getProductId,CereProductMember::getPrice));
-        }
-        //查询所有商品会员价格最高值数据
-        List<CereProductMember> maxMembers=cereProductMemberService.findAllMax();
-        if(!EmptyUtils.isEmpty(maxMembers)){
-            maxMap=maxMembers.stream().collect(Collectors.toMap(CereProductMember::getProductId,CereProductMember::getPrice));
-        }
+//        //定义最低会员价map
+//        Map<Long, BigDecimal> minMap=new HashMap<>();
+//        //定义最高会员价map
+//        Map<Long,BigDecimal> maxMap=new HashMap<>();
+//        //查询所有商品会员价格最低值数据
+//        List<CereProductMember> minMembers=cereProductMemberService.findAllMin();
+//        if(!EmptyUtils.isEmpty(minMembers)){
+//            minMap=minMembers.stream().collect(Collectors.toMap(CereProductMember::getProductId,CereProductMember::getPrice));
+//        }
+//        //查询所有商品会员价格最高值数据
+//        List<CereProductMember> maxMembers=cereProductMemberService.findAllMax();
+//        if(!EmptyUtils.isEmpty(maxMembers)){
+//            maxMap=maxMembers.stream().collect(Collectors.toMap(CereProductMember::getProductId,CereProductMember::getPrice));
+//        }
         PageHelper.startPage(param.getPage(),param.getPageSize());
-        List<ShopProduct> list=cereShopProductDAO.getAll(param);
-        if(!EmptyUtils.isEmpty(list)){
-            Map<Long, BigDecimal> finalMinMap = minMap;
-            Map<Long, BigDecimal> finalMaxMap = maxMap;
-            list.forEach((shopProduct -> {
-                if(!EmptyUtils.isEmpty(shopProduct.getSkuImage())){
-                    //规格配图了,取规格图片展示
-                    shopProduct.setProductImage(shopProduct.getSkuImage());
+        List<CereShopProduct> list = cereShopProductDAO.getAllProducts(param);
+        List<ShopProduct> res = new ArrayList<>();
+        for (CereShopProduct cereShopProduct: list) {
+            ShopProduct shopProduct = new ShopProduct();
+            shopProduct.setProductId(cereShopProduct.getProductId());
+            shopProduct.setProductType(cereShopProduct.getProductType());
+            shopProduct.setClassifyId(cereShopProduct.getClassifyId());
+            shopProduct.setProductName(cereShopProduct.getProductName());
+            shopProduct.setShopName(cereShopProduct.getShopName());
+
+            //查询规格信息
+            List<Sku> skus = cereProductSkuService.findByProductId(cereShopProduct.getProductId());
+            BigDecimal minPrice = new BigDecimal(Integer.MAX_VALUE);
+            BigDecimal maxPrice = new BigDecimal(Integer.MIN_VALUE);
+            for (Sku sku: skus) {
+                BigDecimal price = sku.getPrice();
+                if (minPrice.intValue() > price.intValue()) {
+                    minPrice = price;
                 }
-                //查询规格商品销量
-                Integer total=cereProductSkuService.findVolumeByProductId(shopProduct.getProductId());
-                shopProduct.setVolume(total);
-                if(!EmptyUtils.isEmpty(finalMinMap)&&!EmptyUtils.isEmpty(finalMinMap.get(shopProduct.getProductId()))){
-                    //设置会员价格区间
-                    shopProduct.setMemberSection("￥"+finalMinMap.get(shopProduct.getProductId())+"~￥"+
-                            finalMaxMap.get(shopProduct.getProductId()));
+                if (maxPrice.intValue() < price.intValue()) {
+                    maxPrice = price;
                 }
-            }));
+            }
+            shopProduct.setPriceInterval(minPrice.intValue() + "-" + maxPrice.intValue());
+            shopProduct.setShopLocation(cereShopProduct.getShopLocation());
+            shopProduct.setIsRecommended(cereShopProduct.getIsRecommended());
+            shopProduct.setShelveState(cereShopProduct.getShelveState());
+            shopProduct.setStarRating(cereShopProduct.getStarRating());
+            shopProduct.setArea(cereShopProduct.getArea());
+            res.add(shopProduct);
         }
-        PageInfo<ShopProduct> pageInfo=new PageInfo<>(list);
+
+//        if(!EmptyUtils.isEmpty(list)){
+//            Map<Long, BigDecimal> finalMinMap = minMap;
+//            Map<Long, BigDecimal> finalMaxMap = maxMap;
+//            list.forEach((shopProduct -> {
+//                if(!EmptyUtils.isEmpty(shopProduct.getSkuImage())){
+//                    //规格配图了,取规格图片展示
+//                    shopProduct.setProductImage(shopProduct.getSkuImage());
+//                }
+//                //查询规格商品销量
+//                Integer total=cereProductSkuService.findVolumeByProductId(shopProduct.getProductId());
+//                shopProduct.setVolume(total);
+
+//                if(!EmptyUtils.isEmpty(finalMinMap)&&!EmptyUtils.isEmpty(finalMinMap.get(shopProduct.getProductId()))){
+//                    //设置会员价格区间
+//                    shopProduct.setMemberSection("￥"+finalMinMap.get(shopProduct.getProductId())+"~￥"+
+//                            finalMaxMap.get(shopProduct.getProductId()));
+//                }
+//            }));
+//        }
+        PageInfo<ShopProduct> pageInfo=new PageInfo<>(res);
         Page page=new Page(pageInfo.getList(),pageInfo.getTotal());
         return page;
     }

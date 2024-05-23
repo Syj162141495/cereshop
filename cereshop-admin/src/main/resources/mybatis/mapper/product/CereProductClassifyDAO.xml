@@ -15,7 +15,7 @@
     <result column="update_time" jdbcType="VARCHAR" property="updateTime" />
   </resultMap>
   <sql id="Base_Column_List">
-    classify_id, classify_pid, classify_hierarchy, classify_level, classify_level_hierarchy, 
+    classify_id, classify_pid, classify_hierarchy, classify_level, classify_level_hierarchy,
     classify_name, classify_image, sort, link, create_time, update_time
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
@@ -25,7 +25,7 @@
     where classify_id = #{classifyId,jdbcType=BIGINT}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-    delete from cere_product_classify_copy
+    delete from cere_product_classify
     where classify_id = #{classifyId,jdbcType=BIGINT}
   </delete>
   <insert id="insert" keyColumn="classify_id" keyProperty="classifyId" parameterType="com.shop.cereshop.commons.domain.product.CereProductClassify" useGeneratedKeys="true">
@@ -38,7 +38,7 @@
       #{updateTime,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" keyColumn="classify_id" keyProperty="classifyId" parameterType="com.shop.cereshop.commons.domain.product.CereProductClassify" useGeneratedKeys="true">
-    insert into cere_product_classify_copy
+    insert into cere_product_classify
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="classifyPid != null">
         classify_pid,
@@ -146,20 +146,20 @@
   <update id="updateByPrimaryKey" parameterType="com.shop.cereshop.commons.domain.product.CereProductClassify">
     update cere_product_classify_copy
     set classify_pid = #{classifyPid,jdbcType=BIGINT},
-      classify_hierarchy = #{classifyHierarchy,jdbcType=VARCHAR},
-      classify_level = #{classifyLevel,jdbcType=TINYINT},
-      classify_level_hierarchy = #{classifyLevelHierarchy,jdbcType=VARCHAR},
-      classify_name = #{classifyName,jdbcType=VARCHAR},
-      classify_image = #{classifyImage,jdbcType=VARCHAR},
-      sort = #{sort,jdbcType=INTEGER},
-      link = #{link,jdbcType=BIGINT},
-      create_time = #{createTime,jdbcType=VARCHAR},
-      update_time = #{updateTime,jdbcType=VARCHAR}
+        classify_hierarchy = #{classifyHierarchy,jdbcType=VARCHAR},
+        classify_level = #{classifyLevel,jdbcType=TINYINT},
+        classify_level_hierarchy = #{classifyLevelHierarchy,jdbcType=VARCHAR},
+        classify_name = #{classifyName,jdbcType=VARCHAR},
+        classify_image = #{classifyImage,jdbcType=VARCHAR},
+        sort = #{sort,jdbcType=INTEGER},
+        link = #{link,jdbcType=BIGINT},
+        create_time = #{createTime,jdbcType=VARCHAR},
+        update_time = #{updateTime,jdbcType=VARCHAR}
     where classify_id = #{classifyId,jdbcType=BIGINT}
   </update>
 
   <select id="getById" parameterType="java.lang.Object" resultType="com.shop.cereshop.commons.domain.product.CereProductClassify">
-    SELECT classify_id,classify_pid,classify_name,description,classify_level_hierarchy,classify_image,link,classify_level FROM cere_product_classify_copy
+    SELECT classify_id,classify_name,classify_level_hierarchy,classify_image,link,classify_level FROM cere_product_classify
     where classify_id=#{classifyId}
   </select>
 
