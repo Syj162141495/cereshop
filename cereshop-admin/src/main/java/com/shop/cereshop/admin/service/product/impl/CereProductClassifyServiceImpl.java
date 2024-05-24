@@ -150,8 +150,8 @@ public class CereProductClassifyServiceImpl implements CereProductClassifyServic
             for (ProductClassify classify:param.getClassifies()) {
                 CereProductClassify cereProductClassify = cereProductClassifyDAO.getById(classify.getId());
                 Long pid = cereProductClassify.getClassifyPid();
-                //如果不存在父节点，新增一级类别数据
-                if (pid == null || pid == 0) {
+                //如果不存在父节点，说明它就是顶级节点
+                if (pid == 0) {
                     addOneClassify(classify, time, updates);
                 }
                 //否则，找到父节点，从父节点开始启动
@@ -241,9 +241,7 @@ public class CereProductClassifyServiceImpl implements CereProductClassifyServic
     public void delete(ClassifyDeleteParam param, CerePlatformUser user) throws CoBusinessException {
         String time = TimeUtils.yyMMddHHmmss();
         // 需要被删除的最顶级类型
-        System.out.println(param.getOneClassifyId());
         CereProductClassify classify = cereProductClassifyDAO.getById(param.getOneClassifyId());
-        System.out.println(classify);
         // 如果存在，则依次检查次级类型
         if (classify != null) {
             String[] split = classify.getClassifyLevelHierarchy().split("/");

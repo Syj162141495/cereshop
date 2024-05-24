@@ -178,7 +178,7 @@
 
     <select id="getById" parameterType="java.lang.Long"
             resultType="com.shop.cereshop.commons.domain.product.CereProductClassify">
-        SELECT classify_id,classify_name,classify_level_hierarchy,classify_image,link,classify_level FROM
+        SELECT classify_id,classify_pid,classify_name,classify_level_hierarchy,classify_image,link,classify_level FROM
             cere_product_classify_copy
         where classify_id=#{classifyId}
     </select>
