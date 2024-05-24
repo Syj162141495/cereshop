@@ -150,8 +150,8 @@ public class CereProductClassifyServiceImpl implements CereProductClassifyServic
             for (ProductClassify classify:param.getClassifies()) {
                 CereProductClassify cereProductClassify = cereProductClassifyDAO.getById(classify.getId());
                 Long pid = cereProductClassify.getClassifyPid();
-                //如果不存在父节点，新增一级类别数据
-                if (pid == null || pid == 0) {
+                //如果不存在父节点，说明它就是顶级节点
+                if (pid == 0) {
                     addOneClassify(classify, time, updates);
                 }
                 //否则，找到父节点，从父节点开始启动
@@ -232,12 +232,8 @@ public class CereProductClassifyServiceImpl implements CereProductClassifyServic
     }
 
     @Override
-    public Page getByClassifyLevel(ClassifyGetByClassifyLevelParam param) throws CoBusinessException{
-        PageHelper.startPage(param.getPage(),param.getPageSize());
-        List<CereProductClassify> list=cereProductClassifyDAO.getByClassifyLevel(param.getClassifyLevel());
-        PageInfo<CereProductClassify> pageInfo=new PageInfo<>(list);
-        Page page=new Page(pageInfo.getList(),pageInfo.getTotal());
-        return page;
+    public List<CereProductClassify>  getByClassifyLevel(ClassifyGetByClassifyLevelParam param) throws CoBusinessException{
+        return cereProductClassifyDAO.getByClassifyLevel(param.getClassifyLevel());
     }
 
     @Override
@@ -250,6 +246,7 @@ public class CereProductClassifyServiceImpl implements CereProductClassifyServic
         if (classify != null) {
             String[] split = classify.getClassifyLevelHierarchy().split("/");
             int level = split.length - 1;
+            System.out.println(level);
             if (level == 3) {
                 // 三级
                 Long third_level_id = Long.parseLong(split[3]);

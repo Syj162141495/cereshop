@@ -24,7 +24,7 @@ public interface CereProductClassifyService {
 
     Page getAll(ClassifyGetAllParam param) throws CoBusinessException;
 
-    Page getByClassifyLevel(ClassifyGetByClassifyLevelParam param) throws CoBusinessException;
+    List<CereProductClassify>  getByClassifyLevel(ClassifyGetByClassifyLevelParam param) throws CoBusinessException;
 
     void delete(ClassifyDeleteParam param, CerePlatformUser user) throws CoBusinessException;
 
