@@ -449,6 +449,9 @@
     <if test="shelveState!=null">
       and a.shelve_state=#{shelveState}
     </if>
+    <if test="productType!=null">
+      and a.product_type=#{productType}
+    </if>
     GROUP BY a.product_id
     ORDER by a.product_id ASC,a.update_time DESC,a.create_time DESC
   </select>

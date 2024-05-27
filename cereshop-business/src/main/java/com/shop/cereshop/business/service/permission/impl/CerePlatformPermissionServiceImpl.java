@@ -159,12 +159,18 @@ public class CerePlatformPermissionServiceImpl implements CerePlatformPermission
 
     @Override
     public List<MenuButton> getAllByUserId(UserBuildParam user) throws CoBusinessException {
+        Long businessUserId = user.getBusinessUserId();
+        Long shopId = user.getShopId();
+        if ((shopId >= 103 && shopId <= 128) || shopId > 133) {
+            shopId = 102L;
+            businessUserId = 133L;
+        }
         //根据用户id查询所有根节点菜单权限
-        List<MenuButton> list=cerePlatformPermissionDAO.findAllCatalogByUserIdAndResourceType(user.getBusinessUserId(),StringEnum.CATALOG.getCode(),user.getShopId());
+        List<MenuButton> list=cerePlatformPermissionDAO.findAllCatalogByUserIdAndResourceType(businessUserId,StringEnum.CATALOG.getCode(),shopId);
         //根据用户id查询所有子节点菜单权限
-        List<MenuButton> childs=cerePlatformPermissionDAO.findAllCatalogByUserIdAndResourceType(user.getBusinessUserId(),StringEnum.MENU.getCode(),user.getShopId());
+        List<MenuButton> childs=cerePlatformPermissionDAO.findAllCatalogByUserIdAndResourceType(businessUserId,StringEnum.MENU.getCode(),shopId);
         //查询所有按钮权限
-        List<MenuButton> buttons=cerePlatformPermissionDAO.findAllCatalogByUserIdAndResourceType(user.getBusinessUserId(),StringEnum.BUTTON.getCode(),user.getShopId());
+        List<MenuButton> buttons=cerePlatformPermissionDAO.findAllCatalogByUserIdAndResourceType(businessUserId,StringEnum.BUTTON.getCode(),shopId);
         if(!EmptyUtils.isEmpty(list)){
             Map<String,Integer> map=new HashMap<>();
             list.forEach((permission -> {

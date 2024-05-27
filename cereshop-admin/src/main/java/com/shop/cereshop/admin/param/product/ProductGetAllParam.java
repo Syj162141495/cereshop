@@ -33,6 +33,12 @@ public class ProductGetAllParam extends PageParam {
     private String productId;
 
     /**
+     * 商品类型
+     */
+    @ApiModelProperty(value = "商品类型")
+    private String productType;
+
+    /**
      * 商品名称
      */
     @ApiModelProperty(value = "商品名称")
