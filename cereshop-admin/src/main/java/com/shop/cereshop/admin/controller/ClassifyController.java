@@ -55,6 +55,8 @@ public class ClassifyController {
     public Result add(@RequestBody @Validated ClassifyLevelParam param, HttpServletRequest request) throws CoBusinessException{
         //获取当前登录账户
         CerePlatformUser user = (CerePlatformUser) request.getAttribute("user");
+        System.out.println("user");
+        System.out.println(user);
         cereProductClassifyService.add(param,user);
         return new Result(user.getUsername(),"添加商品类别", GsonUtil.objectToGson(param));
     }

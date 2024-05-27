@@ -30,6 +30,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
         registry.addInterceptor(authorizationInterceptor).addPathPatterns("/after/**");
         registry.addInterceptor(authorizationInterceptor).addPathPatterns("/buyer/**");
         registry.addInterceptor(authorizationInterceptor).addPathPatterns("/classify/**");
+        registry.addInterceptor(authorizationInterceptor).addPathPatterns("/customerClassify/**");
         registry.addInterceptor(authorizationInterceptor).addPathPatterns("/comment/**");
         registry.addInterceptor(authorizationInterceptor).addPathPatterns("/express/**");
         registry.addInterceptor(authorizationInterceptor).addPathPatterns("/finance/**");

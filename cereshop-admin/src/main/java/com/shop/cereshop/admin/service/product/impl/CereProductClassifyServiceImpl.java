@@ -56,10 +56,10 @@ public class CereProductClassifyServiceImpl implements CereProductClassifyServic
                 //新增一级类别数据
                 addOneClassify(classify,time,updates);
             }
-            if(!EmptyUtils.isEmpty(updates)){
-                //批量更新分类层级结构
-                cereProductClassifyDAO.updateBatchLevelHierarchy(updates);
-            }
+//            if(!EmptyUtils.isEmpty(updates)){
+//                //批量更新分类层级结构
+//                cereProductClassifyDAO.updateBatchLevelHierarchy(updates);
+//            }
         }
         //新增日志
         cerePlatformLogService.addLog(user,"商品类别","平台端操作","添加商品类别",null,time);
@@ -246,7 +246,6 @@ public class CereProductClassifyServiceImpl implements CereProductClassifyServic
         if (classify != null) {
             String[] split = classify.getClassifyLevelHierarchy().split("/");
             int level = split.length - 1;
-            System.out.println(level);
             if (level == 3) {
                 // 三级
                 Long third_level_id = Long.parseLong(split[3]);
