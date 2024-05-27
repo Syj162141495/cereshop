@@ -66,19 +66,23 @@ public class CereCustomerClassifyServiceImpl implements CereCustomerClassifyServ
         List<CereCustomerClassify> updates = new ArrayList<>();
         if (!EmptyUtils.isEmpty(param.getClassifies())) {
             for (CustomerClassify classify : param.getClassifies()) {
-                CereCustomerClassify CereCustomerClassify = cereCustomerClassifyDAO.getById(classify.getClassifyId());
-                Long pid = CereCustomerClassify.getClassifyPid();
+                CereCustomerClassify cereCustomerClassify = cereCustomerClassifyDAO.getById(classify.getClassifyId());
+                Long pid = cereCustomerClassify.getClassifyPid();
                 //如果不存在父节点，说明它就是顶级节点
                 if (pid == 0) {
+                    System.out.println("!!!!");
                     addOneClassify(classify, time, updates);
                 }
                 //否则，找到父节点，从父节点开始启动
                 else {
                     CereCustomerClassify pClassify = cereCustomerClassifyDAO.getById(pid);
+                    System.out.println("pid:" + pid.toString());
+                    System.out.println(pClassify);
                     CustomerClassify parentClassify = new CustomerClassify();
                     parentClassify.setClassifyId(pClassify.getClassifyId());
                     parentClassify.setClassifyName(pClassify.getClassifyName());
                     parentClassify.setDescription(pClassify.getDescription());
+                    parentClassify.setSort(pClassify.getSort());
                     // 实际上能够进入这个代码片段的param.getClassifies()的长度为一，只有一个顶级分类
                     parentClassify.setChildren(param.getClassifies());
                     addOneClassify(parentClassify, time, updates);
@@ -111,11 +115,8 @@ public class CereCustomerClassifyServiceImpl implements CereCustomerClassifyServ
         CereCustomerClassify classify = cereCustomerClassifyDAO.getById(param.getClassifyId());
         // 如果存在，则依次检查次级类型
         if (classify != null) {
-            System.out.println(classify);
             String[] split = classify.getClassifyLevelHierarchy().split("/");
-
             int level = split.length - 1;
-            System.out.println(level);
             if (level == 3) {
                 // 三级
                 Long third_level_id = Long.parseLong(split[3]);
@@ -181,6 +182,7 @@ public class CereCustomerClassifyServiceImpl implements CereCustomerClassifyServ
             result.setClassifyName(classify.getClassifyName());
             result.setClassifyLevel(classify.getClassifyLevel());
             result.setDescription(classify.getDescription());
+            result.setSort(classify.getSort());
             //查询所有二级分类
             List<CustomerClassify> classifies = cereCustomerClassifyDAO.findByPid(classify.getClassifyId());
             if (!EmptyUtils.isEmpty(classifies)) {
@@ -212,7 +214,22 @@ public class CereCustomerClassifyServiceImpl implements CereCustomerClassifyServ
         cereCustomerClassify.setClassifyLevel(IntegerEnum.CLASSIFY_LEVEL_ONE.getCode());
         cereCustomerClassify.setClassifyHierarchy("-" + classify.getClassifyName());
         cereCustomerClassify.setDescription(classify.getDescription());
-        System.out.println(cereCustomerClassify);
+        System.out.println("addOneClassify");
+        System.out.println(classify);
+        System.out.println(classify.getSort());
+        if (classify.getSort() != null) {
+            cereCustomerClassify.setSort(classify.getSort());
+        } else {
+            List<CustomerClassify> clist = cereCustomerClassifyDAO.findByPid(0L);
+            System.out.println(clist);
+            int sortNum = clist.stream()
+                    .mapToInt(CustomerClassify::getSort)
+                    .max()
+                    .orElse(0);
+            cereCustomerClassify.setSort(sortNum + 10);
+        }
+        System.out.println(cereCustomerClassify.getSort());
+        System.out.println("----------------");
 
         if (!EmptyUtils.isEmpty(classify.getClassifyId())) {
             //更新一级类别
@@ -228,9 +245,9 @@ public class CereCustomerClassifyServiceImpl implements CereCustomerClassifyServ
         }
         if (!EmptyUtils.isEmpty(classify.getChildren())) {
             //新增子级类别
-            for (CustomerClassify CustomerClassify : classify.getChildren()) {
+            for (CustomerClassify customerClassify : classify.getChildren()) {
                 addChildClassify(cereCustomerClassify,
-                        updates, time, CustomerClassify, IntegerEnum.CLASSIFY_LEVEL_TWO.getCode());
+                        updates, time, customerClassify, IntegerEnum.CLASSIFY_LEVEL_TWO.getCode());
             }
         }
     }
@@ -242,33 +259,48 @@ public class CereCustomerClassifyServiceImpl implements CereCustomerClassifyServ
             throw new CoBusinessException(CoReturnFormat.CLASSIFY_NAME_NULL);
         }
         // 初始化数据
-        CereCustomerClassify CustomerClassify = new CereCustomerClassify();
-        CustomerClassify.setClassifyId(child.getClassifyId());
-        CustomerClassify.setClassifyPid(parent.getClassifyId());
-        CustomerClassify.setClassifyName(child.getClassifyName());
-        CustomerClassify.setClassifyLevel(level);
-        CustomerClassify.setClassifyHierarchy(parent.getClassifyHierarchy() + "-" + child.getClassifyName());
-        CustomerClassify.setDescription(child.getDescription());
+        CereCustomerClassify cereCustomerClassify = new CereCustomerClassify();
+        cereCustomerClassify.setClassifyId(child.getClassifyId());
+        cereCustomerClassify.setClassifyPid(parent.getClassifyId());
+        cereCustomerClassify.setClassifyName(child.getClassifyName());
+        cereCustomerClassify.setClassifyLevel(level);
+        cereCustomerClassify.setClassifyHierarchy(parent.getClassifyHierarchy() + "-" + child.getClassifyName());
+        cereCustomerClassify.setDescription(child.getDescription());
+        System.out.println("addChildClassify");
+        System.out.println(child);
+        if (child.getSort() != null) {
+            cereCustomerClassify.setSort(child.getSort());
+        } else {
+            List<CustomerClassify> clist = cereCustomerClassifyDAO.findByPid(parent.getClassifyId());
+            int sortNum = clist.stream()
+                    .mapToInt(CustomerClassify::getSort)
+                    .max()
+                    .orElse(0);
+            cereCustomerClassify.setSort(sortNum + 10);
+        }
+        System.out.println(cereCustomerClassify.getSort());
+        System.out.println("*******************");
 
         if (!EmptyUtils.isEmpty(child.getClassifyId())) {
             //更新子级类别
-            CustomerClassify.setUpdateTime(time);
-            CustomerClassify.setClassifyLevelHierarchy(parent.getClassifyLevelHierarchy() + "/" + CustomerClassify.getClassifyId());
-            cereCustomerClassifyDAO.updateByPrimaryKeySelective(CustomerClassify);
+            cereCustomerClassify.setUpdateTime(time);
+            cereCustomerClassify.setClassifyLevelHierarchy(parent.getClassifyLevelHierarchy() + "/" + cereCustomerClassify.getClassifyId());
+            cereCustomerClassifyDAO.updateByPrimaryKeySelective(cereCustomerClassify);
         } else {
             //新增子级类别
-            CustomerClassify.setCreateTime(time);
-            cereCustomerClassifyDAO.insert(CustomerClassify);
-            CustomerClassify.setClassifyLevelHierarchy(parent.getClassifyLevelHierarchy() + "/" + CustomerClassify.getClassifyId());
-            updates.add(CustomerClassify);
+            cereCustomerClassify.setCreateTime(time);
+            cereCustomerClassifyDAO.insert(cereCustomerClassify);
+            cereCustomerClassify.setClassifyLevelHierarchy(parent.getClassifyLevelHierarchy() + "/" + cereCustomerClassify.getClassifyId());
+            updates.add(cereCustomerClassify);
         }
 
         // 递归
         if (!EmptyUtils.isEmpty(child.getChildren())) {
             //新增子级类别
-            for (CustomerClassify classify1 : child.getChildren()) {
-                addChildClassify(CustomerClassify, updates, time, classify1, IntegerEnum.CLASSIFY_LEVEL_THREE.getCode());
+            for (CustomerClassify classify : child.getChildren()) {
+                addChildClassify(cereCustomerClassify, updates, time, classify, IntegerEnum.CLASSIFY_LEVEL_THREE.getCode());
             }
         }
     }
 }
+

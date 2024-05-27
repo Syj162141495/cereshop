@@ -66,7 +66,7 @@ public class CereCustomerClassify implements Serializable {
      * 排序号
      */
     @ApiModelProperty(value = "排序号")
-    private Integer sortID;
+    private Integer sort;
 
 
     /**

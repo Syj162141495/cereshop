@@ -73,6 +73,7 @@ public class CustomerClassifyController {
     public Result update(@RequestBody CustomerClassifyParam param, HttpServletRequest request) throws CoBusinessException {
         //获取当前登录账户
         CerePlatformUser user = (CerePlatformUser) request.getAttribute("user");
+        System.out.println(param);
         cereCustomerClassifyService.update(param, user);
         return new Result(user.getUsername(), "修改商品类别", GsonUtil.objectToGson(param));
     }

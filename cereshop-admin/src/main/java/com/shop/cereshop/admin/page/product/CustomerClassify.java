@@ -57,4 +57,10 @@ public class CustomerClassify {
      */
     @ApiModelProperty(value = "类别介绍")
     private String description;
+
+    /**
+     * 排序号
+     */
+    @ApiModelProperty(value = "类别介绍")
+    private Integer sort;
 }

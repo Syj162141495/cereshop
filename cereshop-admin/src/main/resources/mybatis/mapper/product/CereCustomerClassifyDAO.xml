@@ -9,14 +9,14 @@
         <result column="classify_hierarchy" jdbcType="VARCHAR" property="classifyHierarchy"/>
         <result column="classify_level_hierarchy" jdbcType="VARCHAR" property="classifyLevelHierarchy"/>
         <result column="description" jdbcType="CHAR" property="description"/>
-        <result column="sort_id" jdbcType="INTEGER" property="sortID"/>
+        <result column="sort" jdbcType="INTEGER" property="sort"/>
         <result column="create_time" jdbcType="VARCHAR" property="createTime"/>
         <result column="update_time" jdbcType="VARCHAR" property="updateTime"/>
     </resultMap>
 
     <sql id="Base_Column_List">
-        classify_id , classify_pid,classify_name, classify_level, classify_hierarchy, classify_level_hierarchy,
-        sort_id,create_time, update_time
+        classify_id,classify_pid,classify_name, classify_level, classify_hierarchy, classify_level_hierarchy,description
+        sort,create_time, update_time
     </sql>
 
     <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
@@ -34,15 +34,15 @@
 
     <insert id="insert" keyColumn="classify_id" keyProperty="classifyId"
             parameterType="com.shop.cereshop.commons.domain.product.CereCustomerClassify" useGeneratedKeys="true">
-        insert into cere_customer_classify ( classify_pid, classify_name, classify_level,
-        classify_hierarchy, classify_level_hierarchy, description, sort_id, create_time, update_time)
+        insert into cere_customer_classify (classify_pid, classify_name, classify_level,
+        classify_hierarchy, classify_level_hierarchy, description, sort, create_time, update_time)
         values (#{classifyPid,jdbcType=BIGINT},
         #{classifyName,jdbcType=VARCHAR},
         #{classifyLevel,jdbcType=TINYINT},
         #{classifyHierarchy,jdbcType=VARCHAR},
         #{classifyLevelHierarchy,jdbcType=VARCHAR},
         #{description,jdbcType=CHAR},
-        #{sortID,jdbcType=INTEGER},
+        #{sort,jdbcType=INTEGER},
         #{createTime,jdbcType=VARCHAR},
         #{updateTime,jdbcType=VARCHAR})
     </insert>
@@ -69,8 +69,8 @@
             <if test="description != null and description!=''">
                 description,
             </if>
-            <if test="sortID != null">
-                sort_id,
+            <if test="sort != null">
+                sort,
             </if>
             <if test="createTime != null and createTime!=''">
                 create_time,
@@ -98,8 +98,8 @@
             <if test="description != null and description!=''">
                 #{description,jdbcType=CHAR},
             </if>
-            <if test="sortID != null">
-                #{sort_id,jdbcType=INTEGER},
+            <if test="sort != null">
+                #{sort,jdbcType=INTEGER},
             </if>
             <if test="createTime != null and createTime!=''">
                 #{createTime,jdbcType=VARCHAR},
@@ -132,8 +132,8 @@
             <if test="description != null and description!=''">
                 description = #{description,jdbcType=CHAR},
             </if>
-            <if test="sortID != null">
-                sort_id = #{sort_id,jdbcType=INTEGER},
+            <if test="sort != null">
+                sort = #{sort,jdbcType=INTEGER},
             </if>
             <if test="createTime != null and createTime!=''">
                 create_time = #{createTime,jdbcType=VARCHAR},
@@ -153,7 +153,7 @@
         classify_hierarchy = #{classifyHierarchy,jdbcType=VARCHAR},
         classify_level_hierarchy = #{classifyLevelHierarchy,jdbcType=VARCHAR},
         description = #{description,jdbcType=CHAR},
-        sort_id = #{sortID,jdbcType=INTEGER},
+        sort = #{sort,jdbcType=INTEGER},
         create_time = #{createTime,jdbcType=VARCHAR},
         update_time = #{updateTime,jdbcType=VARCHAR}
         where classify_id = #{classifyId,jdbcType=BIGINT}
@@ -161,7 +161,7 @@
 
     <select id="getById" parameterType="java.lang.Long"
             resultType="com.shop.cereshop.commons.domain.product.CereCustomerClassify">
-        SELECT classify_id, classify_pid, classify_name, classify_level,  classify_level_hierarchy, description
+        SELECT classify_id, classify_pid, classify_name, classify_level,  classify_level_hierarchy, description, sort
         FROM cere_customer_classify
         where classify_id = #{classifyId}
     </select>
@@ -177,7 +177,7 @@
 
     <select id="findByPid" parameterType="java.lang.Object"
             resultType="com.shop.cereshop.admin.page.product.CustomerClassify">
-        SELECT classify_id , classify_name, classify_level, description
+        SELECT classify_id , classify_name, classify_level, description, sort
         FROM cere_customer_classify
         where classify_pid = #{classifyId}
     </select>
