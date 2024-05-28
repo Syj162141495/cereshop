@@ -31,6 +31,8 @@ public interface CereProductClassifyDAO extends BaseMapper<CereProductClassify> 
 
     CereProductClassify getById(@Param("classifyId") Long classifyId);
 
+    List<CereProductClassify> getByPid(@Param("classifyId") Long classifyId);
+
     List<CereProductClassify> getAll();
 
     List<CereProductClassify> getByClassifyLevel(@Param("classifyLevel") Integer classifyLevel);
@@ -40,6 +42,7 @@ public interface CereProductClassifyDAO extends BaseMapper<CereProductClassify> 
     List<CereProductClassify> getClassifySelect(@Param("classifyId") Long classifyPid);
 
     List<ProductClassify> findByPid(@Param("classifyId") Long classifyId);
+
 
     void updateBatchLevelHierarchy(@Param("list") List<CereProductClassify> list);
 

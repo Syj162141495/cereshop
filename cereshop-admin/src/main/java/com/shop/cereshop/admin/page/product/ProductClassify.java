@@ -69,4 +69,10 @@ public class ProductClassify {
      */
     @ApiModelProperty(value = "类别介绍")
     private String description;
+
+    /**
+     * 类别介绍
+     */
+    @ApiModelProperty(value = "排序号")
+    private Integer sort;
 }
