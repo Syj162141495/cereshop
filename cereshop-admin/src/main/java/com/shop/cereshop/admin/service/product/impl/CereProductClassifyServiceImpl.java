@@ -8,6 +8,7 @@ package com.shop.cereshop.admin.service.product.impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.shop.cereshop.admin.dao.product.CereProductClassifyDAO;
+import com.shop.cereshop.admin.page.product.CustomerClassify;
 import com.shop.cereshop.admin.param.product.*;
 import com.shop.cereshop.commons.constant.IntegerEnum;
 import com.shop.cereshop.commons.constant.LongEnum;
@@ -29,6 +30,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import sun.security.provider.ConfigFile;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -56,10 +58,10 @@ public class CereProductClassifyServiceImpl implements CereProductClassifyServic
                 //新增一级类别数据
                 addOneClassify(classify, time, updates);
             }
-//            if(!EmptyUtils.isEmpty(updates)){
-//                //批量更新分类层级结构
-//                cereProductClassifyDAO.updateBatchLevelHierarchy(updates);
-//            }
+            if (!EmptyUtils.isEmpty(updates)) {
+                //批量更新分类层级结构
+                cereProductClassifyDAO.updateBatchLevelHierarchy(updates);
+            }
         }
         //新增日志
         cerePlatformLogService.addLog(user, "商品类别", "平台端操作", "添加商品类别", null, time);
@@ -79,6 +81,18 @@ public class CereProductClassifyServiceImpl implements CereProductClassifyServic
         cereProductClassify.setLink(classify.getLink());
         cereProductClassify.setClassifyHierarchy("-" + classify.getCategoryName());
         cereProductClassify.setDescription(classify.getDescription());
+
+        if (classify.getSort() != null) {
+            cereProductClassify.setSort(classify.getSort());
+        } else {
+            List<ProductClassify> clist = cereProductClassifyDAO.findByPid(0L);
+            System.out.println(clist);
+            int sortNum = clist.stream()
+                    .mapToInt(ProductClassify::getSort)
+                    .max()
+                    .orElse(0);
+            cereProductClassify.setSort(sortNum + 10);
+        }
 
         if (!EmptyUtils.isEmpty(classify.getId())) {
             //更新一级类别
@@ -117,6 +131,17 @@ public class CereProductClassifyServiceImpl implements CereProductClassifyServic
         productClassify.setClassifyImage(child.getCategoryImg());
         productClassify.setClassifyHierarchy(parent.getClassifyHierarchy() + "-" + child.getCategoryName());
         productClassify.setDescription(child.getDescription());
+
+        if (child.getSort() != null) {
+            productClassify.setSort(child.getSort());
+        } else {
+            List<ProductClassify> clist = cereProductClassifyDAO.findByPid(parent.getClassifyId());
+            int sortNum = clist.stream()
+                    .mapToInt(ProductClassify::getSort)
+                    .max()
+                    .orElse(0);
+            productClassify.setSort(sortNum + 10);
+        }
 
         if (!EmptyUtils.isEmpty(child.getId())) {
             //更新子级类别
@@ -163,6 +188,7 @@ public class CereProductClassifyServiceImpl implements CereProductClassifyServic
                     parentClassify.setCategoryImg(pClassify.getClassifyImage());
                     parentClassify.setLink(pClassify.getLink());
                     parentClassify.setDescription(pClassify.getDescription());
+                    parentClassify.setSort(pClassify.getSort());
                     // 实际上能够进入这个代码片段的param.getClassifies()的长度为一，只有一个顶级分类
                     parentClassify.setChilds(param.getClassifies());
                     addOneClassify(parentClassify, time, updates);
@@ -198,6 +224,7 @@ public class CereProductClassifyServiceImpl implements CereProductClassifyServic
             result.setLink(classify.getLink());
             result.setDepth(classify.getClassifyLevel());
             result.setDescription(classify.getDescription());
+            result.setSort(classify.getSort());
             result.setCategoryImg(classify.getClassifyImage());
             List<Image> images = new ArrayList<>();
             Image image = new Image();

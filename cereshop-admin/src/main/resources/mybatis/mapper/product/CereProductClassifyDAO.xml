@@ -220,7 +220,8 @@
     <select id="findByPid" parameterType="java.lang.Object"
             resultType="com.shop.cereshop.admin.page.product.ProductClassify">
         SELECT classify_id id,classify_name categoryName,classify_image categoryImg
-        ,link,classify_level depth FROM cere_product_classify_copy where classify_pid=#{classifyId}
+        ,link,classify_level depth, sort, description
+        FROM cere_product_classify_copy where classify_pid=#{classifyId}
     </select>
 
     <update id="updateBatchLevelHierarchy" parameterType="java.util.List">

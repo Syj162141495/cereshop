@@ -70,7 +70,6 @@ public class CereCustomerClassifyServiceImpl implements CereCustomerClassifyServ
                 Long pid = cereCustomerClassify.getClassifyPid();
                 //如果不存在父节点，说明它就是顶级节点
                 if (pid == 0) {
-                    System.out.println("!!!!");
                     addOneClassify(classify, time, updates);
                 }
                 //否则，找到父节点，从父节点开始启动
@@ -214,9 +213,6 @@ public class CereCustomerClassifyServiceImpl implements CereCustomerClassifyServ
         cereCustomerClassify.setClassifyLevel(IntegerEnum.CLASSIFY_LEVEL_ONE.getCode());
         cereCustomerClassify.setClassifyHierarchy("-" + classify.getClassifyName());
         cereCustomerClassify.setDescription(classify.getDescription());
-        System.out.println("addOneClassify");
-        System.out.println(classify);
-        System.out.println(classify.getSort());
         if (classify.getSort() != null) {
             cereCustomerClassify.setSort(classify.getSort());
         } else {
@@ -228,8 +224,6 @@ public class CereCustomerClassifyServiceImpl implements CereCustomerClassifyServ
                     .orElse(0);
             cereCustomerClassify.setSort(sortNum + 10);
         }
-        System.out.println(cereCustomerClassify.getSort());
-        System.out.println("----------------");
 
         if (!EmptyUtils.isEmpty(classify.getClassifyId())) {
             //更新一级类别
@@ -266,8 +260,7 @@ public class CereCustomerClassifyServiceImpl implements CereCustomerClassifyServ
         cereCustomerClassify.setClassifyLevel(level);
         cereCustomerClassify.setClassifyHierarchy(parent.getClassifyHierarchy() + "-" + child.getClassifyName());
         cereCustomerClassify.setDescription(child.getDescription());
-        System.out.println("addChildClassify");
-        System.out.println(child);
+
         if (child.getSort() != null) {
             cereCustomerClassify.setSort(child.getSort());
         } else {
@@ -278,8 +271,6 @@ public class CereCustomerClassifyServiceImpl implements CereCustomerClassifyServ
                     .orElse(0);
             cereCustomerClassify.setSort(sortNum + 10);
         }
-        System.out.println(cereCustomerClassify.getSort());
-        System.out.println("*******************");
 
         if (!EmptyUtils.isEmpty(child.getClassifyId())) {
             //更新子级类别
