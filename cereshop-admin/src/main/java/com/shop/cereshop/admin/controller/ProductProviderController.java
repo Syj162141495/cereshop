@@ -124,4 +124,11 @@ public class ProductProviderController {
         List<ProductProviderClassify> classifys = cereProductProviderClassifyService.getByPid(param.getClassifyId());
         return new Result(classifys);
     }
+
+    @RequestMapping(value = "getClassify", method = RequestMethod.POST)
+    @ApiOperation(value = "查询分类层级")
+    public Result<ProductProviderClassify> getClassify() throws CoBusinessException {
+        List<ProductProviderClassify> list = cereProductProviderClassifyService.getClassify();
+        return new Result(list);
+    }
 }

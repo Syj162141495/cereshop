@@ -16,7 +16,7 @@ import java.util.List;
  * 服务商类别返回数据实体类
  */
 @Data
-@ApiModel(value = "CustomerClassify", description = "服务商类别返回数据实体类")
+@ApiModel(value = "ProductProviderClassify", description = "服务商类别返回数据实体类")
 public class ProductProviderClassify {
 
     /**

@@ -39,4 +39,8 @@ public interface CereCustomerClassifyDAO extends BaseMapper<CereCustomerClassify
     void updateBatchLevelHierarchy(@Param("list") List<CereCustomerClassify> list);
 
     void deleteByIds(@Param("ids") List<Long> ids);
+
+    List<CustomerClassify> findAll();
+
+    List<CustomerClassify> findChildren();
 }

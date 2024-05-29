@@ -22,4 +22,6 @@ public interface CereCustomerClassifyService {
     CustomerClassify getById(Long classifyId) throws CoBusinessException;
 
     List<CustomerClassify> getByPid(Long classifyPID) throws CoBusinessException;
+
+    List<CustomerClassify> getClassify() throws CoBusinessException;
 }

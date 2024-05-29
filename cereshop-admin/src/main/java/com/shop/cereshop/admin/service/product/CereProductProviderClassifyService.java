@@ -5,6 +5,7 @@
  */
 package com.shop.cereshop.admin.service.product;
 
+import com.shop.cereshop.admin.page.product.CustomerClassify;
 import com.shop.cereshop.admin.page.product.ProductProviderClassify;
 import com.shop.cereshop.admin.param.product.ClassDeleteParam;
 import com.shop.cereshop.admin.param.product.ProductProviderClassifyParam;
@@ -23,4 +24,6 @@ public interface CereProductProviderClassifyService {
     ProductProviderClassify getById(Long classifyId) throws CoBusinessException;
 
     List<ProductProviderClassify> getByPid(Long classifyPID) throws CoBusinessException;
+
+    List<ProductProviderClassify> getClassify() throws CoBusinessException;
 }

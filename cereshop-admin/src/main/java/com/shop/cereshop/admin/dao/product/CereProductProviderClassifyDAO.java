@@ -6,6 +6,7 @@
 package com.shop.cereshop.admin.dao.product;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.shop.cereshop.admin.page.product.CustomerClassify;
 import com.shop.cereshop.admin.page.product.ProductProviderClassify;
 import com.shop.cereshop.commons.domain.product.CereProductProviderClassify;
 import com.shop.cereshop.commons.domain.product.CereShopProduct;
@@ -38,4 +39,8 @@ public interface CereProductProviderClassifyDAO extends BaseMapper<CereProductPr
     void updateBatchLevelHierarchy(@Param("list") List<CereProductProviderClassify> list);
 
     void deleteByIds(@Param("ids") List<Long> ids);
+
+    List<ProductProviderClassify> findAll();
+
+    List<ProductProviderClassify> findChildren();
 }

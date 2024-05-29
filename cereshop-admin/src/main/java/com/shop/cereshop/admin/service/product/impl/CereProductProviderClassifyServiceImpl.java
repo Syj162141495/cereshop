@@ -7,6 +7,7 @@ package com.shop.cereshop.admin.service.product.impl;
 
 import com.shop.cereshop.admin.dao.product.CereProductProviderClassifyDAO;
 import com.shop.cereshop.admin.page.product.ProductProviderClassify;
+import com.shop.cereshop.admin.page.product.ProductProviderClassify;
 import com.shop.cereshop.admin.param.product.ClassDeleteParam;
 import com.shop.cereshop.admin.param.product.ProductProviderClassifyParam;
 import com.shop.cereshop.admin.service.log.CerePlatformLogService;
@@ -27,7 +28,9 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class CereProductProviderClassifyServiceImpl implements CereProductProviderClassifyService {
@@ -200,6 +203,21 @@ public class CereProductProviderClassifyServiceImpl implements CereProductProvid
         return cereProductProviderClassifyDAO.findByPid(classifyPID);
     }
 
+    @Override
+    public List<ProductProviderClassify> getClassify() throws CoBusinessException {
+        //查询所有一级类目
+        List<ProductProviderClassify> list = cereProductProviderClassifyDAO.findAll();
+        //查询所有子节点类目
+        List<ProductProviderClassify> children = cereProductProviderClassifyDAO.findChildren();
+        if (!EmptyUtils.isEmpty(list)) {
+            Map<String, Integer> map = new HashMap<>();
+            list.forEach((classify -> {
+                setChildrenIndex(classify, children, map);
+            }));
+        }
+        return list;
+    }
+
     private void addOneClassify(ProductProviderClassify classify, String time, List<CereProductProviderClassify> updates) throws CoBusinessException {
         if (EmptyUtils.isEmpty(classify.getClassifyName())) {
             throw new CoBusinessException(CoReturnFormat.CLASSIFY_NAME_NULL);
@@ -237,9 +255,9 @@ public class CereProductProviderClassifyServiceImpl implements CereProductProvid
         }
         if (!EmptyUtils.isEmpty(classify.getChildren())) {
             //新增子级类别
-            for (ProductProviderClassify customerClassify : classify.getChildren()) {
+            for (ProductProviderClassify ProductProviderClassify : classify.getChildren()) {
                 addChildClassify(cereCustomerClassify,
-                        updates, time, customerClassify, IntegerEnum.CLASSIFY_LEVEL_TWO.getCode());
+                        updates, time, ProductProviderClassify, IntegerEnum.CLASSIFY_LEVEL_TWO.getCode());
             }
         }
     }
@@ -293,5 +311,42 @@ public class CereProductProviderClassifyServiceImpl implements CereProductProvid
             }
         }
     }
-}
 
+    private ProductProviderClassify setChildrenIndex(ProductProviderClassify parent, List<ProductProviderClassify> all, Map<String, Integer> map) throws ArrayIndexOutOfBoundsException {
+        if (!parent.getClassifyPid().equals(0L)) {
+            //回调进来的,设置回调执行次数+1
+            map.put("callback", map.get("callback") + 1);
+        } else {
+            //如果是根节点进来,初始化回调执行次数
+            map.put("callback", 0);
+        }
+        List<ProductProviderClassify> children = new ArrayList<>();
+        if (!EmptyUtils.isEmpty(all)) {
+            for (int i = 0; i < all.size(); i++) {
+                if (!all.isEmpty()) {
+                    if (i < 0) {
+                        i = 0;
+                    }
+                    ProductProviderClassify classify = all.get(i);
+                    //设置按钮菜单权限
+                    if (parent.getClassifyId().equals(classify.getClassifyPid())) {
+                        all.remove(i);
+                        i--;
+                        //执行回调
+                        ProductProviderClassify itemPermission = setChildrenIndex(classify, all, map);
+                        children.add(itemPermission);
+                        //判断当前是否回到最高级菜单节点
+                        if (parent.getClassifyPid().equals(0L)) {
+                            //如果是,计算索引值=当前索引值-（回调执行次数-1）
+                            i = i - (map.get("callback") - 1);
+                            //初始化回调执行次数
+                            map.put("callback", 0);
+                        }
+                    }
+                }
+            }
+            parent.setChildren(children);
+        }
+        return parent;
+    }
+}

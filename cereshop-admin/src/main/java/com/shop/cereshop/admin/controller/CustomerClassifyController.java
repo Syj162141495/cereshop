@@ -11,6 +11,7 @@ import com.shop.cereshop.admin.annotation.NoRepeatWebLog;
 import com.shop.cereshop.admin.page.product.CustomerClassify;
 import com.shop.cereshop.admin.param.product.*;
 import com.shop.cereshop.admin.service.product.CereCustomerClassifyService;
+import com.shop.cereshop.commons.domain.product.Classify;
 import com.shop.cereshop.commons.domain.user.CerePlatformUser;
 import com.shop.cereshop.commons.exception.CoBusinessException;
 import com.shop.cereshop.commons.result.Result;
@@ -120,5 +121,12 @@ public class CustomerClassifyController {
     public Result<List<CustomerClassify>> getByPid(@RequestBody ClassGetByIdParam param) throws CoBusinessException{
         List<CustomerClassify> classifys = cereCustomerClassifyService.getByPid(param.getClassifyId());
         return new Result(classifys);
+    }
+
+    @RequestMapping(value = "getClassify", method = RequestMethod.POST)
+    @ApiOperation(value = "查询分类层级")
+    public Result<CustomerClassify> getClassify() throws CoBusinessException {
+        List<CustomerClassify> list = cereCustomerClassifyService.getClassify();
+        return new Result(list);
     }
 }

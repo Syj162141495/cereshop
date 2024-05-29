@@ -15,6 +15,7 @@ import com.shop.cereshop.commons.constant.IntegerEnum;
 import com.shop.cereshop.commons.constant.LongEnum;
 import com.shop.cereshop.commons.domain.product.CereCustomerClassify;
 import com.shop.cereshop.commons.domain.product.CereShopProduct;
+import com.shop.cereshop.commons.domain.product.Classify;
 import com.shop.cereshop.commons.domain.user.CerePlatformUser;
 import com.shop.cereshop.commons.exception.CoBusinessException;
 import com.shop.cereshop.commons.utils.EmptyUtils;
@@ -26,7 +27,9 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class CereCustomerClassifyServiceImpl implements CereCustomerClassifyService {
@@ -201,6 +204,21 @@ public class CereCustomerClassifyServiceImpl implements CereCustomerClassifyServ
         return cereCustomerClassifyDAO.findByPid(classifyPID);
     }
 
+    @Override
+    public List<CustomerClassify> getClassify() throws CoBusinessException {
+        //查询所有一级类目
+        List<CustomerClassify> list = cereCustomerClassifyDAO.findAll();
+        //查询所有子节点类目
+        List<CustomerClassify> children = cereCustomerClassifyDAO.findChildren();
+        if (!EmptyUtils.isEmpty(list)) {
+            Map<String, Integer> map = new HashMap<>();
+            list.forEach((classify -> {
+                setChildrenIndex(classify, children, map);
+            }));
+        }
+        return list;
+    }
+
     private void addOneClassify(CustomerClassify classify, String time, List<CereCustomerClassify> updates) throws CoBusinessException {
         if (EmptyUtils.isEmpty(classify.getClassifyName())) {
             throw new CoBusinessException(CoReturnFormat.CLASSIFY_NAME_NULL);
@@ -292,6 +310,44 @@ public class CereCustomerClassifyServiceImpl implements CereCustomerClassifyServ
                 addChildClassify(cereCustomerClassify, updates, time, classify, IntegerEnum.CLASSIFY_LEVEL_THREE.getCode());
             }
         }
+    }
+
+    private CustomerClassify setChildrenIndex(CustomerClassify parent, List<CustomerClassify> all, Map<String, Integer> map) throws ArrayIndexOutOfBoundsException {
+        if (!parent.getClassifyPid().equals(0L)) {
+            //回调进来的,设置回调执行次数+1
+            map.put("callback", map.get("callback") + 1);
+        } else {
+            //如果是根节点进来,初始化回调执行次数
+            map.put("callback", 0);
+        }
+        List<CustomerClassify> children = new ArrayList<>();
+        if (!EmptyUtils.isEmpty(all)) {
+            for (int i = 0; i < all.size(); i++) {
+                if (!all.isEmpty()) {
+                    if (i < 0) {
+                        i = 0;
+                    }
+                    CustomerClassify classify = all.get(i);
+                    //设置按钮菜单权限
+                    if (parent.getClassifyId().equals(classify.getClassifyPid())) {
+                        all.remove(i);
+                        i--;
+                        //执行回调
+                        CustomerClassify itemPermission = setChildrenIndex(classify, all, map);
+                        children.add(itemPermission);
+                        //判断当前是否回到最高级菜单节点
+                        if (parent.getClassifyPid().equals(0L)) {
+                            //如果是,计算索引值=当前索引值-（回调执行次数-1）
+                            i = i - (map.get("callback") - 1);
+                            //初始化回调执行次数
+                            map.put("callback", 0);
+                        }
+                    }
+                }
+            }
+            parent.setChildren(children);
+        }
+        return parent;
     }
 }
 

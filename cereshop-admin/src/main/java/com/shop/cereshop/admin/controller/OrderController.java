@@ -26,9 +26,6 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("order")
-/**
- * 注解方式生成日志对象，指定topic生成对象类名
- */
 @Slf4j(topic = "OrderController")
 @Api(value = "订单管理", tags = "订单管理")
 public class OrderController {
