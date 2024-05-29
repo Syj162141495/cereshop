@@ -216,13 +216,13 @@
         )
     </delete>
 
-    <select id="findAll" resultType="com.shop.cereshop.commons.domain.product.ProductProviderClassify">
+    <select id="findAll" resultType="com.shop.cereshop.admin.page.product.ProductProviderClassify">
         SELECT classify_id, classify_pid, classify_name, classify_level, sort
         FROM cere_product_provider_classify
         where classify_level = 1
     </select>
 
-    <select id="findChildren" resultType="com.shop.cereshop.commons.domain.product.ProductProviderClassify">
+    <select id="findChildren" resultType="com.shop.cereshop.admin.page.product.ProductProviderClassify">
         SELECT classify_id, classify_pid, classify_name, classify_level, sort
         FROM cere_product_provider_classify
         where classify_level<![CDATA[!= ]]>1
