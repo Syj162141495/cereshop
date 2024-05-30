@@ -5,10 +5,11 @@
  */
 package com.shop.cereshop.admin.service.product;
 
-import com.shop.cereshop.admin.page.product.CustomerClassify;
 import com.shop.cereshop.admin.page.product.ProductProviderClassify;
 import com.shop.cereshop.admin.param.product.ClassDeleteParam;
 import com.shop.cereshop.admin.param.product.ProductProviderClassifyParam;
+import com.shop.cereshop.commons.domain.product.CereProductClassify;
+import com.shop.cereshop.commons.domain.product.Classify;
 import com.shop.cereshop.commons.domain.user.CerePlatformUser;
 import com.shop.cereshop.commons.exception.CoBusinessException;
 
@@ -25,5 +26,7 @@ public interface CereProductProviderClassifyService {
 
     List<ProductProviderClassify> getByPid(Long classifyPID) throws CoBusinessException;
 
-    List<ProductProviderClassify> getClassify() throws CoBusinessException;
+    List<Classify> getClassify() throws CoBusinessException;
+
+    List<CereProductClassify> selectAll();
 }

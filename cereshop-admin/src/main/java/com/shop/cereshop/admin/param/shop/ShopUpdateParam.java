@@ -76,6 +76,9 @@ public class ShopUpdateParam {
     @ApiModelProperty(value = "服务商大类")
     private String providersMajor;
 
+    @ApiModelProperty(value = "关联分类id")
+    private Long classifyId;
+
     @ApiModelProperty(value = "服务商小类")
     private String providersSubclass;
 

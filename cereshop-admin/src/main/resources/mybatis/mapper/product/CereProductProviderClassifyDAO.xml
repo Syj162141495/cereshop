@@ -187,6 +187,20 @@
         where classify_pid = #{classifyId}
     </select>
 
+    <select id="selectAll" resultType="com.shop.cereshop.commons.domain.product.CereProductClassify">
+        SELECT classify_id,classify_hierarchy FROM cere_product_provider_classify
+    </select>
+
+    <select id="findAll" resultType="com.shop.cereshop.commons.domain.product.Classify">
+        SELECT classify_id id,classify_pid parentId,classify_name categoryName,classify_level depth
+        FROM cere_product_provider_classify where classify_level=1
+    </select>
+
+    <select id="findChilds" resultType="com.shop.cereshop.commons.domain.product.Classify">
+        SELECT classify_id id,classify_pid parentId,classify_name categoryName,classify_level depth
+        FROM cere_product_provider_classify where classify_level<![CDATA[!= ]]>1
+    </select>
+
     <update id="updateBatchLevelHierarchy" parameterType="java.util.List">
         update cere_product_provider_classify
         <trim prefix="set" suffixOverrides=",">

@@ -6,10 +6,11 @@
 package com.shop.cereshop.admin.dao.product;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.shop.cereshop.admin.page.product.CustomerClassify;
 import com.shop.cereshop.admin.page.product.ProductProviderClassify;
+import com.shop.cereshop.commons.domain.product.CereProductClassify;
 import com.shop.cereshop.commons.domain.product.CereProductProviderClassify;
 import com.shop.cereshop.commons.domain.product.CereShopProduct;
+import com.shop.cereshop.commons.domain.product.Classify;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -40,7 +41,9 @@ public interface CereProductProviderClassifyDAO extends BaseMapper<CereProductPr
 
     void deleteByIds(@Param("ids") List<Long> ids);
 
-    List<ProductProviderClassify> findAll();
+    List<Classify> findAll();
 
-    List<ProductProviderClassify> findChildren();
+    List<Classify> findChilds();
+
+    List<CereProductClassify> selectAll();
 }

@@ -125,10 +125,10 @@ public class ProductProviderController {
         return new Result(classifys);
     }
 
-    @RequestMapping(value = "getClassify", method = RequestMethod.POST)
+    @RequestMapping(value = "getClassify",method = RequestMethod.POST)
     @ApiOperation(value = "查询分类层级")
-    public Result<ProductProviderClassify> getClassify() throws CoBusinessException {
-        List<ProductProviderClassify> list = cereProductProviderClassifyService.getClassify();
+    public Result<Classify> getClassify() throws CoBusinessException{
+        List<Classify> list=cereProductProviderClassifyService.getClassify();
         return new Result(list);
     }
 }

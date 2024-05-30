@@ -85,7 +85,7 @@ public class CerePlatformShopServiceImpl implements CerePlatformShopService {
         cerePlatformShop.setProvidersMajor(param.getProvidersMajor());
         cerePlatformShop.setProvidersSubclass(param.getProvidersSubclass());
         cerePlatformShop.setMedicalcollaboration(param.getMedicalcollaboration());
-//        cerePlatformShop.setServiceClassify(param.getServiceClassify());
+        cerePlatformShop.setServiceClassify(param.getServiceClassify());
         cerePlatformShop.setCoordinateX(param.getCoordinateX());
         cerePlatformShop.setCoordinateY(param.getCoordinateY());
         cerePlatformShop.setReditCode(param.getReditCode());
@@ -166,6 +166,7 @@ public class CerePlatformShopServiceImpl implements CerePlatformShopService {
         cerePlatformShop.setServiceClassify(param.getServiceClassify());
         cerePlatformShop.setProvidersMajor(param.getProvidersMajor());
         cerePlatformShop.setProvidersSubclass(param.getProvidersSubclass());
+        cerePlatformShop.setClassifyId(param.getClassifyId());
         cerePlatformShop.setMedicalcollaboration(param.getMedicalcollaboration());
         cerePlatformShop.setCoordinateX(param.getCoordinateX());
         cerePlatformShop.setCoordinateY(param.getCoordinateY());

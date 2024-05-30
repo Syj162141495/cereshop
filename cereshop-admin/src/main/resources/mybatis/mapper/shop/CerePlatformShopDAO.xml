@@ -15,6 +15,7 @@
     <result column="city" jdbcType="VARCHAR" property="city" />
     <result column="area" jdbcType="VARCHAR" property="area" />
     <result column="service_classify" jdbcType="VARCHAR" property="serviceClassify" />
+    <result column="medical_collaboration" jdbcType="VARCHAR" property="medicalcollaboration" />
     <result column="coordinate_x" jdbcType="VARCHAR" property="coordinateX" />
     <result column="coordinate_y" jdbcType="VARCHAR" property="coordinateY" />
     <result column="institutional_classify" jdbcType="VARCHAR" property="institutionalClassify" />
@@ -57,16 +58,17 @@
                                     shop_phone, shop_password, charge_person_name,
                                     charge_person_phone, shop_adress, effective_date,
                                     effective_year, contract_state, authentication_state,
-                                    check_state, `state`,authen_type, create_time, update_time, redit_code, introduction,
-                                    address, city, area, coordinate_x, coordinate_y, institutional_classify, institutional_grade, classify_id)
+                                    check_state, `state`,authen_type, create_time, update_time, redit_code, introduction, service_classify, providers_major, providers_subclass,
+                                    address, city, area, coordinate_x, coordinate_y, institutional_classify, institutional_grade, classify_id, medical_collaboration)
     values (#{shopCode,jdbcType=VARCHAR}, #{shopName,jdbcType=VARCHAR}, #{shopBrief,jdbcType=VARCHAR},
             #{shopPhone,jdbcType=VARCHAR}, #{shopPassword,jdbcType=VARCHAR}, #{chargePersonName,jdbcType=VARCHAR},
             #{chargePersonPhone,jdbcType=VARCHAR}, #{shopAdress,jdbcType=VARCHAR}, #{effectiveDate,jdbcType=VARCHAR},
             #{effectiveYear,jdbcType=INTEGER}, #{contractState,jdbcType=BIT}, #{authenticationState,jdbcType=BIT},
             #{checkState,jdbcType=BIT}, #{state,jdbcType=BIT},#{authenType,jdbcType=BIT}, #{createTime,jdbcType=VARCHAR},
-            #{updateTime,jdbcType=VARCHAR}, #{reditCode, jdbcType=VARCHAR}, #{introduction, jdbcType=VARCHAR}, #{address, jdbcType=VARCHAR},
+            #{updateTime,jdbcType=VARCHAR}, #{reditCode, jdbcType=VARCHAR}, #{introduction, jdbcType=VARCHAR},
+            #{serviceClassify, jdbcType=VARCHAR}, #{providersMajor, jdbcType=VARCHAR}, #{providersSubclass, jdbcType=VARCHAR}, #{address, jdbcType=VARCHAR},
             #{city, jdbcType=VARCHAR}, #{area, jdbcType=VARCHAR}, #{coordinateX, jdbcType=DOUBLE},
-            #{coordinateY, jdbcType=DOUBLE}, #{institutionalClassify, jdbcType=VARCHAR}, #{institutionalGrade, jdbcType=VARCHAR}, #{classifyId, jdbcType=BIGINT})
+            #{coordinateY, jdbcType=DOUBLE}, #{institutionalClassify, jdbcType=VARCHAR}, #{institutionalGrade, jdbcType=VARCHAR}, #{classifyId, jdbcType=BIGINT}, #{medicalcollaboration, jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" keyColumn="shop_id" keyProperty="shopId" parameterType="com.shop.cereshop.commons.domain.shop.CerePlatformShop" useGeneratedKeys="true">
     insert into cere_platform_shop
@@ -255,11 +257,23 @@
       <if test="coordinateY != null and coordinateY!=''">
         coordinate_y = #{coordinateY, jdbcType=DOUBLE},
       </if>
+      <if test="classifyId != null and classifyId!=''">
+        classify_id = #{classifyId, jdbcType=BIGINT},
+      </if>
       <if test="institutionalClassify != null and institutionalClassify!=''">
         institutional_classify = #{institutionalClassify, jdbcType=VARCHAR},
       </if>
       <if test="institutionalGrade != null and institutionalGrade!=''">
-        institutional_grade = #{institutionalGrade, jdbcType=VARCHAR}
+        institutional_grade = #{institutionalGrade, jdbcType=VARCHAR},
+      </if>
+      <if test="providersMajor != null and providersMajor!=''">
+        providers_major = #{providersMajor, jdbcType=VARCHAR},
+      </if>
+      <if test="providersSubclass != null and providersSubclass!=''">
+        providers_subclass = #{providersSubclass, jdbcType=VARCHAR},
+      </if>
+      <if test="medicalcollaboration != null and medicalcollaboration!=''">
+        medical_collaboration = #{medicalcollaboration, jdbcType=VARCHAR}
       </if>
     </set>
     where shop_id = #{shopId,jdbcType=BIGINT}
@@ -321,8 +335,8 @@
 
   <select id="getById" parameterType="java.lang.Object" resultType="com.shop.cereshop.admin.page.shop.ShopGetAll">
     SELECT a.shop_id, a.shop_code, a.shop_name, a.shop_brief, a.shop_phone, a.shop_password, a.charge_person_name,
-           a.charge_person_phone, a.shop_adress, a.effective_date, a.effective_year, a.contract_state,
-           a.authentication_state, a.check_state, a.`state`, a.authen_type, a.create_time, a.update_time,
+           a.charge_person_phone, a.shop_adress, a.effective_date, a.effective_year, a.contract_state, a.classify_id,
+           a.authentication_state, a.check_state, a.`state`, a.authen_type, a.create_time, a.update_time, a.medical_collaboration,
            b.business_user_id, a.redit_code, a.introduction, a.address, a.city, a.area, a.service_classify,
            a.coordinate_x, a.coordinate_y, a.institutional_classify, a.institutional_grade
     FROM cere_platform_shop a,
