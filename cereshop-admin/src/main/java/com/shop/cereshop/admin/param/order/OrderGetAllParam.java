@@ -50,13 +50,6 @@ public class OrderGetAllParam extends PageParam {
     @ApiModelProperty(value = "下单时间数组")
     private List<String> dates;
 
-    public void setDates(List<String> dates) {
-        if(!EmptyUtils.isEmpty(dates)&&dates.size()>1){
-            this.startTime=dates.get(0);
-            this.endTime=dates.get(1);
-        }
-    }
-
     /**
      * 发送开始时间
      */
@@ -68,4 +61,17 @@ public class OrderGetAllParam extends PageParam {
      */
     @ApiModelProperty(value = "发送结束时间")
     private String endTime;
+
+    /**
+     * 检索类型：medical医疗；rehabilitation康复；elderlyCare养老
+     */
+    @ApiModelProperty(value = "检索类型")
+    private String queryType;
+
+    public void setDates(List<String> dates) {
+        if(!EmptyUtils.isEmpty(dates)&&dates.size()>1){
+            this.startTime=dates.get(0);
+            this.endTime=dates.get(1);
+        }
+    }
 }

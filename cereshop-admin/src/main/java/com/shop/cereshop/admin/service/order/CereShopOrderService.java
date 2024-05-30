@@ -8,6 +8,7 @@ package com.shop.cereshop.admin.service.order;
 import com.shop.cereshop.admin.page.order.ShopOrder;
 import com.shop.cereshop.admin.param.notice.NoticeGetAllParam;
 import com.shop.cereshop.admin.param.order.OrderGetAllParam;
+import com.shop.cereshop.admin.param.order.OrderGetByIdParam;
 import com.shop.cereshop.commons.domain.common.Page;
 import com.shop.cereshop.commons.domain.order.CereShopOrder;
 import com.shop.cereshop.commons.domain.product.CereProductSku;
@@ -26,9 +27,5 @@ public interface CereShopOrderService {
 
     Page getAll(OrderGetAllParam param) throws CoBusinessException;
 
-    ShopOrder getById(Long orderId) throws CoBusinessException;
-
-//    Page getAllMedicalService(OrderGetAllParam param) throws CoBusinessException;
-//
-//    ShopOrder getByIdMedicalService(Long orderId) throws CoBusinessException;
+    ShopOrder getById(OrderGetByIdParam param) throws CoBusinessException;
 }

@@ -21,4 +21,10 @@ public class OrderGetByIdParam {
      */
     @ApiModelProperty(value = "订单id")
     private Long orderId;
+
+    /**
+     * 检索类型：medical医疗；rehabilitation康复；elderlyCare养老
+     */
+    @ApiModelProperty(value = "检索类型")
+    private String queryType;
 }
