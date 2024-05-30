@@ -15,10 +15,16 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import javax.servlet.http.HttpServletResponse;
+import java.io.FileInputStream;
+import java.io.OutputStream;
+import java.nio.file.Paths;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 /**
  * 文件上传
@@ -34,6 +40,9 @@ public class UploadController {
 
     @Autowired
     private FileStrategy fileStrategy;
+
+    @Value("${upload.storage-path}")
+    private String storagePath;
 
     /**
      * 文件上传
@@ -54,5 +63,41 @@ public class UploadController {
             result=new Result(new Url(url));
         }
         return result;
+    }
+
+    /**
+     * 文件下载
+     */
+    @RequestMapping(value = "file/{year}/{month}/{fileName}",method = RequestMethod.GET)
+    @ApiOperation(value = "文件上传")
+    public void file(@PathVariable(name = "year") String year,
+                     @PathVariable(name = "month") String month,
+                     @PathVariable(name = "fileName") String fileName,
+                     HttpServletResponse response) throws Exception{
+        // web服务器存放的绝对路径
+        String absolutePath = Paths.get(storagePath, "file", year, month, fileName).toString();
+        try {
+            FileInputStream inputStream = new FileInputStream(absolutePath);
+            byte[] data = new byte[inputStream.available()];
+            inputStream.read(data);
+            String diskfilename = "final.avi";
+            response.setContentType("video/avi");
+            response.setHeader("Content-Disposition", "attachment; filename=\"" + diskfilename + "\"");
+            System.out.println("data.length " + data.length);
+            response.setContentLength(data.length);
+            response.setHeader("Content-Range", "" + Integer.valueOf(data.length - 1));
+            response.setHeader("Accept-Ranges", "bytes");
+            response.setHeader("Etag", "W/\"9767057-1323779115364\"");
+            OutputStream os = response.getOutputStream();
+
+            os.write(data);
+            //先声明的流后关掉！
+            os.flush();
+            os.close();
+            inputStream.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
