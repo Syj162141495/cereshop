@@ -45,91 +45,101 @@ public class ClassifyController {
 
     /**
      * 添加商品类别
+     *
      * @param param
      * @return
      */
-    @RequestMapping(value = "add",method = RequestMethod.POST)
+    @RequestMapping(value = "add", method = RequestMethod.POST)
     @NoRepeatSubmit
     @ApiOperation(value = "添加商品类别")
     @NoRepeatWebLog
-    public Result add(@RequestBody @Validated ClassifyLevelParam param, HttpServletRequest request) throws CoBusinessException{
+    public Result add(@RequestBody @Validated ClassifyLevelParam param, HttpServletRequest request) throws CoBusinessException {
         //获取当前登录账户
         CerePlatformUser user = (CerePlatformUser) request.getAttribute("user");
-        cereProductClassifyService.add(param,user);
-        return new Result(user.getUsername(),"添加商品类别", GsonUtil.objectToGson(param));
+        cereProductClassifyService.add(param, user);
+        return new Result(user.getUsername(), "添加商品类别", GsonUtil.objectToGson(param));
     }
 
     /**
      * 修改商品类别
+     *
      * @param param
      * @return
      */
-    @RequestMapping(value = "update",method = RequestMethod.POST)
+    @RequestMapping(value = "update", method = RequestMethod.POST)
     @NoRepeatSubmit
     @ApiOperation(value = "修改商品类别")
     @NoRepeatWebLog
-    public Result update(@RequestBody ClassifyLevelParam param, HttpServletRequest request) throws CoBusinessException{
+    public Result update(@RequestBody ClassifyLevelParam param, HttpServletRequest request) throws CoBusinessException {
         //获取当前登录账户
         CerePlatformUser user = (CerePlatformUser) request.getAttribute("user");
-        cereProductClassifyService.update(param,user);
-        return new Result(user.getUsername(),"修改商品类别", GsonUtil.objectToGson(param));
+        cereProductClassifyService.update(param, user);
+        return new Result(user.getUsername(), "修改商品类别", GsonUtil.objectToGson(param));
     }
 
     /**
      * 删除商品类别
+     *
      * @param param
      * @return
      */
-    @RequestMapping(value = "delete",method = RequestMethod.POST)
+    @RequestMapping(value = "delete", method = RequestMethod.POST)
     @NoRepeatSubmit
     @ApiOperation(value = "删除商品类别")
     @NoRepeatWebLog
-    public Result delete(@RequestBody ClassifyDeleteParam param, HttpServletRequest request) throws CoBusinessException{
+    public Result delete(@RequestBody ClassifyDeleteParam param, HttpServletRequest request) throws CoBusinessException {
         //获取当前登录账户
         CerePlatformUser user = (CerePlatformUser) request.getAttribute("user");
-        cereProductClassifyService.delete(param,user);
-        return new Result(user.getUsername(),"删除商品类别", GsonUtil.objectToGson(param));
+        cereProductClassifyService.delete(param, user);
+        return new Result(user.getUsername(), "删除商品类别", GsonUtil.objectToGson(param));
     }
 
     /**
      * 商品类别编辑查询
+     *
      * @param param
      * @return
      */
-    @RequestMapping(value = "getById",method = RequestMethod.POST)
+    @RequestMapping(value = "getById", method = RequestMethod.POST)
     @ApiOperation(value = "商品类别编辑查询")
-    public Result<ProductClassify> getById(@RequestBody ClassifyGetByIdParam param) throws CoBusinessException{
-        ProductClassify classify=cereProductClassifyService.getById(param.getOneClassifyId());
+    public Result<ProductClassify> getById(@RequestBody ClassifyGetByIdParam param) throws CoBusinessException {
+        ProductClassify classify = cereProductClassifyService.getById(param.getOneClassifyId());
         return new Result(classify);
     }
 
     /**
-     * 商品类别管理查询
+     * 商品类别编辑查询
+     *
+     * @param param
      * @return
      */
-    @RequestMapping(value = "getAll",method = RequestMethod.POST)
+    @RequestMapping(value = "getByPid", method = RequestMethod.POST)
+    @ApiOperation(value = "商品类别编辑查询")
+    public Result<List<CereProductClassify>> getByPid(@RequestBody ClassifyGetByIdParam param) throws CoBusinessException {
+        List<CereProductClassify> classify = cereProductClassifyService.getByPid(param.getOneClassifyId());
+        return new Result(classify);
+    }
+
+
+    /**
+     * 商品类别管理查询
+     *
+     * @return
+     */
+    @RequestMapping(value = "getAll", method = RequestMethod.POST)
     @ApiOperation(value = "商品类别管理查询")
-    public Result<Page<CereProductClassify>> getAll(@RequestBody ClassifyGetAllParam param) throws CoBusinessException{
-        Page page=cereProductClassifyService.getAll(param);
+    public Result<Page<CereProductClassify>> getAll(@RequestBody ClassifyGetAllParam param) throws CoBusinessException {
+        Page page = cereProductClassifyService.getAll(param);
         return new Result(page);
     }
 
-    /**
-     * 商品分类层级查询
-     * @return
-     */
-    @RequestMapping(value = "getByClassifyLevel",method = RequestMethod.POST)
-    @ApiOperation(value = "商品分类层级查询")
-    public Result<List<CereProductClassify>> getByClassifyLevel(@RequestBody ClassifyGetByClassifyLevelParam param) throws CoBusinessException {
-        List<CereProductClassify> list= cereProductClassifyService.getByClassifyLevel(param);
-        return new Result(list);
-    }
 
     /**
      * 查询分类层级
+     *
      * @return
      */
-    @RequestMapping(value = "getClassify",method = RequestMethod.POST)
+    @RequestMapping(value = "getClassify", method = RequestMethod.POST)
     @ApiOperation(value = "查询分类层级")
     public Result<Classify> getClassify() throws CoBusinessException {
         List<Classify> list = cereProductClassifyService.getClassify();

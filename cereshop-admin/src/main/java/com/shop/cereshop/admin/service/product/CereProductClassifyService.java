@@ -22,6 +22,8 @@ public interface CereProductClassifyService {
 
     ProductClassify getById(Long classifyId) throws CoBusinessException;
 
+    List<CereProductClassify> getByPid(Long classifyId) throws CoBusinessException;
+
     Page getAll(ClassifyGetAllParam param) throws CoBusinessException;
 
     List<CereProductClassify>  getByClassifyLevel(ClassifyGetByClassifyLevelParam param) throws CoBusinessException;

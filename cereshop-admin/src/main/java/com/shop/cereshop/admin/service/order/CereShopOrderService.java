@@ -27,4 +27,8 @@ public interface CereShopOrderService {
     Page getAll(OrderGetAllParam param) throws CoBusinessException;
 
     ShopOrder getById(Long orderId) throws CoBusinessException;
+
+//    Page getAllMedicalService(OrderGetAllParam param) throws CoBusinessException;
+//
+//    ShopOrder getByIdMedicalService(Long orderId) throws CoBusinessException;
 }

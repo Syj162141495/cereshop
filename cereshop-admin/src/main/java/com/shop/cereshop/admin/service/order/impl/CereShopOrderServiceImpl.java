@@ -51,24 +51,24 @@ public class CereShopOrderServiceImpl implements CereShopOrderService {
 
     @Override
     public Page getAll(OrderGetAllParam param) throws CoBusinessException {
-        PageHelper.startPage(param.getPage(),param.getPageSize());
-        List<ShopOrder> list=cereShopOrderDAO.getAll(param);
-        PageInfo<ShopOrder> pageInfo=new PageInfo<>(list);
-        Page page=new Page(pageInfo.getList(),pageInfo.getTotal());
+        PageHelper.startPage(param.getPage(), param.getPageSize());
+        List<ShopOrder> list = cereShopOrderDAO.getAll(param);
+        PageInfo<ShopOrder> pageInfo = new PageInfo<>(list);
+        Page page = new Page(pageInfo.getList(), pageInfo.getTotal());
         return page;
     }
 
     @Override
     public ShopOrder getById(Long orderId) throws CoBusinessException {
-        ShopOrder shopOrder=cereShopOrderDAO.getById(orderId);
-        if(shopOrder!=null){
+        ShopOrder shopOrder = cereShopOrderDAO.getById(orderId);
+        if (shopOrder != null) {
             //设置详细地址
-            shopOrder.setReceiveAdress(shopOrder.getReceiveAdress()+" "+shopOrder.getAddress());
+            shopOrder.setReceiveAdress(shopOrder.getReceiveAdress() + " " + shopOrder.getAddress());
             //根据买家账户查询下单总数
             shopOrder.setTotal(cereShopOrderDAO.getOrderTotals(shopOrder.getBuyerUserId()));
             //查询商品信息
-            List<Product> products=cereShopOrderDAO.getProducts(orderId);
-            if(!EmptyUtils.isEmpty(products)){
+            List<Product> products = cereShopOrderDAO.getProducts(orderId);
+            if (!EmptyUtils.isEmpty(products)) {
                 //封装规格属性数据
                 products.forEach(product -> product.setSkuDetails(cereShopOrderDAO.findSkuAttribute(product.getOrderProductId())));
             }
@@ -76,4 +76,32 @@ public class CereShopOrderServiceImpl implements CereShopOrderService {
         }
         return shopOrder;
     }
+
+//    @Override
+//    public  Page getAllMedicalService(OrderGetAllParam param) throws CoBusinessException {
+//        PageHelper.startPage(param.getPage(), param.getPageSize());
+//        List<ShopOrder> list = cereShopOrderDAO.getAll(param);
+//        PageInfo<ShopOrder> pageInfo = new PageInfo<>(list);
+//        Page page = new Page(pageInfo.getList(), pageInfo.getTotal());
+//        return page;
+//    }
+//
+//    @Override
+//    public ShopOrder getByIdMedicalService(Long orderId) throws CoBusinessException {
+//        ShopOrder shopOrder = cereShopOrderDAO.getById(orderId);
+//        if (shopOrder != null) {
+//            //设置详细地址
+//            shopOrder.setReceiveAdress(shopOrder.getReceiveAdress() + " " + shopOrder.getAddress());
+//            //根据买家账户查询下单总数
+//            shopOrder.setTotal(cereShopOrderDAO.getOrderTotals(shopOrder.getBuyerUserId()));
+//            //查询商品信息
+//            List<Product> products = cereShopOrderDAO.getProducts(orderId);
+//            if (!EmptyUtils.isEmpty(products)) {
+//                //封装规格属性数据
+//                products.forEach(product -> product.setSkuDetails(cereShopOrderDAO.findSkuAttribute(product.getOrderProductId())));
+//            }
+//            shopOrder.setProducts(products);
+//        }
+//        return shopOrder;
+//    }
 }
