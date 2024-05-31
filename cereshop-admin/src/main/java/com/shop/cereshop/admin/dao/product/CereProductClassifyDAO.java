@@ -35,8 +35,6 @@ public interface CereProductClassifyDAO extends BaseMapper<CereProductClassify> 
 
     List<CereProductClassify> getAll();
 
-    List<CereProductClassify> getByClassifyLevel(@Param("classifyLevel") Integer classifyLevel);
-
     List<CereShopProduct> checkProduct(@Param("classifyId") Long classifyId);
 
     List<CereProductClassify> getClassifySelect(@Param("classifyId") Long classifyPid);

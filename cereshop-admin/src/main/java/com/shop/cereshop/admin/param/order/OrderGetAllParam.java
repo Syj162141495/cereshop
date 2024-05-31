@@ -63,7 +63,7 @@ public class OrderGetAllParam extends PageParam {
     private String endTime;
 
     /**
-     * 检索类型：medical医疗；rehabilitation康复；elderlyCare养老
+     * 检索类型：medical医疗；elderlyCare养老；rehabilitation康复（其他）
      */
     @ApiModelProperty(value = "检索类型")
     private String queryType;

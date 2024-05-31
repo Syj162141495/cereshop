@@ -40,6 +40,8 @@ public class OrderController {
     @RequestMapping(value = "getAll",method = RequestMethod.POST)
     @ApiOperation(value = "订单管理查询")
     public Result<Page<ShopOrder>> getAll(@RequestBody OrderGetAllParam param) throws CoBusinessException {
+        System.out.println("1111");
+        System.out.println(param);
         Page page =cereShopOrderService.getAll(param);
         return new Result(page);
     }

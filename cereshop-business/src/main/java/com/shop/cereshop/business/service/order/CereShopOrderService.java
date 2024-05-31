@@ -13,6 +13,7 @@ import com.shop.cereshop.business.param.finance.FinanceCountParam;
 import com.shop.cereshop.business.param.finance.FinanceDetailParam;
 import com.shop.cereshop.business.param.finance.FinanceWithdrawalParam;
 import com.shop.cereshop.business.param.order.OrderGetAllParam;
+import com.shop.cereshop.business.param.order.OrderGetByIdParam;
 import com.shop.cereshop.commons.domain.common.Page;
 import com.shop.cereshop.commons.domain.order.CereShopOrder;
 import com.shop.cereshop.commons.domain.product.CereProductSku;
@@ -24,7 +25,7 @@ import java.util.List;
 public interface CereShopOrderService {
     Page getAll(OrderGetAllParam param) throws CoBusinessException;
 
-    ShopOrder getById(Long orderId) throws CoBusinessException;
+    ShopOrder getById(OrderGetByIdParam param) throws CoBusinessException;
 
     void updateState(CereShopOrder cereShopOrder) throws CoBusinessException;
 
