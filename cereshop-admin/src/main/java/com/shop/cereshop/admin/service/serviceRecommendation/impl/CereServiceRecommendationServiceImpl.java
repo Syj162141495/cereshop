@@ -14,8 +14,12 @@ import com.shop.cereshop.admin.service.serviceRecommendation.CereServiceRecommen
 import com.shop.cereshop.commons.domain.common.Page;
 import com.shop.cereshop.commons.domain.serviceRecommendation.CereServiceRecommendation;
 import com.shop.cereshop.commons.domain.serviceRecommendation.CereServiceRecommendationProduct;
+import com.shop.cereshop.commons.exception.CoBusinessException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,6 +44,7 @@ public class CereServiceRecommendationServiceImpl implements CereServiceRecommen
     /**
      * 新增服务推荐
      */
+    @Transactional(isolation = Isolation.DEFAULT, propagation = Propagation.REQUIRED, rollbackFor = {CoBusinessException.class, Exception.class})
     public int insertServiceRecommendation(ServiceRecommendationParam serviceRecommendationParam) {
         serviceRecommendationParam
                 .setServiceRecommendationProductIds(serviceRecommendationParam.getServiceRecommendationProductIds()
@@ -60,6 +65,7 @@ public class CereServiceRecommendationServiceImpl implements CereServiceRecommen
     /**
      * 更新服务推荐
      */
+    @Transactional(isolation = Isolation.DEFAULT, propagation = Propagation.REQUIRED, rollbackFor = {CoBusinessException.class, Exception.class})
     public int updateServiceRecommendation(ServiceRecommendationParam serviceRecommendationParam) {
         serviceRecommendationParam
                 .setServiceRecommendationProductIds(serviceRecommendationParam.getServiceRecommendationProductIds()
@@ -81,6 +87,7 @@ public class CereServiceRecommendationServiceImpl implements CereServiceRecommen
     /**
      * 删除服务推荐
      */
+    @Transactional(isolation = Isolation.DEFAULT, propagation = Propagation.REQUIRED, rollbackFor = {CoBusinessException.class, Exception.class})
     public int deleteServiceRecommendation(ServiceRecommendationParam serviceRecommendationParam) {
         // 删除子表记录
         int count = cereServiceRecommendationProductDAO.deleteByServiceRecommendationId(serviceRecommendationParam.getServiceRecommendationId());
