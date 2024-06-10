@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.cereshop.admin.dao.serviceRecommendation.CereServiceRecommendationProductDAO">
+    <sql id="service_recommendation_product_columns_update_or_delete">
+        service_recommendation_id = #{serviceRecommendationId}, product_id = #{productId}
+    </sql>
+
+    <sql id="service_recommendation_product_columns">
+        service_recommendation_id, product_id
+    </sql>
+
+    <insert id="insert" parameterType="com.shop.cereshop.commons.domain.serviceRecommendation.CereServiceRecommendationProduct" useGeneratedKeys="true" keyProperty="serviceRecommendationProductId">
+        insert into cere_service_recommendation_product (<include refid="service_recommendation_product_columns" />)
+        values (#{serviceRecommendationId}, #{productId})
+    </insert>
+
+    <delete id="deleteByServiceRecommendationId">
+        delete from cere_service_recommendation_product where service_recommendation_id = #{serviceRecommendationId}
+    </delete>
+
+    <delete id="deleteByServiceRecommendationIdAndProductId">
+        delete from cere_service_recommendation_product where service_recommendation_id = #{serviceRecommendationId} and productId = #{productId}
+    </delete>
+
+    <select id="selectByServiceRecommendationId" resultType="com.shop.cereshop.commons.domain.serviceRecommendation.CereServiceRecommendationProduct">
+        select service_recommendation_product_id, service_recommendation_id, product_id from cere_service_recommendation_product where service_recommendation_id = #{serviceRecommendationId}
+    </select>
+</mapper>
