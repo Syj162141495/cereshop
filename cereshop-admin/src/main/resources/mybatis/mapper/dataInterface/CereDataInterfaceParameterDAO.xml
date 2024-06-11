@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.cereshop.admin.dao.dataInterface.CereDataInterfaceParameterDAO">
+    <sql id="cere_data_interface_parameter_columns">
+        data_interface_parameter_id, data_interface_id,
+        data_interface_parameter_type, data_interface_parameter_example
+    </sql>
+
+    <sql id="cere_data_interface_parameter_columns_insert">
+        data_interface_id, data_interface_parameter_type, data_interface_parameter_example
+    </sql>
+
+    <select id="getDataInterfaceParameterListByDataInterfaceId" resultType="com.shop.cereshop.commons.domain.dataInterface.CereDataInterfaceParameter">
+        select <include refid="cere_data_interface_parameter_columns"/>
+        from cere_data_interface_parameter
+        where data_interface_id = #{dataInterfaceId}
+    </select>
+
+    <insert id="insertDataInterfaceParameter" parameterType="com.shop.cereshop.commons.domain.dataInterface.CereDataInterfaceParameter" useGeneratedKeys="true" keyProperty="dataInterfaceParameterId">
+        insert into cere_data_interface_parameter (
+            <include refid="cere_data_interface_parameter_columns_insert"/>
+        )
+        values (
+            #{dataInterfaceId}, #{dataInterfaceParameterType}, #{dataInterfaceParameterExample}
+        )
+    </insert>
+
+    <delete id="deleteByDataInterfaceId">
+        delete from cere_data_interface_parameter
+        where data_interface_id = #{dataInterfaceId}
+    </delete>
+</mapper>
