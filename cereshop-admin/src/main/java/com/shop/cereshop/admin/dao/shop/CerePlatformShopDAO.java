@@ -6,6 +6,7 @@
 package com.shop.cereshop.admin.dao.shop;
 
 import com.shop.cereshop.admin.page.finance.Finance;
+import com.shop.cereshop.admin.page.index.OrderInfo;
 import com.shop.cereshop.admin.page.shop.Shop;
 import com.shop.cereshop.admin.page.shop.ShopGetAll;
 import com.shop.cereshop.admin.param.finance.FinanceParam;
@@ -72,4 +73,21 @@ public interface CerePlatformShopDAO extends BaseMapper<CerePlatformShop> {
     List<CerePlatformShop> findAll();
 
     void updateShopStop(CerePlatformShop shop);
+
+    Integer getShopNum();
+
+    Integer getPersonNum();
+
+    Integer getClassifyNum();
+
+    Integer getProductNum();
+
+    Integer getOrderNum();
+
+    List<OrderInfo> getNewOrderList();
+
+    String getPerson(@Param(value = "month")String month);
+
+    String getMoney(@Param(value = "month")String month);
+
 }
