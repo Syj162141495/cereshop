@@ -15,6 +15,7 @@ import com.shop.cereshop.business.page.order.SkuDetail;
 import com.shop.cereshop.business.param.finance.FinanceDetailParam;
 import com.shop.cereshop.business.param.finance.FinanceWithdrawalParam;
 import com.shop.cereshop.business.param.order.OrderGetAllParam;
+import com.shop.cereshop.business.param.order.OrderGetByIdParam;
 import com.shop.cereshop.commons.domain.order.CereShopOrder;
 import com.shop.cereshop.commons.domain.pay.CerePayLog;
 import com.shop.cereshop.commons.domain.product.CereProductSku;
@@ -41,7 +42,7 @@ public interface CereShopOrderDAO extends BaseMapper<CereShopOrder> {
 
     List<ShopOrder> getAll(OrderGetAllParam param);
 
-    ShopOrder getById(@Param("orderId") Long orderId);
+    ShopOrder getById(OrderGetByIdParam param);
 
     Integer getOrderTotals(@Param("buyerUserId") Long buyerUserId);
 

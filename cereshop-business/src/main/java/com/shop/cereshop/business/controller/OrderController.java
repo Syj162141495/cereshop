@@ -69,7 +69,7 @@ public class OrderController {
     @RequestMapping(value = "getById",method = RequestMethod.POST)
     @ApiOperation(value = "订单详情查询")
     public Result<ShopOrder> getById(@RequestBody OrderGetByIdParam param) throws CoBusinessException{
-        ShopOrder shopOrder=cereShopOrderService.getById(param.getOrderId());
+        ShopOrder shopOrder=cereShopOrderService.getById(param);
         return new Result(shopOrder);
     }
 

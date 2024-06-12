@@ -493,8 +493,10 @@
 
     <select id="getAll" parameterType="com.shop.cereshop.business.param.order.OrderGetAllParam"
             resultType="com.shop.cereshop.business.page.order.ShopOrder">
-        SELECT a.order_id,a.order_formid,a.price,IF(a.order_id IS NOT NULL,COUNT(b.product_id),NULL) number,a.state,
-        a.customer_name,a.create_time,a.receive_name,a.receive_phone,a.address,a.receive_adress,c.shop_name FROM cere_shop_order a
+        SELECT a.order_id,a.order_formid,a.price,
+        IF(a.order_id IS NOT NULL,COUNT(b.product_id),NULL) number,
+        a.state, a.customer_name,a.create_time,a.receive_name,a.receive_phone,a.address,a.receive_adress,c.shop_name
+        FROM cere_shop_order_${queryType} a
         LEFT JOIN cere_order_product b ON a.order_id=b.order_id
         LEFT JOIN cere_platform_shop c ON a.shop_id=c.shop_id
         where a.shop_id=#{shopId}
@@ -537,7 +539,7 @@
         </choose>
     </select>
 
-    <select id="getById" parameterType="java.lang.Object" resultType="com.shop.cereshop.business.page.order.ShopOrder">
+    <select id="getById" parameterType="com.shop.cereshop.business.param.order.OrderGetByIdParam" resultType="com.shop.cereshop.business.page.order.ShopOrder">
         SELECT a.order_id,
                a.order_formid,
                b.transaction_id,
@@ -568,7 +570,7 @@
                                                                                               IF(c.after_state = 8,
                                                                                                  '退货完成,拒绝退款',
                                                                                                  IF(c.after_state = 9, '已关闭', '审核通过'))))))))) after_state_name
-        from cere_shop_order a
+        from cere_shop_order_${queryType} a
                  LEFT JOIN cere_pay_log b ON a.order_formid = b.order_formid and b.state = '支付'
                  LEFT JOIN cere_order_after c ON a.order_id = c.order_id
                  LEFT JOIN cere_order_logistics d ON a.logistics_id = d.logistics_id

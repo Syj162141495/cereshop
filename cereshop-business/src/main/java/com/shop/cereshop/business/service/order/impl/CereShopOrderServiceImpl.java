@@ -15,6 +15,7 @@ import com.shop.cereshop.business.param.finance.FinanceCountParam;
 import com.shop.cereshop.business.param.finance.FinanceDetailParam;
 import com.shop.cereshop.business.param.finance.FinanceWithdrawalParam;
 import com.shop.cereshop.business.param.order.OrderGetAllParam;
+import com.shop.cereshop.business.param.order.OrderGetByIdParam;
 import com.shop.cereshop.business.pay.PayFactory;
 import com.shop.cereshop.business.pay.PayService;
 import com.shop.cereshop.business.redis.service.api.StringRedisService;
@@ -114,13 +115,13 @@ public class CereShopOrderServiceImpl implements CereShopOrderService {
     }
 
     @Override
-    public ShopOrder getById(Long orderId) throws CoBusinessException {
-        ShopOrder shopOrder=cereShopOrderDAO.getById(orderId);
+    public ShopOrder getById(OrderGetByIdParam param) throws CoBusinessException {
+        ShopOrder shopOrder=cereShopOrderDAO.getById(param);
         if(shopOrder!=null){
             //根据买家账户查询下单总数
             shopOrder.setTotal(cereShopOrderDAO.getOrderTotals(shopOrder.getBuyerUserId()));
             //查询商品信息
-            List<Product> products=cereShopOrderDAO.getProducts(orderId);
+            List<Product> products=cereShopOrderDAO.getProducts(param.getOrderId());
             if(!EmptyUtils.isEmpty(products)){
                 //封装规格属性数据
                 products.forEach(product -> product.setSkuDetails(cereShopOrderDAO.findSkuAttribute(product.getOrderProductId())));

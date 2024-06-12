@@ -402,10 +402,11 @@ public class CereOrderAfterServiceImpl implements CereOrderAfterService {
                 cerePayLog.setRemark(payLog.getOrderFormid()+"订单退款"+cereOrderAfter.getPrice()+"元");
                 cerePayLogService.insert(cerePayLog);
                 //扣减成长值
-                ShopOrder shopOrder = cereShopOrderService.getById(payLog.getOrderId());
-                if (shopOrder != null) {
-                    cereBuyerUserService.updateGrowth(shopOrder.getBuyerUserId(), payLog.getTotalFee().setScale(0, BigDecimal.ROUND_UP).negate().intValue());
-                }
+                // 需要在payLog中增加一个queryType属性
+                // ShopOrder shopOrder = cereShopOrderService.getById(payLog.getOrderId());
+//                if (shopOrder != null) {
+//                    cereBuyerUserService.updateGrowth(shopOrder.getBuyerUserId(), payLog.getTotalFee().setScale(0, BigDecimal.ROUND_UP).negate().intValue());
+//                }
             }
         }
     }

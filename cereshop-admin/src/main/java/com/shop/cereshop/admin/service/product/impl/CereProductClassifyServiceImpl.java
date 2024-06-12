@@ -263,11 +263,6 @@ public class CereProductClassifyServiceImpl implements CereProductClassifyServic
     }
 
     @Override
-    public List<CereProductClassify> getByClassifyLevel(ClassifyGetByClassifyLevelParam param) throws CoBusinessException {
-        return cereProductClassifyDAO.getByClassifyLevel(param.getClassifyLevel());
-    }
-
-    @Override
     @Transactional(isolation = Isolation.DEFAULT, propagation = Propagation.REQUIRED, rollbackFor = {CoBusinessException.class, Exception.class})
     public void delete(ClassifyDeleteParam param, CerePlatformUser user) throws CoBusinessException {
         String time = TimeUtils.yyMMddHHmmss();
