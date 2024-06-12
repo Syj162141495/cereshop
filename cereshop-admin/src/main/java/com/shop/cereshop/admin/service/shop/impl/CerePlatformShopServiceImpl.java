@@ -8,6 +8,10 @@ package com.shop.cereshop.admin.service.shop.impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.shop.cereshop.admin.dao.shop.CerePlatformShopDAO;
+import com.shop.cereshop.admin.page.index.Index;
+import com.shop.cereshop.admin.page.index.MoneyTotal;
+import com.shop.cereshop.admin.page.index.OrderInfo;
+import com.shop.cereshop.admin.page.index.PersonTotal;
 import com.shop.cereshop.admin.page.shop.ShopGetAll;
 import com.shop.cereshop.admin.service.product.CereShopProductService;
 import com.shop.cereshop.commons.domain.common.Page;
@@ -45,7 +49,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.awt.print.Printable;
 import java.math.BigDecimal;
-import java.util.List;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -294,4 +300,60 @@ public class CerePlatformShopServiceImpl implements CerePlatformShopService {
     public void updateShopStop(CerePlatformShop shop) throws CoBusinessException {
         cerePlatformShopDAO.updateShopStop(shop);
     }
+
+    @Override
+    public Index getIndex() throws CoBusinessException {
+        Index index = new Index();
+        Integer shopNum = cerePlatformShopDAO.getShopNum();
+        index.setShopNum(shopNum);
+        Integer personNum = cerePlatformShopDAO.getPersonNum();
+        index.setPersonNum(personNum);
+        Integer classifyNum = cerePlatformShopDAO.getClassifyNum();
+        index.setClassifyNum(classifyNum);
+        Integer productNum = cerePlatformShopDAO.getProductNum();
+        index.setProductNum(productNum);
+        Integer orderNum = cerePlatformShopDAO.getOrderNum();
+        index.setOrderNum(orderNum);
+        List<OrderInfo> list = cerePlatformShopDAO.getNewOrderList();
+        index.setOrderList(list);
+        List<String> monthList = getMonthList(6);
+        List<String> moneyList = new ArrayList<>();
+        List<String> personList = new ArrayList<>();
+        MoneyTotal moneyTotal = new MoneyTotal();
+        moneyTotal.setMonth(monthList);
+        PersonTotal personTotal = new PersonTotal();
+        personTotal.setMonthList(monthList);
+        BigDecimal bigDecimal1 = new BigDecimal("0");
+        BigDecimal bigDecimal2 = new BigDecimal("0");
+        for(int i = 0 ; i < monthList.size(); i++){
+            String month = monthList.get(i);
+            String personSum = cerePlatformShopDAO.getPerson(month);
+            String moneySum = cerePlatformShopDAO.getMoney(month);
+            personList.add(personSum);
+            moneyList.add(moneySum);
+            moneyTotal.setData(moneyList);
+            personTotal.setPersonList(personList);
+            bigDecimal1 = bigDecimal1.add(new BigDecimal(personSum));
+            bigDecimal2 = bigDecimal2.add(new BigDecimal(moneySum));
+        }
+        Integer newPersonNum = bigDecimal1.intValue();
+        index.setMoneyNum(bigDecimal2);
+        index.setNewPersonNum(newPersonNum);
+        index.setMoneyTotal(moneyTotal);
+        index.setPersonTotal(personTotal);
+        return index;
+    }
+
+    // 获取最近N个月的月份数组
+    public List<String> getMonthList(Integer n){
+        List<String> monthList = new ArrayList<>();
+        LocalDate now = LocalDate.now();
+        for(int i = 0; i < n; i++){
+            monthList.add(now.minusMonths(i).format(DateTimeFormatter.ofPattern("yyyy-MM")));
+        }
+        Collections.reverse(monthList);
+        return monthList;
+    }
+
+
 }
