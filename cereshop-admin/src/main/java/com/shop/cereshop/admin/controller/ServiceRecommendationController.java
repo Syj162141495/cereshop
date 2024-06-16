@@ -1,6 +1,7 @@
 package com.shop.cereshop.admin.controller;
 
 import com.shop.cereshop.admin.dao.product.CereShopProductDAO;
+import com.shop.cereshop.admin.page.buyer.BuyerUser;
 import com.shop.cereshop.admin.page.product.ShopProduct;
 import com.shop.cereshop.admin.page.serviceRecommendation.ServiceRecommendation;
 import com.shop.cereshop.admin.param.product.ProductGetAllParam;
@@ -67,6 +68,11 @@ public class ServiceRecommendationController {
     public Result<Page<ServiceRecommendation>> selectServiceRecommendation(@RequestBody ServiceRecommendationParam serviceRecommendationParam) {
         Page<ServiceRecommendation> page = cereServiceRecommendationService.selectServiceRecommendation(serviceRecommendationParam);
         return new Result<>(page);
+    }
+
+    @RequestMapping(value = "getAllBuyer", method = RequestMethod.GET)
+    public Result<List<BuyerUser>> getAllBuyer() {
+        return new Result<>(cereServiceRecommendationService.getAllBuyer());
     }
 
 }

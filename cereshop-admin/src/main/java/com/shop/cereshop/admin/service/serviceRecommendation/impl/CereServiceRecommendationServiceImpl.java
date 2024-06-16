@@ -5,6 +5,7 @@ import com.github.pagehelper.PageInfo;
 import com.shop.cereshop.admin.dao.product.CereShopProductDAO;
 import com.shop.cereshop.admin.dao.serviceRecommendation.CereServiceRecommendationDAO;
 import com.shop.cereshop.admin.dao.serviceRecommendation.CereServiceRecommendationProductDAO;
+import com.shop.cereshop.admin.page.buyer.BuyerUser;
 import com.shop.cereshop.admin.page.product.ShopProduct;
 import com.shop.cereshop.admin.page.serviceRecommendation.ServiceRecommendation;
 import com.shop.cereshop.admin.param.product.ProductGetAllParam;
@@ -15,6 +16,7 @@ import com.shop.cereshop.commons.domain.common.Page;
 import com.shop.cereshop.commons.domain.serviceRecommendation.CereServiceRecommendation;
 import com.shop.cereshop.commons.domain.serviceRecommendation.CereServiceRecommendationProduct;
 import com.shop.cereshop.commons.exception.CoBusinessException;
+import com.shop.cereshop.commons.utils.TimeUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
@@ -51,6 +53,7 @@ public class CereServiceRecommendationServiceImpl implements CereServiceRecommen
                         .stream().distinct().collect(Collectors.toList()));
         CereServiceRecommendation cereServiceRecommendation = transferServiceRecommendationParamToServiceRecommendationParam(serviceRecommendationParam);
         // 主表推荐
+        cereServiceRecommendation.setServiceRecommendationTime(TimeUtils.yyMMddHHmmss());
         int count = cereServiceRecommendationDAO.insert(cereServiceRecommendation);
         for (Long productId : serviceRecommendationParam.getServiceRecommendationProductIds()) {
             // 子表插入
@@ -122,6 +125,11 @@ public class CereServiceRecommendationServiceImpl implements CereServiceRecommen
         }
         // PageInfo<ServiceRecommendation> pageInfo = new PageInfo<>(serviceRecommendationList);
         return new Page<>(serviceRecommendationList, cereServiceRecommendationList.size());
+    }
+
+    @Override
+    public List<BuyerUser> getAllBuyer() {
+        return cereServiceRecommendationDAO.getAllBuyer();
     }
 
     private CereServiceRecommendation transferServiceRecommendationParamToServiceRecommendationParam(ServiceRecommendationParam serviceRecommendationParam) {

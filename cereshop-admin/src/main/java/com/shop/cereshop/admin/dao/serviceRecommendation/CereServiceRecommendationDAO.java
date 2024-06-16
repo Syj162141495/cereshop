@@ -1,5 +1,6 @@
 package com.shop.cereshop.admin.dao.serviceRecommendation;
 
+import com.shop.cereshop.admin.page.buyer.BuyerUser;
 import com.shop.cereshop.admin.page.product.ShopProduct;
 import com.shop.cereshop.admin.page.serviceRecommendation.ServiceRecommendation;
 import com.shop.cereshop.commons.domain.serviceRecommendation.CereServiceRecommendation;
@@ -21,4 +22,6 @@ public interface CereServiceRecommendationDAO {
     int deleteByServiceRecommendationId(Long serviceRecommendationId);
 
     List<CereServiceRecommendation> getAllServiceRecommendations();
+
+    List<BuyerUser> getAllBuyer();
 }

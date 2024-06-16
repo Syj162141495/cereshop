@@ -1,5 +1,6 @@
 package com.shop.cereshop.admin.service.serviceRecommendation;
 
+import com.shop.cereshop.admin.page.buyer.BuyerUser;
 import com.shop.cereshop.admin.page.product.ShopProduct;
 import com.shop.cereshop.admin.page.serviceRecommendation.ServiceRecommendation;
 import com.shop.cereshop.admin.param.product.ProductGetAllParam;
@@ -23,4 +24,6 @@ public interface CereServiceRecommendationService {
     List<ShopProduct> getShopProducts(ProductGetAllParam productGetAllParam);
 
     Page<ServiceRecommendation> selectServiceRecommendation(ServiceRecommendationParam serviceRecommendationParam);
+
+    List<BuyerUser> getAllBuyer();
 }
