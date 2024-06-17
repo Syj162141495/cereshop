@@ -109,7 +109,7 @@ public class CereServiceRecommendationServiceImpl implements CereServiceRecommen
     @Override
     public Page<ServiceRecommendation> selectServiceRecommendation(ServiceRecommendationParam serviceRecommendationParam) {
          // 查询服务推荐记录
-        List<CereServiceRecommendation> cereServiceRecommendationList = cereServiceRecommendationDAO.getAllServiceRecommendations();
+        List<CereServiceRecommendation> cereServiceRecommendationList = cereServiceRecommendationDAO.getAllServiceRecommendations(serviceRecommendationParam);
         List<ServiceRecommendation> serviceRecommendationList = new ArrayList<>();
         for (int i = (serviceRecommendationParam.getPageNumber() - 1) * serviceRecommendationParam.getPageSize();
              i < cereServiceRecommendationList.size() && i < serviceRecommendationParam.getPageNumber() * serviceRecommendationParam.getPageSize(); i++) {

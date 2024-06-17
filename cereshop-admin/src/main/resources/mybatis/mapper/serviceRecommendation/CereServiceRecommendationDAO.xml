@@ -7,8 +7,19 @@
         service_recommendation_time, service_recommendation_buyer_id, service_recommendation_adoption
     </sql>
 
-    <select id="getAllServiceRecommendations" resultType="com.shop.cereshop.commons.domain.serviceRecommendation.CereServiceRecommendation">
-        select <include refid="service_recommendation_columns" /> from cere_service_recommendation
+    <select id="getAllServiceRecommendations" resultType="com.shop.cereshop.commons.domain.serviceRecommendation.CereServiceRecommendation" parameterType="com.shop.cereshop.admin.param.serviceRecommendation.ServiceRecommendationParam">
+        select service_recommendation_id, service_recommendation_name, service_recommendation_type,
+        service_recommendation_time, service_recommendation_buyer_id, service_recommendation_adoption from cere_service_recommendation
+        where 1=1
+        <if test="serviceRecommendationName != null and serviceRecommendationName != ''">
+            and service_recommendation_name like concat ('%',#{serviceRecommendationName},'%')
+        </if>
+        <if test="serviceRecommendationType != null and serviceRecommendationType != ''">
+            and service_recommendation_type = #{serviceRecommendationType}
+        </if>
+        <if test="serviceRecommendationBuyerId != null and serviceRecommendationBuyerId != 0">
+            and service_recommendation_buyer_id = #{serviceRecommendationBuyerId}
+        </if>
     </select>
 
     <insert id="insert" parameterType="com.shop.cereshop.commons.domain.serviceRecommendation.CereServiceRecommendation" useGeneratedKeys="true" keyProperty="serviceRecommendationId">
