@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.cereshop.admin.dao.dataInterface.CereDataInterfaceDAO">
+    <sql id="cere_data_interface_columns">
+        data_interface_id, system_module_name, data_interface_name, data_interface_http_method,
+        data_interface_url, data_interface_return_type, data_interface_return_type_example
+    </sql>
+
+    <sql id="cere_data_interface_columns_insert">
+        system_module_name, data_interface_name, data_interface_http_method,
+        data_interface_url, data_interface_return_type, data_interface_return_type_example
+    </sql>
+
+    <sql id="cere_data_interface_columns_update">
+        system_module_name = #{systemModuleName},
+        data_interface_name = #{dataInterfaceName},
+        data_interface_http_method = #{dataInterfaceHttpMethod},
+        data_interface_url = #{dataInterfaceUrl},
+        data_interface_return_type = #{dataInterfaceReturnType},
+        data_interface_return_type_example = #{dataInterfaceReturnTypeExample}
+    </sql>
+
+    <select id="getDataInterfaceList" resultType="com.shop.cereshop.commons.domain.dataInterface.CereDataInterface">
+        select <include refid="cere_data_interface_columns"/> from cere_data_interface
+    </select>
+
+    <insert id="insertDataInterface" parameterType="com.shop.cereshop.admin.param.dataInterface.DataInterfaceParam" useGeneratedKeys="true" keyProperty="dataInterfaceId">
+        insert into cere_data_interface (
+        <include refid="cere_data_interface_columns_insert"/>
+        )
+        values (
+        #{dataInterfaceName}, #{systemModuleName}, #{dataInterfaceHttpMethod},
+        #{dataInterfaceUrl}, #{dataInterfaceReturnType}, #{dataInterfaceReturnTypeExample}
+        )
+    </insert>
+
+    <update id="updateByDataInterfaceId" parameterType="com.shop.cereshop.admin.param.dataInterface.DataInterfaceParam">
+        update cere_data_interface
+        set <include refid="cere_data_interface_columns_update"/>
+        where data_interface_id = #{dataInterfaceId}
+    </update>
+
+    <delete id="deleteByDataInterfaceId">
+        delete from cere_data_interface where data_interface_id = #{dataInterfaceId}
+    </delete>
+</mapper>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.cereshop.admin.dao.serviceRecommendation.CereServiceRecommendationDAO">
+
+    <sql id="service_recommendation_columns">
+        service_recommendation_id, service_recommendation_name, service_recommendation_type,
+        service_recommendation_time, service_recommendation_buyer_id, service_recommendation_adoption
+    </sql>
+
+    <select id="getAllServiceRecommendations" resultType="com.shop.cereshop.commons.domain.serviceRecommendation.CereServiceRecommendation">
+        select <include refid="service_recommendation_columns" /> from cere_service_recommendation
+    </select>
+
+    <insert id="insert" parameterType="com.shop.cereshop.commons.domain.serviceRecommendation.CereServiceRecommendation" useGeneratedKeys="true" keyProperty="serviceRecommendationId">
+        insert into cere_service_recommendation (<include refid="service_recommendation_columns" />)
+        values (#{serviceRecommendationId}, #{serviceRecommendationName}, #{serviceRecommendationType},
+                #{serviceRecommendationTime}, #{serviceRecommendationBuyerId}, #{serviceRecommendationAdoption})
+    </insert>
+
+    <update id="updateByServiceRecommendationId" parameterType="com.shop.cereshop.commons.domain.serviceRecommendation.CereServiceRecommendation">
+        update cere_service_recommendation
+        set
+            service_recommendation_name = #{serviceRecommendationName},
+            service_recommendation_type = #{serviceRecommendationType},
+            service_recommendation_time = #{serviceRecommendationTime},
+            service_recommendation_buyer_id = #{serviceRecommendationBuyerId},
+            service_recommendation_adoption = #{serviceRecommendationAdoption}
+        where service_recommendation_id = #{serviceRecommendationId}
+    </update>
+
+    <delete id="deleteByServiceRecommendationId">
+        delete from cere_service_recommendation where service_recommendation_id = #{serviceRecommendationId}
+    </delete>
+
+    <select id="getAllBuyer" resultType="com.shop.cereshop.admin.page.buyer.BuyerUser">
+        SELECT a.buyer_user_id,IF(a.wechat_name IS NULL,a.`name`,a.wechat_name) `name`,d.member_level_name,a.sex,
+               a.phone,a.age,a.cid,a.address,IF(b.total IS NULL,0,b.total) total,IF(b.buyers IS NULL,0,b.buyers) buyers,a.create_time,a.if_black,b.time from cere_buyer_user a
+        LEFT JOIN (SELECT buyer_user_id,SUM(price) total,COUNT(order_id) buyers,MAX(create_time) time from cere_shop_order where state in (2,3,4)
+        GROUP BY buyer_user_id) b ON a.buyer_user_id=b.buyer_user_id
+        LEFT JOIN cere_buyer_label c ON a.buyer_user_id=c.buyer_user_id
+        LEFT JOIN cere_platform_member_level d ON a.member_level_id=d.member_level_id
+    </select>
+</mapper>

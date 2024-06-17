@@ -5,6 +5,7 @@
  */
 package com.shop.cereshop.admin.service.shop;
 
+import com.shop.cereshop.admin.page.index.Index;
 import com.shop.cereshop.admin.page.shop.ShopGetAll;
 import com.shop.cereshop.commons.domain.common.Page;
 import com.shop.cereshop.admin.page.finance.FinanceCount;
@@ -50,4 +51,6 @@ public interface CerePlatformShopService {
     List<CerePlatformShop> findAll();
 
     void updateShopStop(CerePlatformShop shop) throws CoBusinessException;
+
+    Index getIndex() throws CoBusinessException;
 }
