@@ -20,8 +20,19 @@
         data_interface_return_type_example = #{dataInterfaceReturnTypeExample}
     </sql>
 
-    <select id="getDataInterfaceList" resultType="com.shop.cereshop.commons.domain.dataInterface.CereDataInterface">
-        select <include refid="cere_data_interface_columns"/> from cere_data_interface
+    <select id="getDataInterfaceList" resultType="com.shop.cereshop.commons.domain.dataInterface.CereDataInterface" parameterType="com.shop.cereshop.admin.param.dataInterface.DataInterfaceParam">
+        select <include refid="cere_data_interface_columns"/>
+        from cere_data_interface
+        where 1=1
+        <if test="systemModuleName != null and systemModuleName != ''">
+            and system_module_name like concat ('%',#{systemModuleName},'%')
+        </if>
+        <if test="dataInterfaceName != null and dataInterfaceName != ''">
+            and data_interface_name like concat ('%',#{dataInterfaceName},'%')
+        </if>
+        <if test="dataInterfaceUrl != null and dataInterfaceUrl != ''">
+            and data_interface_http_method = #{dataInterfaceHttpMethod}
+        </if>
     </select>
 
     <insert id="insertDataInterface" parameterType="com.shop.cereshop.admin.param.dataInterface.DataInterfaceParam" useGeneratedKeys="true" keyProperty="dataInterfaceId">

@@ -39,7 +39,7 @@ public class CereDataInterfaceServiceImpl implements CereDataInterfaceService {
     @Override
     public Page<DataInterface> getDataInterfaceList(DataInterfaceParam dataInterfaceParam) {
         PageHelper.startPage(dataInterfaceParam.getPageNumber(), dataInterfaceParam.getPageSize());
-        List<CereDataInterface> dataInterfaceList = cereDataInterfaceDAO.getDataInterfaceList();
+        List<CereDataInterface> dataInterfaceList = cereDataInterfaceDAO.getDataInterfaceList(dataInterfaceParam);
         PageInfo<CereDataInterface> pageInfo = new PageInfo<>(dataInterfaceList);
         List<DataInterface> result = new ArrayList<>();
         if (pageInfo.getList() != null) {
