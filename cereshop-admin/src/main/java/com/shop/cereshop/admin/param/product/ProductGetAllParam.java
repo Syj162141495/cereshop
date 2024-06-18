@@ -51,6 +51,18 @@ public class ProductGetAllParam extends PageParam {
     private Integer shelveState;
 
     /**
+     * 是否推荐
+     */
+    @ApiModelProperty(value = "是否推荐")
+    private String isRecommended;
+
+    /**
+     * 分类
+     */
+    @ApiModelProperty(value = "分类")
+    private Integer classifyId;
+
+    /**
      * 创建时间数组
      */
     @ApiModelProperty(value = "下单时间数组")
