@@ -30,7 +30,7 @@
         <if test="dataInterfaceName != null and dataInterfaceName != ''">
             and data_interface_name like concat ('%',#{dataInterfaceName},'%')
         </if>
-        <if test="dataInterfaceUrl != null and dataInterfaceUrl != ''">
+        <if test="dataInterfaceHttpMethod != null and dataInterfaceHttpMethod != ''">
             and data_interface_http_method = #{dataInterfaceHttpMethod}
         </if>
     </select>
