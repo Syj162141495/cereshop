@@ -24,7 +24,6 @@
     <result column="introduction" jdbcType="VARCHAR" property="introduction" />
     <result column="providers_major" jdbcType="VARCHAR" property="providersMajor" />
     <result column="providers_subclass" jdbcType="VARCHAR" property="providersSubclass" />
-    <result column="medical_collaboration" jdbcType="VARCHAR" property="medicalcollaboration" />
     <result column="classify_id" jdbcType="BIGINT" property="classifyId"/>
     <result column="effective_date" jdbcType="VARCHAR" property="effectiveDate" />
     <result column="effective_year" jdbcType="INTEGER" property="effectiveYear" />
@@ -364,6 +363,12 @@
     <if test="chargePersonName!=null and chargePersonName!=''">
       and charge_person_name like concat('%',#{chargePersonName},'%')
     </if>
+    <if test="medicalcollaboration!=null and medicalcollaboration!=''">
+      and medical_collaboration like concat('%',#{medicalcollaboration},'%')
+    </if>
+<!--    <if test="classifyId!=null and classifyId!=''">-->
+<!--      and classify_id like concat('%',#{classifyId},'%')-->
+<!--    </if>-->
     <if test="providersMajor!=null and providersMajor!=''">
       and a.providers_major like concat('%',#{providersMajor},'%')
     </if>
@@ -373,9 +378,9 @@
 <!--    <if test="contractState!=null">-->
 <!--      and contract_state=#{contractState}-->
 <!--    </if>-->
-<!--    <if test="classifyId!=null">-->
-<!--      and (a.classify_id=#{classifyId} or c.classify_level_hierarchy like concat('%/',#{classifyId},'%'))-->
-<!--    </if>-->
+    <if test="classifyId!=null">
+      and (a.classify_id=#{classifyId} or c.classify_level_hierarchy like concat('%/',#{classifyId},'%'))
+    </if>
     order by a.create_time desc
   </select>
 
