@@ -3,4 +3,5 @@ target/
 .idea
 .DS_Store
 /logs
+/out
 *.yml
