@@ -589,12 +589,15 @@
         IF(c.after_state=5,'退款失败',IF(c.after_state=6,'审核不通过',IF(
         c.after_state=7,'评审中',IF(c.after_state=8,'退货完成,拒绝退款',
         IF(c.after_state=9,'已关闭','审核通过'))))))))) after_state_name,e.shop_name
-        from cere_shop_order_${queryType} a
+        from cere_shop_order a
         LEFT JOIN cere_pay_log b ON a.order_formid=b.order_formid and b.state = '支付'
         LEFT JOIN cere_order_after c ON a.order_id=c.order_id
         LEFT JOIN cere_order_logistics d ON a.logistics_id=d.logistics_id
         LEFT JOIN cere_platform_shop e ON a.shop_id=e.shop_id
         where a.order_id=#{orderId}
+        <if test="queryType!=null and queryType!=''">
+            and e.service_classify = #{queryType}
+        </if>
     </select>
 
     <select id="getOrderTotals" parameterType="java.lang.Object" resultType="java.lang.Integer">

@@ -64,6 +64,17 @@ public class OrderController {
     @RequestMapping(value = "getById",method = RequestMethod.POST)
     @ApiOperation(value = "订单详情查询")
     public Result<ShopOrder> getById(@RequestBody OrderGetByIdParam param) throws CoBusinessException{
+        switch (param.getQueryType()) {
+            case "medical":
+                param.setQueryType("医疗服务");
+                break;
+            case "elderlycare":
+                param.setQueryType("养老服务");
+                break;
+            case "rehabilitation":
+                param.setQueryType("其他服务");
+                break;
+        }
         ShopOrder shopOrder=cereShopOrderService.getById(param);
         return new Result(shopOrder);
     }
