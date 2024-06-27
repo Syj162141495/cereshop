@@ -25,6 +25,18 @@ public class Index {
     private Integer shopNum;
 
     /**
+     * 新增服务商数
+     * */
+    @ApiModelProperty(value = "新增服务商数")
+    private Integer newShopNum;
+
+    /**
+     * 待审核服务商数
+     * */
+    @ApiModelProperty(value = "待审核服务商数")
+    private Integer unCheckShopNum;
+
+    /**
      * 客户数量
      * */
     @ApiModelProperty(value = "客户数量")
@@ -43,10 +55,29 @@ public class Index {
     private Integer productNum;
 
     /**
+     * 发布数
+     * */
+    @ApiModelProperty(value = "发布数")
+    private Integer publishProductNum;
+
+    /**
+     * 未发布数
+     * */
+    @ApiModelProperty(value = "未发布数")
+    private Integer unPublishProductNum;
+
+
+    /**
      * 订单成交数
      * */
     @ApiModelProperty(value = "订单成交数")
     private Integer orderNum;
+
+    /**
+     * 本月新订单数
+     * */
+    @ApiModelProperty(value = "本月新订单数")
+    private Integer newOrderNum;
 
     /**
      * 总成交额
@@ -59,6 +90,12 @@ public class Index {
      * */
     @ApiModelProperty(value = "当月新用户")
     private Integer newPersonNum;
+
+    /**
+     * 活跃用户人数
+     * */
+    @ApiModelProperty(value = "活跃用户人数")
+    private Integer activityPersonNum;
 
     /**
      * 最新订单

@@ -547,9 +547,9 @@
     <select id="getAll" parameterType="com.shop.cereshop.admin.param.order.OrderGetAllParam"
             resultType="com.shop.cereshop.admin.page.order.ShopOrder">
         SELECT a.order_id,a.order_formid,a.price,
-        IF(a.order_id IS NOT NULL, COUNT(b.product_id),NULL) number,
+               1 as number,
         a.state, a.customer_name, a.create_time, a.receive_name, a.receive_phone, a.address, a.receive_adress, c.shop_name
-        FROM cere_shop_order_${queryType} a
+        FROM cere_shop_order a
         LEFT JOIN cere_order_product b ON a.order_id = b.order_id
         LEFT JOIN cere_platform_shop c ON a.shop_id = c.shop_id
         where 1=1
