@@ -511,7 +511,7 @@
 
   <select id="getNewOrderList" resultType="com.shop.cereshop.admin.page.index.OrderInfo">
     select
-           t1.order_id as orderId,
+           t1.order_formid as orderId,
            t2.product_name as productName,
            t1.price as price,
            (case t1.state when 1 then '待付款'
@@ -521,21 +521,45 @@
                else '已取消' END) as state,
            t1.create_time as createTime
     from cere_shop_order t1,cere_shop_product t2
-    where t1.product_id = t2.product_id
+    where t1.product_id = t2.product_id and t1.state in (2,3,4)
     order by t1.create_time
-    desc limit 10
+    desc limit 5
   </select>
 
   <select id="getPerson" resultType="String">
-    select count(*)
+    select ifnull(count(*),0)
     from cere_buyer_user
     where DATE_FORMAT(create_time,'%Y-%m') = #{month}
   </select>
 
   <select id="getMoney" resultType="String">
-    select sum(price)
+    select ifnull(sum(price),0)
     from cere_shop_order
     where DATE_FORMAT(create_time,'%Y-%m') = #{month} and state in (2,3,4)
+  </select>
+
+  <select id="getNewShop" resultType="Integer">
+    select count(shop_id) from cere_platform_shop where DATE_FORMAT(create_time,'%Y-%m') = DATE_FORMAT(NOW(), '%Y-%m')
+  </select>
+
+  <select id="getUnCheckShop" resultType="Integer">
+    select count(shop_id) from cere_platform_shop where check_state = 0
+  </select>
+
+  <select id="getPublishProduct" resultType="Integer">
+    select count(product_id) from cere_shop_product where shelve_state in(1,2)
+  </select>
+
+  <select id="getUncheckProduct" resultType="Integer">
+    select count(product_id) from cere_shop_product where shelve_state = 2
+  </select>
+
+  <select id="getNewOrderNum" resultType="Integer">
+    select count(*) from cere_shop_order where DATE_FORMAT(create_time,'%Y-%m') = DATE_FORMAT(NOW(), '%Y-%m')
+  </select>
+
+  <select id="getActivityPerson" resultType="Integer">
+    select count(buyer_user_id) from cere_shop_order where DATE_FORMAT(create_time,'%Y-%m') = DATE_FORMAT(NOW(), '%Y-%m')
   </select>
 
 </mapper>

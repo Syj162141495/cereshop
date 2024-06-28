@@ -10,7 +10,7 @@ import java.util.Date;
 @ApiModel(value = "OrderInfo", description = "首页订单信息实体")
 public class OrderInfo {
 
-    private Integer orderId;
+    private String orderId;
 
     private String productName;
 

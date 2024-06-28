@@ -90,4 +90,16 @@ public interface CerePlatformShopDAO extends BaseMapper<CerePlatformShop> {
 
     String getMoney(@Param(value = "month")String month);
 
+    Integer getNewShop();
+
+    Integer getUnCheckShop();
+
+    Integer getPublishProduct();
+
+    Integer getUncheckProduct();
+
+    Integer getNewOrderNum();
+
+    Integer getActivityPerson();
+
 }
