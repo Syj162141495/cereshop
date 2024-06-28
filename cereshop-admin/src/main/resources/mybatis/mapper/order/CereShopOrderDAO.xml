@@ -605,10 +605,11 @@
     </select>
 
     <select id="getProducts" parameterType="java.lang.Object" resultType="com.shop.cereshop.admin.page.product.Product">
-        SELECT order_product_id,product_id,sku_id,product_name,
-        product_price,number,image,product_price*number total
-        from cere_order_product
-        where order_id=#{orderId}
+        SELECT  order_product_id, a.order_id, sku_id, b.product_name,
+        product_price, number, product_price*number total
+        from cere_shop_order a
+        LEFT JOIN cere_order_product b ON a.order_id = b.order_id
+        where a.order_id=#{orderId}
     </select>
 
     <select id="findSkuAttribute" parameterType="java.lang.Object"
