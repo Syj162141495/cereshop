@@ -116,6 +116,9 @@ public class CerePlatformShop implements Serializable {
     @ApiModelProperty(value = "医疗联合")
     private String medicalcollaboration;
 
+    @ApiModelProperty(value = "第三方平台来源")
+    private String sourcePlatform;
+
     @ApiModelProperty(value = "服务类型")
     private String serviceClassify;
 

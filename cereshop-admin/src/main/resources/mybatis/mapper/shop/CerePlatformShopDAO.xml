@@ -349,7 +349,7 @@
     a.state,a.create_time,a.contract_state,b.business_user_id, a.redit_code, a.introduction,
     a.address, a.city, a.area, a.service_classify, a.coordinate_x, a.coordinate_y,
     a.institutional_classify, a.institutional_grade, a.classify_id,
-    a.providers_major, a.providers_subclass, a.medical_collaboration
+    a.providers_major, a.providers_subclass, a.medical_collaboration,a.source_platform
     FROM cere_platform_shop a
     JOIN cere_platform_business b ON a.shop_phone=b.username
     LEFT JOIN cere_product_classify c ON a.classify_id=c.classify_id

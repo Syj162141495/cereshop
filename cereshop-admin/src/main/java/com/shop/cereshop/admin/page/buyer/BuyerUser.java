@@ -95,4 +95,10 @@ public class BuyerUser {
      */
     @ApiModelProperty(value = "是否加入黑名单 1-是 0-否")
     private Integer ifBlack;
+
+    /**
+     * 平台来源
+     */
+    @ApiModelProperty(value = "平台来源")
+    private String sourcePlatform;
 }

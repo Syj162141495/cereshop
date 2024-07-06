@@ -417,7 +417,7 @@
   <select id="getAll" parameterType="com.shop.cereshop.admin.param.product.ProductGetAllParam" resultType="com.shop.cereshop.admin.page.product.ShopProduct">
     SELECT a.product_id,a.product_name,c.price,concat('￥',c.price,'~￥',d.price) sectionPrice,a.classify_id,
     IF(f.image IS NULL OR f.image='',b.product_image,f.image) image,e.shop_name,
-    c.stock_number,a.shelve_state,a.fictitious_number,a.create_time,g.volume,a.product_type,is_recommended,CONCAT(e.city, '-', e.area) as shop_location,a.star_rating,a.area
+    c.stock_number,a.shelve_state,a.fictitious_number,a.create_time,g.volume,a.product_type,is_recommended,CONCAT(e.city, '-', e.area) as shop_location,a.star_rating,a.area,e.source_platform
     from cere_shop_product a
     LEFT JOIN (SELECT a.product_id,a.product_image from cere_product_image a,
     cere_shop_product b where a.product_id=b.product_id GROUP BY a.product_id) b ON a.product_id=b.product_id

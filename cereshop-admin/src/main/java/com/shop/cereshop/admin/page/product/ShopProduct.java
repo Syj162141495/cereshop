@@ -125,4 +125,10 @@ public class ShopProduct {
      */
     @ApiModelProperty(value = "面积")
     private String area;
+
+    /**
+     * 面积
+     */
+    @ApiModelProperty(value = "来源平台")
+    private String sourcePlatform;
 }
