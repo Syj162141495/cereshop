@@ -86,10 +86,16 @@ public class Index {
     private BigDecimal moneyNum;
 
     /**
-     * 当月新用户
+     * 半年内新增用户
      * */
-    @ApiModelProperty(value = "当月新用户")
+    @ApiModelProperty(value = "半年内新增用户")
     private Integer newPersonNum;
+
+    /**
+     * 当月新增用户
+     * */
+    @ApiModelProperty(value = "当月新增用户")
+    private Integer newMonthPersonNum;
 
     /**
      * 活跃用户人数

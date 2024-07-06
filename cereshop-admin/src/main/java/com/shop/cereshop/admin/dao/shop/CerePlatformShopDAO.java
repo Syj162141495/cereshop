@@ -78,6 +78,8 @@ public interface CerePlatformShopDAO extends BaseMapper<CerePlatformShop> {
 
     Integer getPersonNum();
 
+    Integer getCurrentMonthPerson();
+
     Integer getClassifyNum();
 
     Integer getProductNum();

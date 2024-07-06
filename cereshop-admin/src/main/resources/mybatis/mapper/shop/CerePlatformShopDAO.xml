@@ -532,6 +532,10 @@
     where DATE_FORMAT(create_time,'%Y-%m') = #{month}
   </select>
 
+  <select id="getCurrentMonthPerson" resultType="Integer">
+    select count(buyer_user_id) from cere_buyer_user where DATE_FORMAT(create_time,'%Y-%m') = DATE_FORMAT(NOW(), '%Y-%m')
+  </select>
+
   <select id="getMoney" resultType="String">
     select ifnull(sum(price),0)
     from cere_shop_order

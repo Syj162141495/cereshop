@@ -347,6 +347,8 @@ public class CerePlatformShopServiceImpl implements CerePlatformShopService {
         index.setNewPersonNum(newPersonNum);
         index.setMoneyTotal(moneyTotal);
         index.setPersonTotal(personTotal);
+        Integer newMonthPersonNum = cerePlatformShopDAO.getCurrentMonthPerson();
+        index.setNewMonthPersonNum(newMonthPersonNum);
         return index;
     }
 
