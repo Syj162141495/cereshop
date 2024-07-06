@@ -40,7 +40,7 @@
         <include refid="cere_data_interface_columns_insert"/>
         )
         values (
-        #{dataInterfaceName}, #{systemModuleName}, #{dataInterfaceHttpMethod},
+        #{systemModuleName}, #{dataInterfaceName}, #{dataInterfaceHttpMethod},
         #{dataInterfaceUrl}, #{dataInterfaceReturnType}, #{dataInterfaceReturnTypeExample}
         )
     </insert>

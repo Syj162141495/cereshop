@@ -168,4 +168,16 @@ public class ShopOrder {
      */
     @ApiModelProperty(value = "售后单号")
     private String afterFormIds;
+
+    /**
+     * 服务名称
+     */
+    @ApiModelProperty(value = "服务名称")
+    private String productName;
+
+    /**
+     * 服务分类
+     */
+    @ApiModelProperty(value = "服务分类")
+    private String classifyHierarchy;
 }

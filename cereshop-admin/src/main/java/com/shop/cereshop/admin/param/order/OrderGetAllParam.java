@@ -68,6 +68,12 @@ public class OrderGetAllParam extends PageParam {
     @ApiModelProperty(value = "检索类型")
     private String queryType;
 
+    /**
+     * 检索类型：三级服务分类ID
+     */
+    @ApiModelProperty(value = "三级服务分类ID")
+    private String thirdClassifyID;
+
     public void setDates(List<String> dates) {
         if(!EmptyUtils.isEmpty(dates)&&dates.size()>1){
             this.startTime=dates.get(0);
