@@ -180,4 +180,10 @@ public class ShopOrder {
      */
     @ApiModelProperty(value = "服务分类")
     private String classifyHierarchy;
+
+    /**
+     * 推送来源
+     * */
+    @ApiModelProperty(value = "推送来源")
+    private String sourcePlatform;
 }
